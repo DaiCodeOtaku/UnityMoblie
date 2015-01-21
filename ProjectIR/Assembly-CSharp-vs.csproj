@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AndroidButtonHandel.cs" />
+     <Compile Include="Assets\Resources\Scripts\Obstacle.cs" />
      <Compile Include="Assets\Resources\Scripts\ObstacleController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
