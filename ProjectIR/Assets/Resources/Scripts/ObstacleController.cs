@@ -4,26 +4,50 @@ using System.Collections;
 public class ObstacleController : MonoBehaviour {
 
 	public GameObject ObstacleTemplate;
-	enum spawnPatterns {Basic, Advanced};
-	float patternTimer;
+	enum spawnPatterns {nullPattern ,Basic, Advanced};
+	public float patternTimer;
+	int previousPattern, currentPattern, numObstacles;
+	float spawnHeight, spawnDepth;
 
 	// Use this for initialization
 	void Start () {
-		patternTimer = 5;
+		patternTimer = 2;
+		previousPattern = 0;
+		spawnHeight = 7.0f;
+		spawnDepth = -0.5f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		patternTimer -= Time.deltaTime;
-		if(patternTimer < 0){
-			newPattern((spawnPatterns)1);
+
+		if (patternTimer < 0) {
+			currentPattern = (int)newPattern((spawnPatterns)previousPattern);
+			setPatternTimer(currentPattern);
 		}
-		if(spawnObstacle()){
+
+		executePattern(currentPattern);		
+
+		/*if(spawnObstacle()){
 			//Random.Range(-3.1f, 3.1f);
 			//ObstacleTemplate.transform.Translate(new Vector3(10, 0, 0));
 			ObstacleTemplate.transform.Translate(new Vector3(Random.Range(-3.1f, 3.1f), 7, -0.5f));
 			GameObject.Instantiate((GameObject)ObstacleTemplate);
 			resetObstacle();
+		}*/
+
+	}
+
+	void setPatternTimer(int currentPattern){
+		switch (currentPattern) {
+		case 0:
+			patternTimer = 1;
+			break;
+		case 1:
+		case 2:
+		default:
+			patternTimer = 3;
+			break;
 		}
 	}
 
@@ -35,20 +59,27 @@ public class ObstacleController : MonoBehaviour {
 	}
 
 	spawnPatterns newPattern(spawnPatterns previousPattern){
-		int nextPattern = (int)((2 * Random.value)+1);
+		int nextPattern = (int)(3 * Random.value);
 		switch(nextPattern){
 		case 0:
 			if(nextPattern == (int)previousPattern){
-				return (spawnPatterns)1;
+				numObstacles = 16;
+				return spawnPatterns.Basic;
 			}
-			return 0;
+			return spawnPatterns.nullPattern;
 
 		case 1:
 			if(nextPattern == (int)previousPattern){
-				return 0;
+				return spawnPatterns.Advanced;
 			}
-			return (spawnPatterns)1;
+			numObstacles = 16;
+			return spawnPatterns.Basic;
 
+		case 2:
+			if(nextPattern == (int)previousPattern){
+				return spawnPatterns.Basic;
+			}
+			return spawnPatterns.Advanced;
 		}
 		return 0;
 	}
@@ -57,6 +88,84 @@ public class ObstacleController : MonoBehaviour {
 		ObstacleTemplate.transform.Translate(-ObstacleTemplate.transform.position);
 	}
 
+	void spawnObstacle(float x){
+		ObstacleTemplate.transform.Translate(new Vector3(x, spawnHeight, spawnDepth));
+		GameObject.Instantiate((GameObject)ObstacleTemplate);
+		resetObstacle();
+	}
 
+	void executePattern(int pattern){
+		switch (pattern) {
+		case 0:
+			break;
+		case 1:
+			if((patternTimer > 2.9) && (patternTimer < 3) && (numObstacles == 16)){
+				spawnObstacle(0.0f);
+				numObstacles--;
+			} else if((patternTimer > 2.8) && (patternTimer < 2.9) && (numObstacles == 15)){
+				spawnObstacle(1.0f);
+				numObstacles--;
+			} else if((patternTimer > 2.6) && (patternTimer	< 2.7) && (numObstacles == 14)){
+				spawnObstacle(2.0f);
+				numObstacles--;
+			} else if((patternTimer > 2.4) && (patternTimer < 2.5) && (numObstacles == 13)){
+				spawnObstacle(3.0f);
+				numObstacles--;
+			} else if((patternTimer > 2.2) && (patternTimer < 2.3) && (numObstacles == 12)){
+				spawnObstacle(-0.5f);
+				numObstacles--;
+			} else if((patternTimer > 2) && (patternTimer < 2.1) && (numObstacles == 11)){
+				spawnObstacle(-1.5f);
+				numObstacles--;
+			} else if((patternTimer > 1.8) && (patternTimer < 1.9) && (numObstacles == 10)){
+				spawnObstacle(-2.5f);
+				numObstacles--;
+			} else if((patternTimer > 1.6) && (patternTimer < 1.7) && (numObstacles == 9)){
+				spawnObstacle(-3.0f);
+				numObstacles--;
+			} else if((patternTimer > 1.3) && (patternTimer < 1.4) && (numObstacles == 8)){
+				spawnObstacle(-0.5f);
+				numObstacles--;
+			} else if((patternTimer > 1.1) && (patternTimer < 1.2) && (numObstacles == 7)){
+				spawnObstacle(0.5f);
+				numObstacles--;
+			} else if((patternTimer > 0.9) && (patternTimer < 1.0) && (numObstacles == 6)){
+				spawnObstacle(1.5f);
+				numObstacles--;
+			} else if((patternTimer > 0.7) && (patternTimer < 0.8) && (numObstacles == 5)){
+				spawnObstacle(1.5f);
+				numObstacles--;
+				spawnObstacle(-1.5f);
+				numObstacles--;
+			} else if((patternTimer > 0.5) && (patternTimer < 0.6) && (numObstacles == 3)){
+				spawnObstacle(1.5f);
+				numObstacles--;
+				spawnObstacle(-1.5f);
+				numObstacles--;
+			} else if((patternTimer > 0.3) && (patternTimer < 0.4) && (numObstacles == 1)){
+				spawnObstacle(-1.5f);
+				numObstacles--;
+			}
+			break;
+		case 2:
+			break;
+		}
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -339,6 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObstacleTemplate: {fileID: 189406, guid: fbf0d5e686028b4429de615a1bd30a71, type: 2}
+  patternTimer: 0
 --- !u!4 &1856694174
 Transform:
   m_ObjectHideFlags: 0
