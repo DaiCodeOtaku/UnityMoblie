@@ -6,7 +6,7 @@ public class Obstacle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		speed = 8;
+		speed = 7;
 	}
 	
 	// Update is called once per frame
