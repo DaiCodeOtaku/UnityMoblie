@@ -26,6 +26,7 @@ public class Player
 			while (lastScheme == scheme) 
 			{
 				scheme = Random.Range (0, 11);
+
 			}
 		}	
 		return scheme;
@@ -50,6 +51,7 @@ public class PlayerControls : MonoBehaviour
 
 		if (timer > 5) {
 			player.scheme = player.GetControlScheme (player.scheme);
+			Debug.Log(player.scheme);
 			timer = 0;
 		}
 
