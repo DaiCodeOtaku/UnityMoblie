@@ -9,13 +9,40 @@ public class ObstacleController : MonoBehaviour {
 	enum spawnPatterns {nullPattern, Basic, Advanced, Painful};
 	public float patternTimer;
 	spawnPatterns previousPattern, currentPattern;
-	int numObstacles;
+	int patternOffset;
 	float spawnHeight, spawnDepth;
+
+	int numBasic = 41;
+	float[] basicPattern = {	0.2f, 1, 1.0f,			0.2f, 1, 2.0f,			0.2f, 1, 3.0f, 				
+								0.2f, 1, -0.5f,			0.2f, 1, -1.5f,			0.2f, 1, -2.5f, 			
+								0.2f, 1, -3.0f,			0.3f, 1, -0.5f,			0.2f, 1, 0.5f,				
+								0.2f, 1, 1.5f,			0.2f, 2, 1.5f, -1.5f,	0.2f, 2, 1.5f, -1.5f,	
+								0.2f, 1, -1.5f,			0.3f};
+
+	int numAdvanced = 49;
+	float[] advancedPattern = {	0.1f, 1, -1.5f,			0.2f, 1, -1.5f,			0.2f, 1, -1.5f,			//9
+								0.2f, 1, 0.0f,			0.2f, 1, 0.0f,			0.2f, 1, 0.0f,			//9
+								0.2f, 1, 1.0f,			0.2f, 1, -2.0f,			0.2f, 1, 0.5f,			//9
+								0.2f, 1, -0.5f,			0.2f, 1, -2.5f,			0.2f, 1, 2.5f,			//10
+								0.2f, 1, 0.0f,			0.2f, 1, -1.0f, 		0.2f, 1, -2.0f,			//9
+								0.1f, 1, 2.0f,			0.0f};											//4
+
+	int numPainful = 75;
+	float[] painfulPattern = {	0.1f, 2, 0.0f, 2.0f,	0.1f, 1, -0.5f, 		0.1f, 1, 0.5f,			//10
+								0.1f, 1, -1.0f, 		0.1f, 1, 1.0f,			0.1f, 1, -1.5f,			//9
+								0.1f, 1, 1.5f,			0.2f, 2, 2.0f, 3.0f,	0.1f, 1, 2.5f,			//10
+								0.1f, 1, -3.0f,			0.2f, 2, -2.5f, 1.5f,	0.2f, 2, -2.0f, 1.0f,	//11
+								0.2f, 2, -1.5f, 0.5f, 	0.1f, 1, 3.0f,			0.1f, 1, 2.5f,			//10
+								0.1f, 1, 2.0f, 			0.1f, 1, 1.5f, 			0.1f, 1, 1.0f,			//9
+								0.1f, 1, -1.0f, 		0.1f, 1, -1.5f, 		0.1f, 1, -2.0f,			//9
+								0.1f, 1, -2.5f, 		0.1f, 1, 3.0f, 			0.0f};					//7
+
 
 	// Use this for initialization
 	void Start () {
 		patternTimer = 2;
 		previousPattern = 0;
+		patternOffset = 0;
 		spawnHeight = 7.0f;
 		spawnDepth = -0.5f;
 	}
@@ -24,22 +51,13 @@ public class ObstacleController : MonoBehaviour {
 	void Update () {
 		patternTimer -= Time.deltaTime;
 
+		executePattern(currentPattern);
+
 		if (patternTimer < 0) {
-			currentPattern = newPattern(previousPattern);
+			currentPattern = newPattern();
 			Debug.Log(currentPattern);
 			setPatternTimer(currentPattern);
 		}
-
-		executePattern(currentPattern);		
-
-		/*if(spawnObstacle()){
-			//Random.Range(-3.1f, 3.1f);
-			//ObstacleTemplate.transform.Translate(new Vector3(10, 0, 0));
-			ObstacleTemplate.transform.Translate(new Vector3(Random.Range(-3.1f, 3.1f), 7, -0.5f));
-			GameObject.Instantiate((GameObject)ObstacleTemplate);
-			resetObstacle();
-		}*/
-
 	}
 
 	void setPatternTimer(spawnPatterns currentPattern){
@@ -48,9 +66,16 @@ public class ObstacleController : MonoBehaviour {
 			patternTimer = 1;
 			break;
 		case spawnPatterns.Basic:
+			patternTimer = basicPattern[0];
+			patternOffset = 1;
+			break;
 		case spawnPatterns.Advanced:
-		default:
-			patternTimer = 3;
+			patternTimer = advancedPattern[0];
+			patternOffset = 1;
+			break;
+		case spawnPatterns.Painful:
+			patternTimer = painfulPattern[0];
+			patternOffset = 1;
 			break;
 		}
 	}
@@ -62,34 +87,36 @@ public class ObstacleController : MonoBehaviour {
 		return false;
 	}
 
-	spawnPatterns newPattern(spawnPatterns previousPattern){
-		if(previousPattern != spawnPatterns.nullPattern){
-			return spawnPatterns.nullPattern;
-		}
-		spawnPatterns nextPattern = (spawnPatterns)(3 * Random.value);
+	spawnPatterns newPattern(){
+		spawnPatterns nextPattern = (spawnPatterns)(4 * Random.value);
 		switch(nextPattern){
 		case spawnPatterns.nullPattern:
 			if(nextPattern == previousPattern){
-				numObstacles = 15;
 				return spawnPatterns.Basic;
 			}
+			previousPattern = spawnPatterns.nullPattern;
 			return spawnPatterns.nullPattern;
 
 		case spawnPatterns.Basic:
 			if(nextPattern == previousPattern){
-				numObstacles = 16;
 				return spawnPatterns.Advanced;
 			}
-			numObstacles = 15;
+			previousPattern = spawnPatterns.Basic;
 			return spawnPatterns.Basic;
 
 		case spawnPatterns.Advanced:
 			if(nextPattern == previousPattern){
-				numObstacles = 15;
 				return spawnPatterns.Basic;
 			}
-			numObstacles = 16;
+			previousPattern = spawnPatterns.Advanced;
 			return spawnPatterns.Advanced;
+
+		case spawnPatterns.Painful:
+			if(nextPattern == previousPattern){
+				return spawnPatterns.Advanced;
+			}
+			previousPattern = spawnPatterns.Painful;
+			return spawnPatterns.Painful;
 		}
 		return 0;
 	}
@@ -109,118 +136,46 @@ public class ObstacleController : MonoBehaviour {
 		case spawnPatterns.nullPattern:
 			break;
 		case spawnPatterns.Basic:
-			/*if(timeTest(2.9f, 16)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else*/ if(timeTest(2.8f, 15)){
-				spawnObstacle(1.0f);
-				numObstacles--;
-			} else if(timeTest(2.6f, 14)){
-				spawnObstacle(2.0f);
-				numObstacles--;
-			} else if(timeTest(2.4f, 13)){
-				spawnObstacle(3.0f);
-				numObstacles--;
-			} else if(timeTest(2.2f, 12)){
-				spawnObstacle(-0.5f);
-				numObstacles--;
-			} else if(timeTest(2.0f, 11)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(1.8f, 10)){
-				spawnObstacle(-2.5f);
-				numObstacles--;
-			} else if(timeTest(1.6f, 9)){
-				spawnObstacle(-3.0f);
-				numObstacles--;
-			} else if(timeTest(1.3f, 8)){
-				spawnObstacle(-0.5f);
-				numObstacles--;
-			} else if(timeTest(1.1f, 7)){
-				spawnObstacle(0.5f);
-				numObstacles--;
-			} else if(timeTest(0.9f, 6)){
-				spawnObstacle(1.5f);
-				numObstacles--;
-			} else if(timeTest(0.7f, 5)){
-				spawnObstacle(1.5f);
-				numObstacles--;
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(0.5f, 3)){
-				spawnObstacle(1.5f);
-				numObstacles--;
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(0.3f, 1)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
+			if(patternOffset < numBasic){
+				if(patternTimer < 0){
+					int i = 0;
+					for(i = 0; i < basicPattern[patternOffset]; i++){
+						spawnObstacle(basicPattern[patternOffset + i + 1]);
+					}
+					patternOffset += i + 1;
+					patternTimer = basicPattern[patternOffset];
+					patternOffset++;
+				}
 			}
 			break;
 		case spawnPatterns.Advanced:
-			if(timeTest(2.9f, 16)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(2.7f, 15)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(2.5f, 14)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(2.3f, 13)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else if(timeTest(2.1f, 12)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else if(timeTest(1.9f, 11)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else if(timeTest(1.7f, 10)){
-				spawnObstacle(1.0f);
-				numObstacles--;
-			} else if(timeTest(1.5f, 9)){
-				spawnObstacle(-2.0f);
-				numObstacles--;
-			} else if(timeTest(1.3f, 8)){
-				spawnObstacle(0.5f);
-				numObstacles--;
-			} else if(timeTest(1.1f, 7)){
-				spawnObstacle(-0.5f);
-				numObstacles--;
-			} else if(timeTest(0.9f, 6)){
-				spawnObstacle(-2.5f);
-				numObstacles--;
-			} else if(timeTest(0.7f, 5)){
-				spawnObstacle(2.5f);
-				numObstacles--;
-			} else if(timeTest(0.5f, 4)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else if(timeTest(0.3f, 3)){
-				spawnObstacle(-1.0f);
-				numObstacles--;
-			} else if(timeTest(0.1f, 2)){
-				spawnObstacle(-2.0f);
-				numObstacles--;
-			} else if(timeTest(0.0f, 1)){
-				spawnObstacle(2.0f);
-				numObstacles--;
+			if(patternOffset < numAdvanced){
+				if(patternTimer < 0){
+					int i = 0;
+					for(i = 0; i < advancedPattern[patternOffset]; i++){
+						spawnObstacle(advancedPattern[patternOffset + i + 1]);
+					}
+					patternOffset += i + 1;
+					patternTimer = advancedPattern[patternOffset];
+					patternOffset++;
+				}
 			}
 			break;
 
 		case spawnPatterns.Painful:
-
+			if(patternOffset < numPainful){
+				if(patternTimer < 0){
+					int i = 0;
+					for(i = 0; i < painfulPattern[patternOffset]; i++){
+						spawnObstacle(painfulPattern[patternOffset + i + 1]);
+					}
+					patternOffset += i + 1;
+					patternTimer = painfulPattern[patternOffset];
+					patternOffset++;
+				}
+			}
 			break;
 		}
-	}
-
-
-	bool timeTest(float time, int ObstacleNumber){
-		if((patternTimer > time) && (patternTimer < time + 0.1f) && (numObstacles == ObstacleNumber)){
-			return true;
-		}
-		return false;
 	}
 
 }
