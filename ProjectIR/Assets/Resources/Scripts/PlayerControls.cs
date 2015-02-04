@@ -8,41 +8,29 @@ public class Player
 	public float speed;
 	public float accelSpeed;
 	public int scheme;
-	public Vector2 direction;
+	public Vector3 direction;
+
 
 	public Player()
 	{
 		scheme = (int)cScheme.moveScale;
 		speed = 0.0375f;
-		direction = Vector2.zero;
+		direction = Vector3.zero;
 		accelSpeed = 0;
-
 	}
 
-	public int GetControlScheme(int scheme)
+	public int GetControlScheme(int scheme, float accelSpeed)
 	{
 		int lastScheme = scheme;
-		/*if (Otherboolean == true)//janky using tilt control boolean = true
-		{
-			if (Random.value <= 0.01f) 
-			{
-				while (lastScheme == scheme) 
-				{
-					scheme = Random.Range (0, 9);
-					
-				}
-			}	
-		} else
-		{ */
 			if (Random.value <= 0.3f) 
 			{
 				while (lastScheme == scheme) 
 				{
 					scheme = Random.Range (0, 11);
-					Debug.Log(scheme);
+					accelSpeed = 0;
 				}
-			}	
-		//}
+				Debug.Log(scheme);
+			}
 		return scheme;
 	}
 }
@@ -52,13 +40,13 @@ public class PlayerControls : MonoBehaviour
 	Player player = new Player();
 	float timer;
 	bool checkSOD;
+	float moveThreshold = 0.2f;
 
 	// Use this for initialization
 	void Start () 
 	{
 		timer = 0;
 		checkSOD = false;
-
 	}
 	
 	// Update is called once per frame
@@ -68,20 +56,35 @@ public class PlayerControls : MonoBehaviour
 
 		if (timer >= 5) 
 		{
-			player.scheme = player.GetControlScheme (player.scheme);
+			player.scheme = player.GetControlScheme (player.scheme, player.accelSpeed);
 
 			timer = 0;
 		}
 
 		Vector3 mousePos = new Vector3 (0, 0, 0);
 
-		switch ((cScheme)player.scheme)
+		if ((this.transform.position.x + 0.25 < 3.1) && (this.transform.position.x - 0.25 > -3.1))
 		{
-		case cScheme.moveScale:
+
+			switch ((cScheme)player.scheme)
+			{
+			case cScheme.moveScale:
+					if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
+					{	
+						mousePos.x = Input.mousePosition.x;
+						this.transform.Translate ((mousePos.x - (Screen.width / 2)) * player.speed * Time.deltaTime, 0, 0);
+					} 
+					else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
+					{	
+						mousePos.x = Input.mousePosition.x;
+						this.transform.Translate ((((Screen.width / 2) - mousePos.x) * -player.speed * Time.deltaTime), 0, 0);
+					}
+					break;
+			case cScheme.moveScaleInv:
+
 				if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
 				{	
 					mousePos.x = Input.mousePosition.x;
-					
 					if (this.transform.position.x + 0.25 < 3.1) 
 					{
 						this.transform.Translate ((mousePos.x - (Screen.width / 2)) * player.speed * Time.deltaTime, 0, 0);
@@ -92,205 +95,216 @@ public class PlayerControls : MonoBehaviour
 					mousePos.x = Input.mousePosition.x;
 					if (this.transform.position.x - 0.25 > -3.1) 
 					{
-						this.transform.Translate ((((Screen.width / 2) - mousePos.x) * -player.speed * Time.deltaTime), 0, 0);
+						this.transform.Translate ((mousePos.x - (Screen.width / 2)) * player.speed * Time.deltaTime, 0, 0);
 					}
 				}
 				break;
-		case cScheme.moveScaleInv:
-			if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-			{	
-				mousePos.x = Input.mousePosition.x;
-				if (this.transform.position.x + 0.25 < 3.1) 
+			case cScheme.tilt:
+				if (Input.acceleration.y > moveThreshold)
 				{
-					this.transform.Translate ((mousePos.x - (Screen.width / 2)) * player.speed * Time.deltaTime, 0, 0);
+				transform.Translate(Input.acceleration.x * player.speed,0,0);
 				}
-			} 
-			else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-			{	
-				mousePos.x = Input.mousePosition.x;
-				if (this.transform.position.x - 0.25 > -3.1) 
+				else if (Input.acceleration.y < -moveThreshold)
 				{
-					this.transform.Translate ((mousePos.x - (Screen.width / 2)) * player.speed * Time.deltaTime, 0, 0);
-				}
-			}
-			break;
-		case cScheme.tilt:
-			player.direction.x = Input.acceleration.z;
-			if (player.direction.x > 0.1)
-			{
-				this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
-			}
-			else if (player.direction.x < -0.1)
-			{
-				this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
-			}
-			break;
+				transform.Translate(Input.acceleration.x * player.speed,0,0);
+				} 
+				break;
 
-		case cScheme.tiltInv:
-			player.direction.x = Input.acceleration.z;
-			if (player.direction.x < -0.1)
-			{
-				this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
-			}
-			else if (player.direction.x > 0.1)
-			{
-				this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
-			}
-			break; 
-		case cScheme.accelInv:
-			if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-			{					
-				if(transform.position.x < 0)
+			case cScheme.tiltInv:
+			if (Input.acceleration.y < -moveThreshold)
 				{
-					player.accelSpeed += 0.5f;
-				} else
-				{
-					player.accelSpeed += 0.3f;
+				transform.Translate(-Input.acceleration.x * 0.5f,0,0);
 				}
-			} 
-			else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-			{	
-				if(transform.position.x > 0)
+				else if (Input.acceleration.y > moveThreshold)
 				{
-					player.accelSpeed -= 0.5f;
-				} else
-				{
-					player.accelSpeed -= 0.3f;
+				transform.Translate(-Input.acceleration.x * 0.5f,0,0);
 				}
-			}
-
-			if (this.transform.position.x + 0.5 < 3.1  && this.transform.position.x - 0.5 > -3.1) 
-			{
+				break;
+			case cScheme.accelInv:
+				if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
+				{					
+					if(transform.position.x < 0)
+					{
+						player.accelSpeed += 0.1f;
+					} else
+					{
+						player.accelSpeed += 0.03f;
+					}
+				} 
+				else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
+				{	
+					if(transform.position.x > 0)
+					{
+						player.accelSpeed -= 0.1f;
+					} else
+					{
+						player.accelSpeed -= 0.03f;
+					}
+				}
+				Debug.Log(player.accelSpeed);
 				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
-			}
-			break;
-		case cScheme.accel:
-			if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-			{	
-				if(transform.position.x > 0)
-				{
-					player.accelSpeed -= 0.4f;
-				} else
-				{
-					player.accelSpeed -= 0.2f;
+				break;
+			case cScheme.accel:
+				if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
+				{	
+					if(transform.position.x > 0)
+					{
+						player.accelSpeed -= 0.1f;
+					} else
+					{
+						player.accelSpeed -= 0.03f;
+					}
+				} 
+				else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
+				{	
+					if(transform.position.x < 0)
+					{
+						player.accelSpeed += 0.1f;
+					} else
+					{
+						player.accelSpeed += 0.03f;
+					}
 				}
-			} 
-			else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-			{	
-				if(transform.position.x < 0)
-				{
-					player.accelSpeed += 0.4f;
-				} else
-				{
-					player.accelSpeed += 0.2f;
-				}
-			}
-			if (this.transform.position.x + 0.5 < 3.1  && this.transform.position.x - 0.5 > -3.1) 
-			{
+				
+				Debug.Log(player.accelSpeed);
 				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
-			}
-			break;
-		case cScheme.SOD:
-			if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-			{	
-				//mousePos.x = Input.mousePosition.x;
-				if(transform.position.x > 0)
-				{
-					if(checkSOD == false)
+				break;
+			case cScheme.SOD:
+				if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
+				{	
+					if(transform.position.x > 0)
 					{
-						player.accelSpeed = -0.01f;
-						checkSOD = true;
-					}
-					else
+						if(checkSOD == false)
+						{
+							player.accelSpeed = -0.01f;
+							checkSOD = true;
+						}
+						else
+						{
+							player.accelSpeed -= 0.1f;
+						}
+					} else
 					{
-						player.accelSpeed -= 0.4f;
+						player.accelSpeed -= 0.03f;
+						checkSOD = false;
 					}
-				} else
-				{
-					player.accelSpeed -= 0.2f;
-					checkSOD = false;
+				} 
+				else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
+				{	
+					if(transform.position.x < 0)
+					{
+						if(checkSOD == false)
+						{
+							player.accelSpeed = 0.0f;
+							checkSOD = true;
+						}
+						else
+						{
+							player.accelSpeed += 0.1f;
+						}
+					} else
+					{
+						player.accelSpeed += 0.03f;
+						checkSOD = false;
+					}
 				}
-			} 
-			else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-			{	
-				if(transform.position.x < 0)
-				{
-					if(checkSOD == false)
-					{
-						player.accelSpeed = 0.0f;
-						checkSOD = true;
-					}
-					else
-					{
-						player.accelSpeed += 0.4f;
-					}
-				} else
-				{
-					player.accelSpeed += 0.2f;
-					checkSOD = false;
-				}
-			}
-			if (this.transform.position.x + 0.5 < 3.1  && this.transform.position.x - 0.5 > -3.1) 
-			{
+				Debug.Log(player.accelSpeed);
 				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
-			}
-			break;
-		case cScheme.SODInv:
-			if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-			{	
-				//mousePos.x = Input.mousePosition.x;
-				if(transform.position.x > 0)
-				{
-					if(checkSOD == false)
+				break;
+			case cScheme.SODInv:
+				if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
+				{	
+					if(transform.position.x > 0)
 					{
-						player.accelSpeed = -0.01f;
-						checkSOD = true;
-					}
-					else
+						if(checkSOD == false)
+						{
+							player.accelSpeed = -0.01f;
+							checkSOD = true;
+						}
+						else
+						{
+							player.accelSpeed -= 0.1f;
+						}
+					} else
 					{
-						player.accelSpeed -= 0.4f;
+						player.accelSpeed -= 0.03f;
+						checkSOD = false;
 					}
-				} else
-				{
-					player.accelSpeed -= 0.2f;
-					checkSOD = false;
+				} 
+				else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
+				{	
+					if(transform.position.x < 0)
+					{
+						if(checkSOD == false)
+						{
+							player.accelSpeed = 0.0f;
+							checkSOD = true;
+						}
+						else
+						{
+							player.accelSpeed += 0.1f;
+						}
+					} else
+					{
+						player.accelSpeed += 0.03f;
+						checkSOD = false;
+					}
 				}
-			} 
-			else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-			{	
-				if(transform.position.x < 0)
-				{
-					if(checkSOD == false)
-					{
-						player.accelSpeed = 0.0f;
-						checkSOD = true;
-					}
-					else
-					{
-						player.accelSpeed += 0.4f;
-					}
-				} else
-				{
-					player.accelSpeed += 0.2f;
-					checkSOD = false;
-				}
-			}
-			if (this.transform.position.x + 0.5 < 3.1  && this.transform.position.x - 0.5 > -3.1) 
-			{
+				
+				Debug.Log(player.accelSpeed);
 				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
+
+				break;
+			case cScheme.arrows:
+				if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2) - 1) 
+				{	
+					mousePos.x = Input.mousePosition.x;
+					this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
+				} 
+				else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2) + 1) 
+				{	
+					mousePos.x = Input.mousePosition.x;
+					this.transform.Translate ((-player.speed * Time.deltaTime), 0, 0);
+				}
+				break;
+			case cScheme.arrowsInv:
+				if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2) - 1) 
+				{	
+					mousePos.x = Input.mousePosition.x;
+					if (this.transform.position.x + 0.25 < 3.1) 
+					{
+						this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
+					}
+				} 
+				else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2) + 1) 
+				{	
+					mousePos.x = Input.mousePosition.x;
+					if (this.transform.position.x - 0.25 > -3.1) 
+					{
+						this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
+					}
+				}
+				break;
+
+					//Move movement schemes go here
+			default:
+				break;
 			}
-
-			break;
-
-
-				//Move movement schemes go here
-		default:
-			break;
 		}
-		if(Mathf.Abs (transform.position.x) >= 2.6)
+		else
 		{
-			this.transform.position = new Vector3(this.transform.position.x * 0.995f, this.transform.position.y, this.transform.position.z);
 			player.accelSpeed = 0;
+			if (this.transform.position.x < (Screen.width/2))
+			{
+				this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
+			}
+			else
+			{
+				this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
+			}
 		}
+		;
 	}
 }
+
+
