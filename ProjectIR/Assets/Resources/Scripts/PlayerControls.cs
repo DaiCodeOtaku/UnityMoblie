@@ -9,20 +9,24 @@ public class Player
 	public float accelSpeed;
 	public int scheme;
 	public Vector3 direction;
+	public float maxSpeed;
+	public float minSpeed;
 
 
 	public Player()
 	{
-		scheme = (int)cScheme.moveScale;
+		scheme = (int)cScheme.arrows;
 		speed = 0.0375f;
 		direction = Vector3.zero;
 		accelSpeed = 0;
+		maxSpeed = 10;
+		minSpeed = -10;
 	}
 
-	public int GetControlScheme(int scheme, float accelSpeed)
+	public int GetControlScheme(int scheme, ref float accelSpeed)
 	{
 		int lastScheme = scheme;
-			if (Random.value <= 0.3f) 
+			if (Random.value <= 0.5f) 
 			{
 				while (lastScheme == scheme) 
 				{
@@ -56,10 +60,12 @@ public class PlayerControls : MonoBehaviour
 
 		if (timer >= 5) 
 		{
-			player.scheme = player.GetControlScheme (player.scheme, player.accelSpeed);
+			//player.scheme = player.GetControlScheme (player.scheme, ref player.accelSpeed);
 
 			timer = 0;
 		}
+
+
 
 		Vector3 mousePos = new Vector3 (0, 0, 0);
 
@@ -125,23 +131,22 @@ public class PlayerControls : MonoBehaviour
 				{					
 					if(transform.position.x < 0)
 					{
-						player.accelSpeed += 0.1f;
+						player.accelSpeed += 0.05f;
 					} else
 					{
-						player.accelSpeed += 0.03f;
+						player.accelSpeed += 0.025f;
 					}
 				} 
 				else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
 				{	
 					if(transform.position.x > 0)
 					{
-						player.accelSpeed -= 0.1f;
+						player.accelSpeed -= 0.05f;
 					} else
 					{
-						player.accelSpeed -= 0.03f;
+						player.accelSpeed -= 0.025f;
 					}
 				}
-				Debug.Log(player.accelSpeed);
 				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
 				break;
 			case cScheme.accel:
@@ -149,24 +154,22 @@ public class PlayerControls : MonoBehaviour
 				{	
 					if(transform.position.x > 0)
 					{
-						player.accelSpeed -= 0.1f;
+						player.accelSpeed -= 0.05f;
 					} else
 					{
-						player.accelSpeed -= 0.03f;
+						player.accelSpeed -= 0.025f;
 					}
 				} 
 				else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
 				{	
 					if(transform.position.x < 0)
 					{
-						player.accelSpeed += 0.1f;
+						player.accelSpeed += 0.05f;
 					} else
 					{
-						player.accelSpeed += 0.03f;
+						player.accelSpeed += 0.025f;
 					}
 				}
-				
-				Debug.Log(player.accelSpeed);
 				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
 				break;
 			case cScheme.SOD:
@@ -176,16 +179,16 @@ public class PlayerControls : MonoBehaviour
 					{
 						if(checkSOD == false)
 						{
-							player.accelSpeed = -0.01f;
+							player.accelSpeed = 0.0f;
 							checkSOD = true;
 						}
 						else
 						{
-							player.accelSpeed -= 0.1f;
+							player.accelSpeed -= 0.05f;
 						}
 					} else
 					{
-						player.accelSpeed -= 0.03f;
+						player.accelSpeed -= 0.025f;
 						checkSOD = false;
 					}
 				} 
@@ -200,15 +203,14 @@ public class PlayerControls : MonoBehaviour
 						}
 						else
 						{
-							player.accelSpeed += 0.1f;
+							player.accelSpeed += 0.05f;
 						}
 					} else
 					{
-						player.accelSpeed += 0.03f;
+						player.accelSpeed += 0.025f;
 						checkSOD = false;
 					}
 				}
-				Debug.Log(player.accelSpeed);
 				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
 				break;
 			case cScheme.SODInv:
@@ -223,11 +225,11 @@ public class PlayerControls : MonoBehaviour
 						}
 						else
 						{
-							player.accelSpeed -= 0.1f;
+							player.accelSpeed -= 0.05f;
 						}
 					} else
 					{
-						player.accelSpeed -= 0.03f;
+						player.accelSpeed -= 0.025f;
 						checkSOD = false;
 					}
 				} 
@@ -242,46 +244,44 @@ public class PlayerControls : MonoBehaviour
 						}
 						else
 						{
-							player.accelSpeed += 0.1f;
+							player.accelSpeed += 0.5f;
 						}
 					} else
 					{
-						player.accelSpeed += 0.03f;
+						player.accelSpeed += 0.025f;
 						checkSOD = false;
 					}
 				}
-				
-				Debug.Log(player.accelSpeed);
 				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
 
 				break;
 			case cScheme.arrows:
-				if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2) - 1) 
+				if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.height / 4))) && (Input.mousePosition.y < (Screen.height / 8))) 
 				{	
 					mousePos.x = Input.mousePosition.x;
-					this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
+					this.transform.Translate (player.speed * Time.deltaTime * 100.0f, 0, 0);
 				} 
-				else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2) + 1) 
+				else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 4)) && (Input.mousePosition.y < (Screen.height / 8))) 
 				{	
 					mousePos.x = Input.mousePosition.x;
-					this.transform.Translate ((-player.speed * Time.deltaTime), 0, 0);
+					this.transform.Translate (-player.speed * Time.deltaTime * 100.0f, 0, 0);
 				}
 				break;
 			case cScheme.arrowsInv:
-				if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2) - 1) 
+				if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.height / 4))) && (Input.mousePosition.y < (Screen.height / 8))) 
 				{	
 					mousePos.x = Input.mousePosition.x;
 					if (this.transform.position.x + 0.25 < 3.1) 
 					{
-						this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
+						this.transform.Translate (player.speed * Time.deltaTime * 150.0f, 0, 0);
 					}
 				} 
-				else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2) + 1) 
+				else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 4)) && (Input.mousePosition.y < (Screen.height / 8))) 
 				{	
 					mousePos.x = Input.mousePosition.x;
 					if (this.transform.position.x - 0.25 > -3.1) 
 					{
-						this.transform.Translate (player.speed * Time.deltaTime, 0, 0);
+						this.transform.Translate (player.speed * Time.deltaTime * 150.0f, 0, 0);
 					}
 				}
 				break;
@@ -303,7 +303,18 @@ public class PlayerControls : MonoBehaviour
 				this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
 			}
 		}
-		;
+
+		if (player.accelSpeed >= player.maxSpeed) 
+		{
+			player.speed = player.maxSpeed - 1;
+			player.accelSpeed = player.maxSpeed - 1;
+		}
+		if (player.accelSpeed <= player.minSpeed) 
+		{
+			
+			player.speed = player.minSpeed + 1;
+			player.accelSpeed = player.minSpeed + 1;
+		}
 	}
 }
 
