@@ -47,8 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AndroidButtonHandel.cs" />
+     <Compile Include="Assets\BtnOptions.cs" />
      <Compile Include="Assets\BtnScreen.cs" />
      <Compile Include="Assets\SplashSequencer.cs" />
+     <Compile Include="Assets\valControlScheme.cs" />
+     <Compile Include="Assets\valSFX.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

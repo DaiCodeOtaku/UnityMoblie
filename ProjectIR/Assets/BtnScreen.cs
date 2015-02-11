@@ -11,7 +11,6 @@ public class BtnScreen : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		canPause.enabled = false;
-		//canTitle.enabled = false;
 		canDeath.enabled = false;
 
 	}

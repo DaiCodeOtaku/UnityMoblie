@@ -8,10 +8,13 @@ public class SplashSequencer : MonoBehaviour {
 
 	public Timer splashInterval = new Timer();
 	public int splashCount = 0;
+	public static int sfxVol = 10;
+	public static int ctrlScheme = 1;
 
 	public Canvas canUnity;
 	public Canvas canBrokenEarth;
 	public Canvas canMenu;
+	public Canvas canOptions;
 
 	// Use this for initialization
 	void Start () {
@@ -21,17 +24,13 @@ public class SplashSequencer : MonoBehaviour {
 
 		canBrokenEarth.enabled = false;
 		canMenu.enabled = false;
+		canOptions.enabled = false;
 		
 	}
 
 	public void splashSequence(object source, ElapsedEventArgs e){
 		splashCount++;
 
-	}
-
-	public void pressStart(){
-		Debug.Log ("start");
-		Application.LoadLevel ("Main");
 	}
 
 	// Update is called once per frame
@@ -53,5 +52,24 @@ public class SplashSequencer : MonoBehaviour {
 			splashInterval.Stop();
 			splashCount++;
 		} 
+
+
+	}
+
+	public void pressOptions(){
+		Debug.Log ("options");
+		canMenu.enabled = false;
+		canOptions.enabled = true;
+	}
+
+	public void pressStart(){
+		Debug.Log ("start");
+		Application.LoadLevel ("Main");
+	}
+
+	public void pressBack(){
+		Debug.Log ("back");
+		canMenu.enabled = true;
+		canOptions.enabled = false;
 	}
 }
