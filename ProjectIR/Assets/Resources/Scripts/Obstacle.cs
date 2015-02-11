@@ -6,7 +6,7 @@ public class Obstacle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		speed = 6;
+		speed = 5.5f;
 	}
 	
 	// Update is called once per frame
@@ -18,7 +18,7 @@ public class Obstacle : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision collision) {
+	void OnCollisionEnter() {
 		Destroy(this.gameObject);
 	}
 }
