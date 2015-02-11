@@ -6,7 +6,8 @@ using System.Collections;
 public class ObstacleController : MonoBehaviour {
 
 	public GameObject ObstacleTemplate;
-	enum spawnPatterns {nullPattern = 0, Basic, Advanced, Painful, Stairs, Butterfly, SpaceInvaders};
+	enum spawnPatterns {nullPattern = 0, Basic, Advanced, Painful, Stairs, Butterfly, 
+		SpaceInvaders, Pillar, TargetLocked, Platforms};
 	public float patternTimer;
 	spawnPatterns previousPattern, currentPattern;
 	int patternOffset;
@@ -60,7 +61,24 @@ public class ObstacleController : MonoBehaviour {
 								0.3f, 1, 2.5f,			0.1f, 2, 3.0f, 2.0f,	0.3f, 1, 1.0f,
 								0.1f, 2, 1.5f, 0.5f,	0.3f};
 
+	int numPillar = 61;
+	float[] pillarPattern = {	0.1f, 1, -1.5f,		0.1f, 1, 1.0f,		0.1f, 1, -2.0f,		0.1f, 1, 1.5f,
+		0.1f, 1, -1.5f,			0.1f, 1, 1.0f,		0.1f, 1, -2.0f,		0.2f, 1, -1.5f,		0.2f, 2, -2.0f, -0.5f,
+		0.2f, 2, -1.5f, 0.0f,	0.2f, 2, -2.0f, -0.5f,		0.2f, 1, -1.5f,		0.2f, 2, -2.0f, 1.5f,
+		0.2f, 2, -1.5f, 2.0f,	0.2f, 2, -2.0f, 1.5f,		0.2f, 1, -1.5f,		0.2f, 1, -2.0f,		0.2f, 1, -1.5f, 0.1f};
 
+	int numTargetLocked = 59;
+	float[] targetLockedPattern = {	0.2f, 2, -1.5f, 1.5f,	0.2f, 2, 1.0f, -1.0f,	0.2f, 2, 0.5f, -0.5f, 	0.2f, 1, 0.0f,
+		0.5f, 2, 3.0f, -3.0f,	0.1f, 2, 2.5f, -2.5f,	0.1f, 2, 2.0f, -2.0f,	0.1f, 2, 1.5f, -1.5f,	0.1f, 2, 2.0f, -2.0f,
+		0.1f, 2, 2.5f, -2.5f,	0.1f, 2, 3.0f, -3.0f,	0.5f, 1, 0.0f,			0.2f, 2, 0.5f, -0.5f,	0.2f, 2, 1.0f, -1.0f,
+		0.2f, 2, 1.5f, -1.5f,	0.3f};
+
+	int numPlatforms = 56;
+	float[] platformsPattern = {	0.5f, 9, 3.0f, 0.5f, 0.0f, -0.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f,
+									0.5f, 9, 3.0f, 2.5f, 0.0f, -0.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f,
+									0.5f, 9, 3.0f, 2.5f, 2.0f, -0.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f,
+									0.5f, 9, 3.0f, 0.5f, 0.0f, -0.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f,
+									0.5f, 9, 3.0f, 2.5f, 2.0f, 1.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f, 	0.5f};
 
 
 	// Use this for initialization
@@ -87,48 +105,52 @@ public class ObstacleController : MonoBehaviour {
 
 	void setPatternTimer(spawnPatterns currentPattern){
 		switch (currentPattern) {
-		case spawnPatterns.nullPattern:
-			patternTimer = 0.1f;
+		case spawnPatterns.nullPattern: // atm used for testing
+			//patternTimer = pillarPattern[0];
 			break;
 		case spawnPatterns.Basic:
 			patternTimer = basicPattern[0];
-			patternOffset = 1;
 			break;
 		case spawnPatterns.Advanced:
 			patternTimer = advancedPattern[0];
-			patternOffset = 1;
 			break;
 		case spawnPatterns.Painful:
 			patternTimer = painfulPattern[0];
-			patternOffset = 1;
 			break;
 		case spawnPatterns.Stairs:
 			patternTimer = stairsPattern[0];
-			patternOffset = 1;
 			break;
 		case spawnPatterns.Butterfly:
 			patternTimer = butterflyPattern[0];
-			patternOffset = 1;
 			break;
 		case spawnPatterns.SpaceInvaders:
 			patternTimer = spaceInvadersPattern[0];
-			patternOffset = 1;
+			break;
+		case spawnPatterns.Pillar:
+			patternTimer = pillarPattern[0];
+			break;
+		case spawnPatterns.TargetLocked:
+			patternTimer = targetLockedPattern[0];
+			break;
+		case spawnPatterns.Platforms:
+			patternTimer = platformsPattern[0];
 			break;
 		}
+		patternOffset = 1;
 	}
 
 	spawnPatterns newPattern(){
-		spawnPatterns nextPattern = (spawnPatterns)((6 * Random.value) + 1);
+		spawnPatterns nextPattern = (spawnPatterns)((9 * Random.value) + 1);
 
 		switch(nextPattern){
 
 		case spawnPatterns.nullPattern:
 			if(nextPattern == previousPattern){
-				previousPattern = spawnPatterns.Basic;
-				return spawnPatterns.Basic;
+				previousPattern = spawnPatterns.Pillar;
+				return spawnPatterns.Pillar;
 			}
-			previousPattern = spawnPatterns.Advanced;
-			return spawnPatterns.Advanced;
+			previousPattern = spawnPatterns.TargetLocked;
+			return spawnPatterns.TargetLocked;
 
 		case spawnPatterns.Basic:
 			if(nextPattern == previousPattern){
@@ -176,6 +198,30 @@ public class ObstacleController : MonoBehaviour {
 			}
 			previousPattern = spawnPatterns.SpaceInvaders;
 			return spawnPatterns.SpaceInvaders;
+
+		case spawnPatterns.Pillar:
+			if(nextPattern == previousPattern){
+				previousPattern = spawnPatterns.SpaceInvaders;
+				return spawnPatterns.SpaceInvaders;
+			}
+			previousPattern = spawnPatterns.Pillar;
+			return spawnPatterns.Pillar;
+
+		case spawnPatterns.TargetLocked:
+			if(nextPattern == previousPattern){
+				previousPattern = spawnPatterns.Pillar;
+				return spawnPatterns.Pillar;
+			}
+			previousPattern = spawnPatterns.TargetLocked;
+			return spawnPatterns.TargetLocked;
+
+		case spawnPatterns.Platforms:
+			if(nextPattern == previousPattern){
+				previousPattern = spawnPatterns.TargetLocked;
+				return spawnPatterns.TargetLocked;
+			}
+			previousPattern = spawnPatterns.Platforms;
+			return spawnPatterns.Platforms;
 
 		}
 		return 0;
@@ -273,6 +319,48 @@ public class ObstacleController : MonoBehaviour {
 					}
 					patternOffset += i + 1;
 					patternTimer = spaceInvadersPattern[patternOffset];
+					patternOffset++;
+				}
+			}
+			break;
+
+		case spawnPatterns.Pillar:
+			if(patternOffset < numPillar){
+				if(patternTimer < 0){
+					int i = 0;
+					for(i = 0; i < pillarPattern[patternOffset]; i++){
+						spawnObstacle(pillarPattern[patternOffset + i + 1]);
+					}
+					patternOffset += i + 1;
+					patternTimer = pillarPattern[patternOffset];
+					patternOffset++;
+				}
+			}
+			break;
+
+		case spawnPatterns.TargetLocked:
+			if(patternOffset < numTargetLocked){
+				if(patternTimer < 0){
+					int i = 0;
+					for(i = 0; i < targetLockedPattern[patternOffset]; i++){
+						spawnObstacle(targetLockedPattern[patternOffset + i + 1]);
+					}
+					patternOffset += i + 1;
+					patternTimer = targetLockedPattern[patternOffset];
+					patternOffset++;
+				}
+			}
+			break;
+
+		case spawnPatterns.Platforms:
+			if(patternOffset < numPlatforms){
+				if(patternTimer < 0){
+					int i = 0;
+					for(i = 0; i < platformsPattern[patternOffset]; i++){
+						spawnObstacle(platformsPattern[patternOffset + i + 1]);
+					}
+					patternOffset += i + 1;
+					patternTimer = platformsPattern[patternOffset];
 					patternOffset++;
 				}
 			}

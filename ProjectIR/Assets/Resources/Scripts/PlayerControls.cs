@@ -22,7 +22,7 @@ public class Player
 
 	public Player()
 	{
-		scheme = (int)cScheme.accel;
+		scheme = (int)cScheme.moveScale;
 		speed = 0.0375f;
 		accelSpeed = 0;
 		maxSpeed = 10;
@@ -96,7 +96,7 @@ public class PlayerControls : MonoBehaviour
 
 		if (timer >= 5) 
 		{
-			player.scheme = player.GetControlScheme (player.scheme, ref player.accelSpeed, ref player.telegraphTime );
+			//player.scheme = player.GetControlScheme (player.scheme, ref player.accelSpeed, ref player.telegraphTime );
 
 			timer = 0;
 		}
@@ -349,7 +349,7 @@ public class PlayerControls : MonoBehaviour
 			player.speed = player.minSpeed + 1;
 			player.accelSpeed = player.minSpeed + 1;
 		}
-		Debug.Log (player.telegraphTime);
+		//Debug.Log (player.telegraphTime);
 	}
 }
 
