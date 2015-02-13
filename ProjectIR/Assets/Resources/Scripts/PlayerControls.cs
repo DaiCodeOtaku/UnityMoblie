@@ -17,34 +17,29 @@ public class Player
 	public float maxSpeed; // Highest positive speed the player can go to in accel scheme
 	public float minSpeed; // Lowest etc. 
 	public float telegraphTime; // Grace period before the control scheme changes
-	float telegraphLength; // Length of time for the grace period
+	public bool teleCheck; // Checks if the grace period is active
+	public bool startGetScheme; // Used to tell the control scheme function to get a new control scheme 
 
 
 	public Player()
 	{
 		scheme = (int)cScheme.moveScale;
 		speed = 0.0375f;
-		accelSpeed = 0;
+		accelSpeed = 0; 
 		maxSpeed = 10;
 		minSpeed = -10;
 		telegraphTime = 0.0f;
-		telegraphLength = 3.0f;
 	}
 
-	public int GetControlScheme(int scheme, ref float accelSpeed, ref float telegraphTime)
+	public int GetControlScheme(int scheme, ref float accelSpeed, ref float telegraphTime, ref bool getScheme)
 	{
 		int lastScheme = scheme;
 
 			if (Random.value <= 0.85f) 
 			{
-				while (scheme == lastScheme)
+				if (startGetScheme)
 				{
-					if (telegraphTime < telegraphLength)
-					{
-						// do some telegraph wizardry here, change the colours of things
-						telegraphTime += Time.deltaTime;
-					}
-					else if (telegraphTime >= telegraphLength)
+					while (scheme == lastScheme) 
 					{
 						// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
 						//{
@@ -60,6 +55,8 @@ public class Player
 						if (scheme != lastScheme)
 						{
 							telegraphTime = 0;
+						getScheme = false;
+
 						}
 					}
 				}
@@ -67,6 +64,7 @@ public class Player
 			// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
 				Debug.Log(scheme);
 			}
+
 		return scheme;
 	}
 }
@@ -79,6 +77,7 @@ public class PlayerControls : MonoBehaviour
 	float moveThreshold = 0.2f;
 	float arrowTop = (Screen.height / 8) + 0.25f;
 	float arrowBottom = (Screen.height / 20);
+	bool activateTimer = true;
 
 
 	// Use this for initialization
@@ -94,13 +93,24 @@ public class PlayerControls : MonoBehaviour
 		float normalisedSpeed = player.speed * Time.deltaTime;
 		timer += Time.deltaTime;
 
-		if (timer >= 5) 
+		if (timer >= 5 && activateTimer) 
 		{
-			//player.scheme = player.GetControlScheme (player.scheme, ref player.accelSpeed, ref player.telegraphTime );
-
+			player.scheme = player.GetControlScheme (player.scheme, ref player.accelSpeed, ref player.telegraphTime, ref player.startGetScheme );
+			activateTimer = true;
 			timer = 0;
+			player.teleCheck = true;
 		}
 
+		if (player.teleCheck) 
+		{
+			player.telegraphTime += Time.deltaTime;
+			if(player.telegraphTime >= 3)
+			{
+				player.startGetScheme = true;
+				player.teleCheck = false;
+				activateTimer = true;
+			}
+		}
 
 
 		Vector3 mousePos = new Vector3 (0, 0, 0);
@@ -264,7 +274,7 @@ public class PlayerControls : MonoBehaviour
 					{
 						if(checkSOD == false)
 						{
-							player.accelSpeed = -0.01f;
+							player.accelSpeed = 0.00f;
 							checkSOD = true;
 						}
 						else
@@ -340,16 +350,13 @@ public class PlayerControls : MonoBehaviour
 
 		if (player.accelSpeed >= player.maxSpeed) 
 		{
-			player.speed = player.maxSpeed - 1;
 			player.accelSpeed = player.maxSpeed - 1;
 		}
 		if (player.accelSpeed <= player.minSpeed) 
 		{
-			
-			player.speed = player.minSpeed + 1;
 			player.accelSpeed = player.minSpeed + 1;
 		}
-		//Debug.Log (player.telegraphTime);
+		Debug.Log (player.scheme);
 	}
 }
 

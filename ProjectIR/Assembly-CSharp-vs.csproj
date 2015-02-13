@@ -46,11 +46,21 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\AndroidButtonHandel.cs" />
+     <Compile Include="Assets\Resources\Scripts\AndroidButtonHandel.cs" />
+     <Compile Include="Assets\Resources\Scripts\ArrowControl.cs" />
+     <Compile Include="Assets\Resources\Scripts\ControlText.cs" />
+     <Compile Include="Assets\Resources\Scripts\GameOverController.cs" />
+     <Compile Include="Assets\Resources\Scripts\Game_Over.cs" />
+     <Compile Include="Assets\Resources\Scripts\InverseControl.cs" />
+     <Compile Include="Assets\Resources\Scripts\NEW.cs" />
      <Compile Include="Assets\Resources\Scripts\Obstacle.cs" />
      <Compile Include="Assets\Resources\Scripts\ObstacleController.cs" />
      <Compile Include="Assets\Resources\Scripts\PlayerControls.cs" />
+     <Compile Include="Assets\Resources\Scripts\QuitCon.cs" />
      <Compile Include="Assets\Resources\Scripts\ScoreController.cs" />
+     <Compile Include="Assets\Resources\Scripts\UiControl.cs" />
+     <Compile Include="Assets\Resources\Scripts\UiScore.cs" />
+     <Compile Include="Assets\Resources\Scripts\XML.cs" />
      <None Include="Assets\Scenes\lolololol.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>

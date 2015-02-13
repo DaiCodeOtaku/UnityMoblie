@@ -9,6 +9,7 @@ public class ObstacleController : MonoBehaviour {
 	enum spawnPatterns {nullPattern = 0, Basic, Advanced, Painful, Stairs, Butterfly, 
 		SpaceInvaders, Pillar, TargetLocked, Platforms, Spears};
 	public float patternTimer;
+	public bool GO;
 	spawnPatterns previousPattern, currentPattern;
 	int patternOffset;
 	float spawnHeight, spawnDepth;
@@ -106,6 +107,7 @@ public class ObstacleController : MonoBehaviour {
 		patternOffset = 0;
 		spawnHeight = 7.0f;
 		spawnDepth = -0.5f;
+		GO = false;
 	}
 	
 	// Update is called once per frame
