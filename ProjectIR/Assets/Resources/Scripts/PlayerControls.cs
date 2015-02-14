@@ -23,7 +23,7 @@ public class Player
 
 	public Player()
 	{
-		scheme = (int)cScheme.moveScale;
+		scheme = (int)cScheme.arrowsInv;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -43,26 +43,26 @@ public class Player
 					{
 						// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
 						//{
-							scheme = Random.Range (0, 11);
+							scheme = Random.Range (0, 10);
 							accelSpeed = 0;
 						/*}
 						else
 						{
-							scheme = Random.Range (0, 9);
+							scheme = Random.Range (0, 8);
 							accelSpeed = 0;
 						}*/
 
 						if (scheme != lastScheme)
 						{
 							telegraphTime = 0;
-						getScheme = false;
+							getScheme = false;
+						// DisplayScheme(); A function from UI that displays what control scheme is being used
+						// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
 
 						}
 					}
 				}
-			// DisplayScheme(); A function from UI that displays what control scheme is being used
-			// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
-				Debug.Log(scheme);
+
 			}
 
 		return scheme;
@@ -322,7 +322,7 @@ public class PlayerControls : MonoBehaviour
 			case cScheme.arrowsInv:
 				if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 4))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
 				{	
-					this.transform.Translate (normalisedSpeed * 150.0f, 0, 0);
+					this.transform.Translate (-normalisedSpeed * 150.0f, 0, 0);
 				} 
 				else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 4)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
 				{	
@@ -356,7 +356,6 @@ public class PlayerControls : MonoBehaviour
 		{
 			player.accelSpeed = player.minSpeed + 1;
 		}
-		Debug.Log (player.scheme);
 	}
 }
 
