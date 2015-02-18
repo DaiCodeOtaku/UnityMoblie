@@ -356,7 +356,14 @@ public class PlayerControls : MonoBehaviour
 		{
 			player.accelSpeed = player.minSpeed + 1;
 		}
-		Debug.Log (player.scheme);
+		//Debug.Log (player.scheme);
+	}
+
+	void OnCollisionEnter() {
+		if(GameObject.FindObjectOfType<ObstacleController>().GO == false){
+			GameObject.FindObjectOfType<UiControl>().GameOver();
+			GameObject.FindObjectOfType<ObstacleController>().GO = true;
+		}
 	}
 }
 
