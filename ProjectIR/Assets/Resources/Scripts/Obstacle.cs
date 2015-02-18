@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Obstacle : MonoBehaviour {
@@ -6,7 +6,7 @@ public class Obstacle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		speed = 7;
+		speed = 5.5f;
 	}
 	
 	// Update is called once per frame
@@ -16,5 +16,9 @@ public class Obstacle : MonoBehaviour {
 			Destroy(this.gameObject);
 			Destroy(this);
 		}
+	}
+
+	void OnCollisionEnter() {
+		Destroy(this.gameObject);
 	}
 }

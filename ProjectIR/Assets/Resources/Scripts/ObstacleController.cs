@@ -6,92 +6,210 @@ using System.Collections;
 public class ObstacleController : MonoBehaviour {
 
 	public GameObject ObstacleTemplate;
-	enum spawnPatterns {nullPattern, Basic, Advanced, Painful};
+	enum spawnPatterns {nullPattern = 0, Basic, Advanced, Painful, Stairs, Butterfly, 
+		SpaceInvaders, Pillar, TargetLocked, Platforms, Spears};
 	public float patternTimer;
+	public static bool GO = false;
 	spawnPatterns previousPattern, currentPattern;
-	int numObstacles;
+	int patternOffset;
 	float spawnHeight, spawnDepth;
+
+							  //time before, //num of blocks, //block offset
+
+	int numBasic = 41;
+	float[] basicPattern = {	0.2f, 1, 1.0f,			0.2f, 1, 2.0f,			0.2f, 1, 3.0f, 				
+								0.2f, 1, -0.5f,			0.2f, 1, -1.5f,			0.2f, 1, -2.5f, 			
+								0.2f, 1, -3.0f,			0.3f, 1, -0.5f,			0.2f, 1, 0.5f,				
+								0.2f, 1, 1.5f,			0.2f, 2, 1.5f, -1.5f,	0.2f, 2, 1.5f, -1.5f,	
+								0.2f, 1, -1.5f,			0.3f};
+
+	int numAdvanced = 49;
+	float[] advancedPattern = {	0.1f, 1, -1.5f,			0.2f, 1, -1.5f,			0.2f, 1, -1.5f,			
+								0.2f, 1, 0.0f,			0.2f, 1, 0.0f,			0.2f, 1, 0.0f,			
+								0.2f, 1, 1.0f,			0.2f, 1, -2.0f,			0.2f, 1, 0.5f,			
+								0.2f, 1, -0.5f,			0.2f, 1, -2.5f,			0.2f, 1, 2.5f,			
+								0.2f, 1, 0.0f,			0.2f, 1, -1.0f, 		0.2f, 1, -2.0f,			
+								0.1f, 1, 2.0f,			0.0f};											
+
+	int numPainful = 75;
+	float[] painfulPattern = {	0.1f, 2, 0.0f, 2.0f,	0.1f, 1, -0.5f, 		0.1f, 1, 0.5f,			
+								0.1f, 1, -1.0f, 		0.1f, 1, 1.0f,			0.1f, 1, -1.5f,			
+								0.1f, 1, 1.5f,			0.2f, 2, 2.0f, 3.0f,	0.1f, 1, 2.5f,			
+								0.1f, 1, -3.0f,			0.2f, 2, -2.5f, 1.5f,	0.2f, 2, -2.0f, 1.0f,	
+								0.2f, 2, -1.5f, 0.5f, 	0.1f, 1, 3.0f,			0.1f, 1, 2.5f,			
+								0.1f, 1, 2.0f, 			0.1f, 1, 1.5f, 			0.1f, 1, 1.0f,			
+								0.1f, 1, -1.0f, 		0.1f, 1, -1.5f, 		0.1f, 1, -2.0f,			
+								0.1f, 1, -2.5f, 		0.1f, 1, 3.0f, 			0.0f};					
+
+	int numStairs = 37;
+	float[] stairsPattern = {	0.1f, 1, -2.0f,			0.2f, 1, -1.0f,			0.2f, 1, 0.0f,
+								0.4f, 1, 2.0f,			0.2f, 1, 1.0f,			0.2f, 1, 0.0f,
+								0.2f, 1, -1.0f,			0.4f, 1, -3.0f,			0.2f, 1, -2.0f,
+								0.2f, 1, -1.0f,			0.4f, 1, 1.0f,			0.2f, 1, 2.0f,
+								0.1f};
+
+	int numButterfly = 49;
+	float[] butterflyPattern = {0.1f, 2, 3.0f, -3.0f,	0.2f, 2, 2.5f, -2.5f,	0.2f, 4, 3.0f, -3.0f, 1.5f, -1.5f,
+					0.2f, 4, 2.5f, -2.5f, 1.0f, -1.0f,	0.2f, 2, 1.5f, -1.5f,		0.2f, 2, 1.0f,-1.0f,
+								0.6f, 1, 0.0f,		0.2f, 3, 0.0f, 1.0f, -1.0f,	0.2f, 2, 1.5f, -1.5f,
+								0.2f, 2, 1.0f, -1.0f,	0.2f, 2, 1.5f, -1.5f, 	0.5f};
+
+	int numSpaceInvaders = 57;
+	float[] spaceInvadersPattern = {	0.2f, 5, 3.0f, -3.0f, 2.0f, -2.0f, 0.0f, 		0.1f, 2, 2.5f, -2.5f,
+								0.5f, 2, 1.0f, -1.0f, 	0.1f, 4, 0.5f, -0.5f, 1.5f, -1.5f,
+								0.3f, 1, 2.3f, 			0.1f, 2, 3.0f, 2.0f,	0.2f, 1, -2.5f,
+								0.1f, 2, -3.0f, -2.0f, 	0.3f, 1, -0.5f,			0.1f, 2, 0.0f, -1.0f,
+								0.3f, 1, 2.5f,			0.1f, 2, 3.0f, 2.0f,	0.3f, 1, 1.0f,
+								0.1f, 2, 1.5f, 0.5f,	0.3f};
+
+	int numPillar = 61;
+	float[] pillarPattern = {	0.1f, 1, -1.5f,		0.1f, 1, 1.0f,		0.1f, 1, -2.0f,		0.1f, 1, 1.5f,
+		0.1f, 1, -1.5f,			0.1f, 1, 1.0f,		0.1f, 1, -2.0f,		0.2f, 1, -1.5f,		0.2f, 2, -2.0f, -0.5f,
+		0.2f, 2, -1.5f, 0.0f,	0.2f, 2, -2.0f, -0.5f,		0.2f, 1, -1.5f,		0.2f, 2, -2.0f, 1.5f,
+		0.2f, 2, -1.5f, 2.0f,	0.2f, 2, -2.0f, 1.5f,		0.2f, 1, -1.5f,		0.2f, 1, -2.0f,		0.2f, 1, -1.5f, 0.1f};
+
+	int numTargetLocked = 59;
+	float[] targetLockedPattern = {	0.2f, 2, -1.5f, 1.5f,	0.2f, 2, 1.0f, -1.0f,	0.2f, 2, 0.5f, -0.5f, 	0.2f, 1, 0.0f,
+		0.5f, 2, 3.0f, -3.0f,	0.1f, 2, 2.5f, -2.5f,	0.1f, 2, 2.0f, -2.0f,	0.1f, 2, 1.5f, -1.5f,	0.1f, 2, 2.0f, -2.0f,
+		0.1f, 2, 2.5f, -2.5f,	0.1f, 2, 3.0f, -3.0f,	0.5f, 1, 0.0f,			0.2f, 2, 0.5f, -0.5f,	0.2f, 2, 1.0f, -1.0f,
+		0.2f, 2, 1.5f, -1.5f,	0.3f};
+
+	int numPlatforms = 56;
+	float[] platformsPattern = {	0.5f, 9, 3.0f, 0.5f, 0.0f, -0.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f,
+									0.5f, 9, 3.0f, 2.5f, 0.0f, -0.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f,
+									0.5f, 9, 3.0f, 2.5f, 2.0f, -0.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f,
+									0.5f, 9, 3.0f, 0.5f, 0.0f, -0.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f,
+									0.5f, 9, 3.0f, 2.5f, 2.0f, 1.5f, -1.0f, -1.5f, -2.0f, -2.5f, -3.0f, 	0.5f};
+
+	int numSpears = 289;
+	float[] spearsPattern = {		0.1f, 1, -2.5f,		0.1f, 1, -2.5f, 	0.1f, 1, -2.5f, 	0.1f, 2, 1.5f, -2.5f,
+		0.1f, 2, 1.5f, -2.5f,		0.1f, 2, 1.5f, -2.5f,		0.1f, 2, 1.5f, -2.5f, 		0.1f, 2, 1.5f, -2.5f,
+		0.1f, 1, 1.5f,		0.1f, 1, 1.5f,		0.1f, 2, 1.5f, -1.5f, 		0.1f, 1, -1.5f, 	0.1f, 1, -1.5f,
+		0.1f, 1, -1.5f,		0.1f, 1, -1.5f,		0.1f, 1, -1.5f,		0.1f, 1, -1.5f,		0.1f, 1, -1.5f,		0.1f, 1, 1.0f,
+		0.1f, 1, 1.0f, 		0.1f, 1, 1.0f,		0.1f, 1, 1.0f,		0.1f, 1, 1.0f,		0.1f, 1, 1.0f,		0.1f, 1, 1.0f,
+		0.1f, 1, 1.0f,		0.3f, 1, -0.5f, 		0.1f, 1, -0.5f,		0.1f, 1, -0.5f, 	0.1f, 1, -0.5f,		0.1f, 1, -0.5f,
+		0.1f, 1, -0.5f, 	0.1f, 2, -0.5f, 2.5f,		0.1f, 2, -0.5f, 2.5f,		0.1f, 1, 2.5f,			0.1f, 1, 2.5f,
+		0.1f, 1, 2.5f,		0.1f, 2, 2.5f, -2.5f, 		0.1f, 2, 2.5f, -2.5f,		0.1f, 2, 2.5f, -2.5f,	0.1f, 1, -2.5f,
+		0.1f, 1, -2.5f,		0.1f, 1, -2.5f,		0.1f, 1, -2.5f,		0.1f, 1, -2.5f,		0.4f, 1, 1.5f, 		0.1f, 2, 1.5f, -1.0f,
+		0.1f, 2, 1.5f, -1.0f,		0.1f, 2, 1.5f, -1.0f,		0.1f, 2, 1.5f, -1.0f,		0.1f, 2, 1.5f, -1.0f,
+		0.1f, 2, 1.5f, -1.0f,		0.1f, 2, 1.5f, -1.0f,		0.1f, 1, -1.0f,		0.3f, 1, 0.5f,			0.1f, 1, 0.5f,
+		0.1f, 1, 0.5f,		0.1f, 2, 0.5f, -2.5f,		0.1f, 2, 0.5f, -2.5f,		0.1f, 2, 0.5f, -2.5f,	0.1f, 2, 0.5f, -2.5f,
+		0.1f, 2, 0.5f, -2.5f,		0.1f, 1,  -2.5f,		0.1f, 1,  -2.5f,		0.1f, 1,  -2.5f,		0.4f, 2, 2.0f, -1.0f,
+		0.1f, 2, 2.0f, -1.0f,		0.1f, 2, 2.0f, -1.0f,		0.1f, 2, 2.0f, -1.0f,		0.1f, 2, 2.0f, -1.0f,		0.1f, 2, 2.0f, -1.0f,
+		0.1f, 2, 2.0f, -1.0f,		0.1f, 2, 2.0f, -1.0f,		0.4f, 1, -2.0f,		0.1f, 1, -2.0f,			0.1f, 1, -2.0f,
+		0.1f, 2, -2.0f, 0.0f,		0.1f, 2, -2.0f, 0.0f,		0.1f, 2, -2.0f, 0.0f,		0.1f, 2, -2.0f, 0.0f,
+		0.1f, 2, -2.0f, 0.0f,		0.1f, 1, 0.0f,		0.1f, 1, 0.0f,		0.1f, 1, 0.0f,		0.3f};
 
 	// Use this for initialization
 	void Start () {
 		patternTimer = 2;
 		previousPattern = 0;
+		patternOffset = 0;
 		spawnHeight = 7.0f;
 		spawnDepth = -0.5f;
+		//GO = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		patternTimer -= Time.deltaTime;
 
+		executePattern(currentPattern);
+
 		if (patternTimer < 0) {
-			currentPattern = newPattern(previousPattern);
+			currentPattern = newPattern();
 			Debug.Log(currentPattern);
-			setPatternTimer(currentPattern);
 		}
-
-		executePattern(currentPattern);		
-
-		/*if(spawnObstacle()){
-			//Random.Range(-3.1f, 3.1f);
-			//ObstacleTemplate.transform.Translate(new Vector3(10, 0, 0));
-			ObstacleTemplate.transform.Translate(new Vector3(Random.Range(-3.1f, 3.1f), 7, -0.5f));
-			GameObject.Instantiate((GameObject)ObstacleTemplate);
-			resetObstacle();
-		}*/
-
 	}
 
-	void setPatternTimer(spawnPatterns currentPattern){
-		switch (currentPattern) {
+	spawnPatterns setPatternTimer(spawnPatterns CurrentPattern){
+		switch (CurrentPattern) {
 		case spawnPatterns.nullPattern:
-			patternTimer = 1;
 			break;
 		case spawnPatterns.Basic:
+			patternTimer = basicPattern[0];
+			break;
 		case spawnPatterns.Advanced:
-		default:
-			patternTimer = 3;
+			patternTimer = advancedPattern[0];
+			break;
+		case spawnPatterns.Painful:
+			patternTimer = painfulPattern[0];
+			break;
+		case spawnPatterns.Stairs:
+			patternTimer = stairsPattern[0];
+			break;
+		case spawnPatterns.Butterfly:
+			patternTimer = butterflyPattern[0];
+			break;
+		case spawnPatterns.SpaceInvaders:
+			patternTimer = spaceInvadersPattern[0];
+			break;
+		case spawnPatterns.Pillar:
+			patternTimer = pillarPattern[0];
+			break;
+		case spawnPatterns.TargetLocked:
+			patternTimer = targetLockedPattern[0];
+			break;
+		case spawnPatterns.Platforms:
+			patternTimer = platformsPattern[0];
+			break;
+		case spawnPatterns.Spears:
+			patternTimer = spearsPattern[0];
 			break;
 		}
+		patternOffset = 1;
+		return CurrentPattern;
 	}
 
-	bool spawnObstacle(){
-		if ((Random.value * 1000.0f) <= 100) {
-			return true;
-		}
-		return false;
-	}
+	spawnPatterns newPattern(){
+		spawnPatterns nextPattern = (spawnPatterns)((10 * Random.value) + 1);
 
-	spawnPatterns newPattern(spawnPatterns previousPattern){
-		if(previousPattern != spawnPatterns.nullPattern){
-			return spawnPatterns.nullPattern;
-		}
-		spawnPatterns nextPattern = (spawnPatterns)(3 * Random.value);
 		switch(nextPattern){
+
 		case spawnPatterns.nullPattern:
-			if(nextPattern == previousPattern){
-				numObstacles = 15;
-				return spawnPatterns.Basic;
-			}
-			return spawnPatterns.nullPattern;
+			return setPatternTimer(setUpPattern(spawnPatterns.TargetLocked, spawnPatterns.Pillar));
 
 		case spawnPatterns.Basic:
-			if(nextPattern == previousPattern){
-				numObstacles = 16;
-				return spawnPatterns.Advanced;
-			}
-			numObstacles = 15;
-			return spawnPatterns.Basic;
+			return setPatternTimer(setUpPattern(spawnPatterns.Basic, spawnPatterns.Advanced));
 
 		case spawnPatterns.Advanced:
-			if(nextPattern == previousPattern){
-				numObstacles = 15;
-				return spawnPatterns.Basic;
-			}
-			numObstacles = 16;
-			return spawnPatterns.Advanced;
+			return setPatternTimer(setUpPattern(spawnPatterns.Advanced, spawnPatterns.Basic));
+
+		case spawnPatterns.Painful:
+			return setPatternTimer(setUpPattern(spawnPatterns.Painful, spawnPatterns.Advanced));
+
+		case spawnPatterns.Stairs:
+			return setPatternTimer(setUpPattern(spawnPatterns.Stairs, spawnPatterns.Painful));
+		
+		case spawnPatterns.Butterfly:
+			return setPatternTimer(setUpPattern(spawnPatterns.Butterfly, spawnPatterns.Stairs));
+
+		case spawnPatterns.SpaceInvaders:
+			return setPatternTimer(setUpPattern(spawnPatterns.SpaceInvaders, spawnPatterns.Butterfly));
+
+		case spawnPatterns.Pillar:
+			return setPatternTimer(setUpPattern(spawnPatterns.Pillar, spawnPatterns.SpaceInvaders));
+
+		case spawnPatterns.TargetLocked:
+			return setPatternTimer(setUpPattern(spawnPatterns.TargetLocked, spawnPatterns.Pillar));
+
+		case spawnPatterns.Platforms:
+			return setPatternTimer(setUpPattern(spawnPatterns.Platforms, spawnPatterns.TargetLocked));
+
+		case spawnPatterns.Spears:
+			return setPatternTimer(setUpPattern(spawnPatterns.Spears, spawnPatterns.Platforms));
+
 		}
 		return 0;
+	}
+
+	spawnPatterns setUpPattern(spawnPatterns set, spawnPatterns backUp){
+		if(set == previousPattern){
+			previousPattern = backUp;
+			return backUp;
+		}
+		previousPattern = set;
+		return set;
 	}
 
 	void resetObstacle(){
@@ -109,118 +227,59 @@ public class ObstacleController : MonoBehaviour {
 		case spawnPatterns.nullPattern:
 			break;
 		case spawnPatterns.Basic:
-			/*if(timeTest(2.9f, 16)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else*/ if(timeTest(2.8f, 15)){
-				spawnObstacle(1.0f);
-				numObstacles--;
-			} else if(timeTest(2.6f, 14)){
-				spawnObstacle(2.0f);
-				numObstacles--;
-			} else if(timeTest(2.4f, 13)){
-				spawnObstacle(3.0f);
-				numObstacles--;
-			} else if(timeTest(2.2f, 12)){
-				spawnObstacle(-0.5f);
-				numObstacles--;
-			} else if(timeTest(2.0f, 11)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(1.8f, 10)){
-				spawnObstacle(-2.5f);
-				numObstacles--;
-			} else if(timeTest(1.6f, 9)){
-				spawnObstacle(-3.0f);
-				numObstacles--;
-			} else if(timeTest(1.3f, 8)){
-				spawnObstacle(-0.5f);
-				numObstacles--;
-			} else if(timeTest(1.1f, 7)){
-				spawnObstacle(0.5f);
-				numObstacles--;
-			} else if(timeTest(0.9f, 6)){
-				spawnObstacle(1.5f);
-				numObstacles--;
-			} else if(timeTest(0.7f, 5)){
-				spawnObstacle(1.5f);
-				numObstacles--;
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(0.5f, 3)){
-				spawnObstacle(1.5f);
-				numObstacles--;
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(0.3f, 1)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			}
+			executePattern(basicPattern, numBasic);
 			break;
 		case spawnPatterns.Advanced:
-			if(timeTest(2.9f, 16)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(2.7f, 15)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(2.5f, 14)){
-				spawnObstacle(-1.5f);
-				numObstacles--;
-			} else if(timeTest(2.3f, 13)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else if(timeTest(2.1f, 12)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else if(timeTest(1.9f, 11)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else if(timeTest(1.7f, 10)){
-				spawnObstacle(1.0f);
-				numObstacles--;
-			} else if(timeTest(1.5f, 9)){
-				spawnObstacle(-2.0f);
-				numObstacles--;
-			} else if(timeTest(1.3f, 8)){
-				spawnObstacle(0.5f);
-				numObstacles--;
-			} else if(timeTest(1.1f, 7)){
-				spawnObstacle(-0.5f);
-				numObstacles--;
-			} else if(timeTest(0.9f, 6)){
-				spawnObstacle(-2.5f);
-				numObstacles--;
-			} else if(timeTest(0.7f, 5)){
-				spawnObstacle(2.5f);
-				numObstacles--;
-			} else if(timeTest(0.5f, 4)){
-				spawnObstacle(0.0f);
-				numObstacles--;
-			} else if(timeTest(0.3f, 3)){
-				spawnObstacle(-1.0f);
-				numObstacles--;
-			} else if(timeTest(0.1f, 2)){
-				spawnObstacle(-2.0f);
-				numObstacles--;
-			} else if(timeTest(0.0f, 1)){
-				spawnObstacle(2.0f);
-				numObstacles--;
-			}
+			executePattern(advancedPattern, numAdvanced);
 			break;
 
 		case spawnPatterns.Painful:
-
+			executePattern(painfulPattern, numPainful);
 			break;
+
+		case spawnPatterns.Stairs:
+			executePattern(stairsPattern, numStairs);
+			break;
+
+		case spawnPatterns.Butterfly:
+			executePattern(butterflyPattern, numButterfly);
+			break;
+
+		case spawnPatterns.SpaceInvaders:
+			executePattern(spaceInvadersPattern, numSpaceInvaders);
+			break;
+
+		case spawnPatterns.Pillar:
+			executePattern(pillarPattern, numPillar);
+			break;
+
+		case spawnPatterns.TargetLocked:
+			executePattern(targetLockedPattern, numTargetLocked);
+			break;
+
+		case spawnPatterns.Platforms:
+			executePattern(platformsPattern, numPlatforms);
+			break;
+
+		case spawnPatterns.Spears:
+			executePattern(spearsPattern, numSpears);
+			break;
+
 		}
 	}
 
-
-	bool timeTest(float time, int ObstacleNumber){
-		if((patternTimer > time) && (patternTimer < time + 0.1f) && (numObstacles == ObstacleNumber)){
-			return true;
+	void executePattern(float[] Pattern, int NumPattern){
+		if(patternOffset < NumPattern){
+			if(patternTimer < 0){
+				int i = 0;
+				for(i = 0; i < Pattern[patternOffset]; i++){
+					spawnObstacle(Pattern[patternOffset + i + 1]);
+				}
+				patternOffset += i + 1;
+				patternTimer = Pattern[patternOffset];
+				patternOffset++;
+			}
 		}
-		return false;
 	}
 
 }

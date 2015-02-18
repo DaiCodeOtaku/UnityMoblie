@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf1e1455c4feef4c95d130fa05c8fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObstacleTemplate: {fileID: 189406, guid: fbf0d5e686028b4429de615a1bd30a71, type: 2}
+  ObstacleTemplate: {fileID: 173520, guid: 02f69f785a683854f97e0644ecc7999b, type: 2}
   patternTimer: 0
 --- !u!1001 &100100000
 Prefab:
