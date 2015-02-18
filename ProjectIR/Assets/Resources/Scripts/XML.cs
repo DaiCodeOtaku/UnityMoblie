@@ -3,42 +3,58 @@ using System.Collections;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-public class XML : MonoBehaviour { 
+public class XML : MonoBehaviour {
+
+
+
+    string filepath;
+    string file;
+    static string final;
+    void Start()
+    {
+        file = "/info.xml";
+        filepath = Application.persistentDataPath;
+        final = filepath + file;
+      //  FirstTime();
+    }
+ 
 
      public void UpdateScore(int Score)
     {
         ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
-        APP1 = APP1.Load("Info.xml");
+        APP1 = APP1.Load(final);
         APP2 = APP1;
         APP2.HighScore = Score;
-        APP2.save("Info.xml");
+        APP2.save(final);
+         
+
     }
 
 	static public void UpdateControl(int Control)
     {
         ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
-        APP1 = APP1.Load("Info.xml");
+        APP1 = APP1.Load(final);
         APP2 = APP1;
         APP2.Control = Control;
-        APP2.save("Info.xml");
+        APP2.save(final);
     }
 
   	static public void UpdateFirstPlay(int First)
     {
         ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
-        APP1 = APP1.Load("Info.xml");
+        APP1 = APP1.Load(final);
         APP2 = APP1;
         APP2.FirstTimePlay = First;
-        APP2.save("Info.xml");
+        APP2.save(final);
     }
 
 	static public int ControlScheme()
         {
             ApplicationData APP1 = new ApplicationData();
-            APP1 = APP1.Load("Info.xml");
+            APP1 = APP1.Load(final);
             return APP1.Control;
         }
 
@@ -46,10 +62,18 @@ public class XML : MonoBehaviour {
   	{
       int temp;
       ApplicationData APP1 = new ApplicationData();
-      APP1 = APP1.Load("Info.xml");
+      APP1 = APP1.Load(final);
       temp = APP1.HighScore;
       return temp;     
   	}
+
+     public void FirstTime()
+    {
+        ApplicationData APP1 = new ApplicationData();
+        APP1 = APP1.Load(final);
+    }
+
+
 
     public class ApplicationData
     {
@@ -61,7 +85,7 @@ public class XML : MonoBehaviour {
       	public void save(string FileName)
         {
 
-            using (var Stream = new FileStream(FileName, FileMode.Create))
+            using (var Stream = new FileStream(FileName, FileMode.OpenOrCreate))
             {
                 XmlSerializer XML = new XmlSerializer(typeof(ApplicationData));
                 XML.Serialize(Stream, this);
@@ -72,7 +96,7 @@ public class XML : MonoBehaviour {
 
       	public ApplicationData Load(string FileName)
       	{
-          	using (var Stream = new FileStream(FileName, FileMode.Open))
+            using (var Stream = new FileStream(FileName, FileMode.OpenOrCreate))
           	{
               	XmlSerializer XML = new XmlSerializer(typeof(ApplicationData));
             //  Debug.Log("Open");

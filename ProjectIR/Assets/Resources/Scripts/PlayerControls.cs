@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-enum cScheme {moveScale, arrows, accel, SOD, moveScaleInv, arrowsInv, accelInv, SODInv, tiltInv, tilt};
+public enum cScheme {moveScale, arrows, accel, SOD, moveScaleInv, arrowsInv, accelInv, SODInv, tiltInv, tilt};
 // moveScale = Player moves at varying speed depending on how extreme their button presses are either side of middle
 // arrows = Two arrows appear on screen for the player to click to move at a contstant speed in the chosen direction
 // accel = Accelerated movement, the longer the player holds, the faster they move. Let go and they slow down
@@ -14,57 +14,87 @@ public class Player
 {
 	public float speed; // Constant speed
 	public float accelSpeed; // Accelerated speed, cumulative
-	public int scheme;  // What control schele is being used
+	public cScheme scheme;  // What control schele is being used
 	public float maxSpeed; // Highest positive speed the player can go to in accel scheme
 	public float minSpeed; // Lowest etc. 
 	public float telegraphTime; // Grace period before the control scheme changes
 	public bool teleCheck; // Checks if the grace period is active
 	public bool startGetScheme; // Used to tell the control scheme function to get a new control scheme 
-
+	
+	public UiControl UIControl;
+	public cScheme lastScheme;
 
 	public Player()
 	{
-		scheme = (int)cScheme.moveScaleInv;
+		scheme = cScheme.moveScale;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
 		minSpeed = -10;
 		telegraphTime = 0.0f;
+		lastScheme = (cScheme)(-1);
+		startGetScheme = false;
 	}
 
-	public int GetControlScheme(int scheme, ref float accelSpeed, ref float telegraphTime, ref bool getScheme)
+	public cScheme GetControlScheme()
 	{
-		int lastScheme = scheme;
-
-			if (Random.value <= 0.85f) 
+		Debug.Log("Last Scheme");
+		Debug.Log(lastScheme);
+		/*if(lastScheme == (cScheme)(-1))
+		{
+			if ((scheme == cScheme.arrows) || (scheme == cScheme.arrowsInv))
 			{
-				if (startGetScheme)
+				UIControl.ArrowScroll(1);
+			}
+			lastScheme = scheme;
+			return scheme;
+		}*/
+
+		lastScheme = scheme;
+
+		if (Random.value <= 0.85f) 
+		{
+			if (startGetScheme)
+			{
+				int i = 0;
+				while (scheme == lastScheme) 
 				{
-					while (scheme == lastScheme) 
+					// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
+					//{
+						scheme = (cScheme)Random.Range (0, 10);
+
+					Debug.Log("Loop number: " + i + "  Scheme: " + scheme + "  LastScheme:" + lastScheme);
+					i++;
+					/*}
+					else
 					{
-						// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
-						//{
-							scheme = Random.Range (0, 10);
-							
-						/*}
-						else
+						scheme = Random.Range (0, 8);
+						accelSpeed = 0;
+					}*/
+
+					if (scheme != lastScheme)
+					{
+						telegraphTime = 0;
+						startGetScheme = false;
+						Debug.Log(scheme);
+						lastScheme = scheme;
+
+						/*if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
 						{
-							scheme = Random.Range (0, 8);
-							accelSpeed = 0;
+							UIControl.ArrowScroll(0);
+						}
+						if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
+						{
+							UIControl.ArrowScroll(1);
 						}*/
 
-						if (scheme != lastScheme)
-						{
-							telegraphTime = 0;
-							getScheme = false;
-							Debug.Log(scheme);
+					// DisplayScheme(); A function from UI that displays what control scheme is being used
+					// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
 
-						// DisplayScheme(); A function from UI that displays what control scheme is being used
-						// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
-
-						}
 					}
+
 				}
+			}
 
 			}
 
@@ -74,7 +104,6 @@ public class Player
 
 public class PlayerControls : MonoBehaviour 
 {
-	Player player = new Player();
 /*
 	__      __       _____   _____            ____   _       ______   _____ 
 	\ \    / //\    |  __ \ |_   _|    /\    |  _ \ | |     |  ____| / ____|
@@ -94,7 +123,7 @@ public class PlayerControls : MonoBehaviour
 	float tiltSpeed = 6.0f;
 	float acceleration = 0.05f;
 	float revAcceleration = 0.11f;
-	float scaleSpeedLimiter = 0.5f;
+	float scaleSpeedLimiter = 0.9f;
 
 	// Misc Variables:
 	bool checkSOD;
@@ -102,11 +131,16 @@ public class PlayerControls : MonoBehaviour
 	float arrowTop = (Screen.height / 8) + 0.25f;
 	float arrowBottom = (Screen.height / 20);
 
+	// Class Variables:
+	Player player = new Player();
+
+
 	// Use this for initialization
 	void Start () 
 	{
 		timer = 0;
 		checkSOD = false;
+		player.UIControl = GameObject.FindObjectOfType<UiControl>();
 	}
 
 	/*
@@ -124,6 +158,11 @@ public class PlayerControls : MonoBehaviour
 	{
 		normalisedSpeed = player.speed * Time.deltaTime;
 		timer += Time.deltaTime;
+
+		if (player.lastScheme == (cScheme)(-1))
+		{
+			player.GetControlScheme();
+		}
 
 		PlayTimer ();
 		TelegraphChecker ();
@@ -339,7 +378,7 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (timer >= 5 && activateTimer) 
 		{
-			player.scheme = player.GetControlScheme (player.scheme, ref player.accelSpeed, ref player.telegraphTime, ref player.startGetScheme );
+			player.scheme = player.GetControlScheme();
 			activateTimer = true;
 			timer = 0;
 			player.teleCheck = true;
@@ -347,13 +386,15 @@ public class PlayerControls : MonoBehaviour
 	}
 
 
-	/*void OnCollisionEnter ()
+	void OnCollisionEnter ()
 	{
 		if (ObstacleController.GO == false) {
-			GameObject.FindObjectOfType<UiControl>().GameOver();
+			player.UIControl.GameOver();
 			ObstacleController.GO = true;
 		}
-	}*/
+	}
+
+
 
 }
 
