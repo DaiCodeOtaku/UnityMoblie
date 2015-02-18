@@ -45,7 +45,7 @@ public class Player
 						// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
 						//{
 							scheme = Random.Range (0, 10);
-							accelSpeed = 0;
+							
 						/*}
 						else
 						{
@@ -58,6 +58,7 @@ public class Player
 							telegraphTime = 0;
 							getScheme = false;
 							Debug.Log(scheme);
+
 						// DisplayScheme(); A function from UI that displays what control scheme is being used
 						// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
 
@@ -74,6 +75,13 @@ public class Player
 public class PlayerControls : MonoBehaviour 
 {
 	Player player = new Player();
+/*
+	__      __       _____   _____            ____   _       ______   _____ 
+	\ \    / //\    |  __ \ |_   _|    /\    |  _ \ | |     |  ____| / ____|
+	 \ \  / //  \   | |__) |  | |     /  \   | |_) || |     | |__   | (___  
+	  \ \/ // /\ \  |  _  /   | |    / /\ \  |  _ < | |     |  __|   \___ \ 
+	   \  // ____ \ | | \ \  _| |_  / ____ \ | |_) || |____ | |____  ____) |
+		\//_/    \_\|_|  \_\|_____|/_/    \_\|____/ |______||______||_____/  */
 
 	// Timing Variables:
 	float timer;
@@ -100,7 +108,17 @@ public class PlayerControls : MonoBehaviour
 		timer = 0;
 		checkSOD = false;
 	}
-	
+
+	/*
+	 ______ _    _ _   _  _____ _______ _____ ____  _   _  _____ 
+	|  ____| |  | | \ | |/ ____|__   __|_   _/ __ \| \ | |/ ____|
+	| |__  | |  | |  \| | |       | |    | || |  | |  \| | (___  
+	|  __| | |  | | . ` | |       | |    | || |  | | . ` |\___ \ 
+	| |    | |__| | |\  | |____   | |   _| || |__| | |\  |____) |
+	|_|     \____/|_| \_|\_____|  |_|  |_____\____/|_| \_|_____/  
+	 */
+
+	// UNITY FUNCTIONS
 	// Update is called once per frame
 	void Update () 
 	{
@@ -115,6 +133,8 @@ public class PlayerControls : MonoBehaviour
 		//Debug.Log ((cScheme)player.scheme);
 	}
 
+
+	//SCOTT'S FUNCTIONS
 	// Update Function
 	void MovePlayer()
 	{
