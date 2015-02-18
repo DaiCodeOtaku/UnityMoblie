@@ -26,7 +26,7 @@ public class Player
 
 	public Player()
 	{
-		scheme = cScheme.moveScale;
+		scheme = cScheme.arrows;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -36,70 +36,50 @@ public class Player
 		startGetScheme = false;
 	}
 
-	public cScheme GetControlScheme()
+	public void GetControlScheme()
 	{
-		Debug.Log("Last Scheme");
-		Debug.Log(lastScheme);
-		/*if(lastScheme == (cScheme)(-1))
+		if(lastScheme == (cScheme)(-1))
 		{
 			if ((scheme == cScheme.arrows) || (scheme == cScheme.arrowsInv))
 			{
 				UIControl.ArrowScroll(1);
 			}
 			lastScheme = scheme;
-			return scheme;
-		}*/
+			//return scheme;
+		}
 
-		lastScheme = scheme;
+		//lastScheme = scheme;
 
 		if (Random.value <= 0.85f) 
 		{
 			if (startGetScheme)
 			{
-				int i = 0;
+				//int i = 0;
 				while (scheme == lastScheme) 
 				{
-					// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
-					//{
-						scheme = (cScheme)Random.Range (0, 10);
-
-					Debug.Log("Loop number: " + i + "  Scheme: " + scheme + "  LastScheme:" + lastScheme);
-					i++;
-					/*}
-					else
-					{
-						scheme = Random.Range (0, 8);
-						accelSpeed = 0;
-					}*/
+					scheme = (cScheme)Random.Range (0, 10);
 
 					if (scheme != lastScheme)
 					{
 						telegraphTime = 0;
 						startGetScheme = false;
 						Debug.Log(scheme);
-						lastScheme = scheme;
 
-						/*if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
+						if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
 						{
 							UIControl.ArrowScroll(0);
 						}
 						if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
 						{
 							UIControl.ArrowScroll(1);
-						}*/
-
-					// DisplayScheme(); A function from UI that displays what control scheme is being used
-					// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
-
+						}
 					}
-
 				}
+				lastScheme = scheme;
 			}
-
-			}
-
-		return scheme;
+		}
 	}
+
 }
 
 public class PlayerControls : MonoBehaviour 
@@ -169,7 +149,7 @@ public class PlayerControls : MonoBehaviour
 		MovePlayer ();
 		AccelLimit (ref player);
 
-		//Debug.Log ((cScheme)player.scheme);
+		Debug.Log (timer);
 	}
 
 
@@ -378,8 +358,8 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (timer >= 5 && activateTimer) 
 		{
-			player.scheme = player.GetControlScheme();
-			activateTimer = true;
+			player.GetControlScheme();
+			activateTimer = false;
 			timer = 0;
 			player.teleCheck = true;
 		}
