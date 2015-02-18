@@ -19,12 +19,6 @@ public class Obstacle : MonoBehaviour {
 	}
 
 	void OnCollisionEnter() {
-		ObstacleController OC = (ObstacleController)GameObject.FindObjectOfType<ObstacleController>();
-		if(OC.GO == false){
-			UiControl UIC = (UiControl)GameObject.FindObjectOfType<UiControl>();
-			UIC.GameOver();
-			OC.GO = true;
-		}
 		Destroy(this.gameObject);
 	}
 }

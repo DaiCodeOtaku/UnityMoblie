@@ -103,6 +103,7 @@ public class UiControl : MonoBehaviour {
 
    public void LoadGame()
     {
+		ObstacleController.GO = false;
         Application.LoadLevel("Main");
     }
 
