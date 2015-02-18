@@ -19,6 +19,7 @@ public class Obstacle : MonoBehaviour {
 	}
 
 	void OnCollisionEnter() {
+
 		Destroy(this.gameObject);
 	}
 }
