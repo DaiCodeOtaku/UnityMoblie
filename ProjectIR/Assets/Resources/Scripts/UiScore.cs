@@ -10,18 +10,13 @@ public class UiScore : MonoBehaviour {
 	// Use this for initialization
 
 
-	void Start () 
-    {
-      
-    }
+	void Start (){   
+
+    } 
 	
 	// Update is called once per frame
 	void Update () 
     {
-
-
-
-
        ScoreController S = (ScoreController)GameObject.FindObjectOfType<ScoreController>();
        VarScore = (int)S.score;
 

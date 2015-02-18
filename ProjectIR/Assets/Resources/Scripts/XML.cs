@@ -3,11 +3,7 @@ using System.Collections;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-public class XML : MonoBehaviour {
-
-
-
-  
+public class XML : MonoBehaviour { 
 
      public void UpdateScore(int Score)
     {
@@ -19,8 +15,7 @@ public class XML : MonoBehaviour {
         APP2.save("Info.xml");
     }
 
-
-   static public void UpdateControl(int Control)
+	static public void UpdateControl(int Control)
     {
         ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
@@ -30,7 +25,7 @@ public class XML : MonoBehaviour {
         APP2.save("Info.xml");
     }
 
-  static public void UpdateFirstPlay(int First)
+  	static public void UpdateFirstPlay(int First)
     {
         ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
@@ -40,37 +35,30 @@ public class XML : MonoBehaviour {
         APP2.save("Info.xml");
     }
 
-  static public int ControlScheme()
+	static public int ControlScheme()
         {
             ApplicationData APP1 = new ApplicationData();
             APP1 = APP1.Load("Info.xml");
             return APP1.Control;
         }
 
- public int HighScore()
-  {
+ 	public int HighScore()
+  	{
       int temp;
       ApplicationData APP1 = new ApplicationData();
       APP1 = APP1.Load("Info.xml");
       temp = APP1.HighScore;
-      return temp;
-     
-  }
-
-
-
+      return temp;     
+  	}
 
     public class ApplicationData
     {
-
-        public int HighScore { get; set; }
+    	public int HighScore { get; set; }
         public int FirstTimePlay { get; set; }
         public int Control { get; set; }
-       
 
 
-
-      public void save(string FileName)
+      	public void save(string FileName)
         {
 
             using (var Stream = new FileStream(FileName, FileMode.Create))
@@ -82,20 +70,15 @@ public class XML : MonoBehaviour {
         }
 
 
-      public ApplicationData Load(string FileName)
-      {
-          using (var Stream = new FileStream(FileName, FileMode.Open))
-          {
-              XmlSerializer XML = new XmlSerializer(typeof(ApplicationData));
+      	public ApplicationData Load(string FileName)
+      	{
+          	using (var Stream = new FileStream(FileName, FileMode.Open))
+          	{
+              	XmlSerializer XML = new XmlSerializer(typeof(ApplicationData));
             //  Debug.Log("Open");
-             return(ApplicationData)XML.Deserialize(Stream);
-          }
-
-      }
+             	return(ApplicationData)XML.Deserialize(Stream);
+          	}
+      	}
     }
-
-   
-    
-
 
 }

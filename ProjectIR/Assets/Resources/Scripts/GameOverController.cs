@@ -14,21 +14,17 @@ public class GameOverController : MonoBehaviour {
     int Highscore;
     int currentScore;
 	// Use this for initialization
-	void Start () {
-      
+	void Start () {      
 	}
 	
 	// Update is called once per frame
-	void Update () {
-       
-     
+	void Update () {     
 	}
 
 
     public void Show()
     {
       //  gameObject.SetActive(true);
-
 
         ScoreController S = (ScoreController)GameObject.FindObjectOfType<ScoreController>();
         currentScore = (int)S.score;
@@ -57,8 +53,5 @@ public class GameOverController : MonoBehaviour {
 
         t2 = Highscore.ToString();
         GameOver_Highscore.text = t2;
-
-
-
     }
 }

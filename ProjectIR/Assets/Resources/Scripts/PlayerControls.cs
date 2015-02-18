@@ -9,6 +9,7 @@ enum cScheme {moveScale, arrows, accel, SOD, moveScaleInv, arrowsInv, accelInv, 
 // tilt = Gyroscope controls, tilt phone to move in a direction
 // suffix -Inv = Inverted control scheme, the player moves in the opposide direction to their input.
 
+
 public class Player
 {
 	public float speed; // Constant speed
@@ -23,7 +24,7 @@ public class Player
 
 	public Player()
 	{
-		scheme = (int)cScheme.moveScale;
+		scheme = (int)cScheme.moveScaleInv;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -43,26 +44,28 @@ public class Player
 					{
 						// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
 						//{
-							scheme = Random.Range (0, 11);
-							accelSpeed = 0;
+							scheme = Random.Range (0, 10);
+							
 						/*}
 						else
 						{
-							scheme = Random.Range (0, 9);
+							scheme = Random.Range (0, 8);
 							accelSpeed = 0;
 						}*/
 
 						if (scheme != lastScheme)
 						{
 							telegraphTime = 0;
-						getScheme = false;
+							getScheme = false;
+							Debug.Log(scheme);
+
+						// DisplayScheme(); A function from UI that displays what control scheme is being used
+						// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
 
 						}
 					}
 				}
-			// DisplayScheme(); A function from UI that displays what control scheme is being used
-			// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
-				Debug.Log(scheme);
+
 			}
 
 		return scheme;
@@ -72,13 +75,32 @@ public class Player
 public class PlayerControls : MonoBehaviour 
 {
 	Player player = new Player();
+/*
+	__      __       _____   _____            ____   _       ______   _____ 
+	\ \    / //\    |  __ \ |_   _|    /\    |  _ \ | |     |  ____| / ____|
+	 \ \  / //  \   | |__) |  | |     /  \   | |_) || |     | |__   | (___  
+	  \ \/ // /\ \  |  _  /   | |    / /\ \  |  _ < | |     |  __|   \___ \ 
+	   \  // ____ \ | | \ \  _| |_  / ____ \ | |_) || |____ | |____  ____) |
+		\//_/    \_\|_|  \_\|_____|/_/    \_\|____/ |______||______||_____/  */
+
+	// Timing Variables:
 	float timer;
+	bool activateTimer = true;
+	float teleTime = 3;
+
+	// Speed Variables:
+	float arrowSpeed = 150.0f;
+	float normalisedSpeed = 0.0f;
+	float tiltSpeed = 6.0f;
+	float acceleration = 0.05f;
+	float revAcceleration = 0.11f;
+	float scaleSpeedLimiter = 0.5f;
+
+	// Misc Variables:
 	bool checkSOD;
 	float moveThreshold = 0.2f;
 	float arrowTop = (Screen.height / 8) + 0.25f;
 	float arrowBottom = (Screen.height / 20);
-	bool activateTimer = true;
-
 
 	// Use this for initialization
 	void Start () 
@@ -86,268 +108,209 @@ public class PlayerControls : MonoBehaviour
 		timer = 0;
 		checkSOD = false;
 	}
-	
+
+	/*
+	 ______ _    _ _   _  _____ _______ _____ ____  _   _  _____ 
+	|  ____| |  | | \ | |/ ____|__   __|_   _/ __ \| \ | |/ ____|
+	| |__  | |  | |  \| | |       | |    | || |  | |  \| | (___  
+	|  __| | |  | | . ` | |       | |    | || |  | | . ` |\___ \ 
+	| |    | |__| | |\  | |____   | |   _| || |__| | |\  |____) |
+	|_|     \____/|_| \_|\_____|  |_|  |_____\____/|_| \_|_____/  
+	 */
+
+	// UNITY FUNCTIONS
 	// Update is called once per frame
 	void Update () 
 	{
-		float normalisedSpeed = player.speed * Time.deltaTime;
+		normalisedSpeed = player.speed * Time.deltaTime;
 		timer += Time.deltaTime;
 
-		if (timer >= 5 && activateTimer) 
-		{
-			player.scheme = player.GetControlScheme (player.scheme, ref player.accelSpeed, ref player.telegraphTime, ref player.startGetScheme );
-			activateTimer = true;
-			timer = 0;
-			player.teleCheck = true;
-		}
+		PlayTimer ();
+		TelegraphChecker ();
+		MovePlayer ();
+		AccelLimit (ref player);
 
-		if (player.teleCheck) 
-		{
-			player.telegraphTime += Time.deltaTime;
-			if(player.telegraphTime >= 3)
-			{
-				player.startGetScheme = true;
-				player.teleCheck = false;
-				activateTimer = true;
-			}
-		}
+		//Debug.Log ((cScheme)player.scheme);
+	}
 
 
-		Vector3 mousePos = new Vector3 (0, 0, 0);
-
+	//SCOTT'S FUNCTIONS
+	// Update Function
+	void MovePlayer()
+	{
 		if ((this.transform.position.x + 0.25 < 3.1) && (this.transform.position.x - 0.25 > -3.1))
 		{
-
 			switch ((cScheme)player.scheme)
 			{
 			case cScheme.moveScale:
-					if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-					{	
-						mousePos.x = Input.mousePosition.x;
-						this.transform.Translate ((mousePos.x - (Screen.width / 2)) * normalisedSpeed, 0, 0);
-					} 
-					else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-					{	
-						mousePos.x = Input.mousePosition.x;
-						this.transform.Translate ((((Screen.width / 2) - mousePos.x) * -normalisedSpeed), 0, 0);
-					}
-					break;
+				MoveScale(1);
+				break;
 			case cScheme.moveScaleInv:
-
-				if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-				{	
-					mousePos.x = Input.mousePosition.x;
-					if (this.transform.position.x + 0.25 < 3.1) 
-					{
-						this.transform.Translate ((mousePos.x - (Screen.width / 2)) * normalisedSpeed, 0, 0);
-					}
-				} 
-				else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-				{	
-					mousePos.x = Input.mousePosition.x;
-					if (this.transform.position.x - 0.25 > -3.1) 
-					{
-						this.transform.Translate ((mousePos.x - (Screen.width / 2)) * normalisedSpeed, 0, 0);
-					}
-				}
+				MoveScale(-1);
 				break;
 			case cScheme.tilt:
-				if (Input.acceleration.y > moveThreshold)
-				{
-				transform.Translate(Input.acceleration.x * player.speed,0,0);
-				}
-				else if (Input.acceleration.y < -moveThreshold)
-				{
-				transform.Translate(Input.acceleration.x * player.speed,0,0);
-				} 
+				Tilt(1);
 				break;
-
 			case cScheme.tiltInv:
-			if (Input.acceleration.y < -moveThreshold)
-				{
-				transform.Translate(-Input.acceleration.x * 0.5f,0,0);
-				}
-				else if (Input.acceleration.y > moveThreshold)
-				{
-				transform.Translate(-Input.acceleration.x * 0.5f,0,0);
-				}
-				break;
-			case cScheme.accelInv:
-				if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-				{					
-					if(transform.position.x < 0)
-					{
-						player.accelSpeed += 0.05f;
-					} else
-					{
-						player.accelSpeed += 0.025f;
-					}
-				} 
-				else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-				{	
-					if(transform.position.x > 0)
-					{
-						player.accelSpeed -= 0.05f;
-					} else
-					{
-						player.accelSpeed -= 0.025f;
-					}
-				}
-				else 
-				{
-					player.accelSpeed *= 0.99f;
-				}
-				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
+				Tilt (-1);
 				break;
 			case cScheme.accel:
-				if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-				{	
-					if(transform.position.x > 0)
-					{
-						player.accelSpeed -= 0.05f;
-					} else
-					{
-						player.accelSpeed -= 0.025f;
-					}
-				} 
-				else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-				{	
-					if(transform.position.x < 0)
-					{
-						player.accelSpeed += 0.05f;
-					} else
-					{
-						player.accelSpeed += 0.025f;
-					}
-				}
-				else 
-				{
-					player.accelSpeed *= 0.99f;
-				}
-				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
+				Accelerate(1);
+				break;
+			case cScheme.accelInv:
+				Accelerate(-1);
 				break;
 			case cScheme.SOD:
-				if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-				{	
-					if(transform.position.x > 0)
-					{
-						if(checkSOD == false)
-						{
-							player.accelSpeed = 0.0f;
-							checkSOD = true;
-						}
-						else
-						{
-							player.accelSpeed -= 0.05f;
-						}
-					} else
-					{
-						player.accelSpeed -= 0.025f;
-						checkSOD = false;
-					}
-				} 
-				else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-				{	
-					if(transform.position.x < 0)
-					{
-						if(checkSOD == false)
-						{
-							player.accelSpeed = 0.0f;
-							checkSOD = true;
-						}
-						else
-						{
-							player.accelSpeed += 0.05f;
-						}
-					} else
-					{
-						player.accelSpeed += 0.025f;
-						checkSOD = false;
-					}
-				}
-				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
+				StopOnDime(1);
 				break;
 			case cScheme.SODInv:
-				if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
-				{	
-					if(transform.position.x > 0)
-					{
-						if(checkSOD == false)
-						{
-							player.accelSpeed = 0.00f;
-							checkSOD = true;
-						}
-						else
-						{
-							player.accelSpeed -= 0.05f;
-						}
-					} else
-					{
-						player.accelSpeed -= 0.025f;
-						checkSOD = false;
-					}
-				} 
-				else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
-				{	
-					if(transform.position.x < 0)
-					{
-						if(checkSOD == false)
-						{
-							player.accelSpeed = 0.0f;
-							checkSOD = true;
-						}
-						else
-						{
-							player.accelSpeed += 0.5f;
-						}
-					} else
-					{
-						player.accelSpeed += 0.025f;
-						checkSOD = false;
-					}
-				}
-				this.transform.Translate (player.accelSpeed * Time.deltaTime, 0, 0);
-
+				StopOnDime(-1);
 				break;
 			case cScheme.arrows:
-				if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 4))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
-				{	
-					this.transform.Translate (normalisedSpeed * 150.0f, 0, 0);
-				} 
-				else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 4)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
-				{	
-					this.transform.Translate (-normalisedSpeed * 150.0f, 0, 0);
-				}
+				Arrows(1);
 				break;
 			case cScheme.arrowsInv:
-				if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 4))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
-				{	
-					this.transform.Translate (-normalisedSpeed * 150.0f, 0, 0);
-				} 
-				else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 4)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
-				{	
-					this.transform.Translate (normalisedSpeed * 150.0f, 0, 0);
-				}
+				Arrows (-1);
 				break;
-
-					//Move movement schemes go here
+				//Move movement schemes go here
 			default:
 				break;
 			}
 		}
 		else
 		{
-			player.accelSpeed = 0;
-			if (this.transform.position.x < (Screen.width/2))
+			EdgeDetect(ref player.accelSpeed);
+		}
+	}
+
+	// Movement Functions:
+	void MoveScale(int sign)
+	{
+		if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
+		{
+			this.transform.Translate ((Input.mousePosition.x - (Screen.width / 2)) * normalisedSpeed * scaleSpeedLimiter * sign, 0, 0);
+		} 
+		else if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
+		{	
+			this.transform.Translate ((((Screen.width / 2) - Input.mousePosition.x) * -normalisedSpeed * scaleSpeedLimiter * sign), 0, 0);
+		}
+	}
+
+	void Tilt(int sign)
+	
+	{
+		if (Input.acceleration.y > moveThreshold)
+		{
+			transform.Translate(Input.acceleration.x * player.speed * tiltSpeed * sign,0,0);
+		}
+		else if (Input.acceleration.y < -moveThreshold)
+		{
+			transform.Translate(Input.acceleration.x * player.speed * tiltSpeed * sign,0,0);
+		} 
+	}
+
+	void Accelerate(int sign)
+	{
+		if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
+		{	
+			if(transform.position.x > 0)
 			{
-				this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
+				player.accelSpeed -= acceleration;
+			} else
+			{
+				player.accelSpeed -= revAcceleration;
 			}
-			else
+		} 
+		else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
+		{	
+			if(transform.position.x < 0)
 			{
-				this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
+				player.accelSpeed += acceleration;
+			} else
+			{
+				player.accelSpeed += revAcceleration;
 			}
 		}
+		else 
+		{
+			player.accelSpeed *= 0.98f;
+		}
+		this.transform.Translate (player.accelSpeed * Time.deltaTime * sign, 0, 0);
+	}
 
+	void StopOnDime(int sign)
+	{
+		if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
+		{	
+			if(transform.position.x > 0)
+			{
+				if(checkSOD == false)
+				{
+					player.accelSpeed = 0.0f;
+					checkSOD = true;
+				}
+				else
+				{
+					player.accelSpeed -= acceleration;
+				}
+			} else
+			{
+				player.accelSpeed -= revAcceleration;
+				checkSOD = false;
+			}
+		} 
+		else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
+		{	
+			if(transform.position.x < 0)
+			{
+				if(checkSOD == false)
+				{
+					player.accelSpeed = 0.0f;
+					checkSOD = true;
+				}
+				else
+				{
+					player.accelSpeed += acceleration;
+				}
+			} else
+			{
+				player.accelSpeed += revAcceleration;
+				checkSOD = false;
+			}
+		}
+		this.transform.Translate (player.accelSpeed * Time.deltaTime * sign, 0, 0);
+	}
+
+	void Arrows(int sign)
+	{
+		
+		if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 4))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
+		{	
+			this.transform.Translate (normalisedSpeed * arrowSpeed, 0, 0);
+		} 
+		else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 4)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
+		{	
+			this.transform.Translate (-normalisedSpeed * arrowSpeed * sign, 0, 0);
+		}
+	}
+	
+	
+	// Misc Functions:
+	public void EdgeDetect(ref float accelSpeed)
+	{
+		accelSpeed = 0;
+		if (this.transform.position.x < (Screen.width/2))
+		{
+			this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
+		}
+		else
+		{
+			this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
+		}
+	}
+	
+	public void AccelLimit (ref Player player)
+	{
 		if (player.accelSpeed >= player.maxSpeed) 
 		{
 			player.accelSpeed = player.maxSpeed - 1;
@@ -356,15 +319,42 @@ public class PlayerControls : MonoBehaviour
 		{
 			player.accelSpeed = player.minSpeed + 1;
 		}
-		//Debug.Log (player.scheme);
 	}
 
-	void OnCollisionEnter() {
-		if(ObstacleController.GO == false){
+	void TelegraphChecker ()
+	{
+		if (player.teleCheck) 
+		{
+			player.telegraphTime += Time.deltaTime;
+			if(player.telegraphTime >= teleTime)
+			{
+				player.startGetScheme = true;
+				player.teleCheck = false;
+				activateTimer = true;
+			}
+		}
+	}
+
+	void PlayTimer ()
+	{
+		if (timer >= 5 && activateTimer) 
+		{
+			player.scheme = player.GetControlScheme (player.scheme, ref player.accelSpeed, ref player.telegraphTime, ref player.startGetScheme );
+			activateTimer = true;
+			timer = 0;
+			player.teleCheck = true;
+		}
+	}
+
+
+	/*void OnCollisionEnter ()
+	{
+		if (ObstacleController.GO == false) {
 			GameObject.FindObjectOfType<UiControl>().GameOver();
 			ObstacleController.GO = true;
 		}
-	}
+	}*/
+
 }
 
 

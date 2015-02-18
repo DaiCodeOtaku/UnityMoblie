@@ -12,26 +12,13 @@ public class Game_Over : MonoBehaviour {
 
     void Start()
     {
-        b1 = false;
-      
-
-
-
-       
+        b1 = false;       
     }
-
-
-
-
 
     void Update()
     {
-
-       
-
-        if (b1 == true)
-        {
-         
+		if (b1 == true)
+        {         
             if (time > 0.0f)
             {
                 gameObject.transform.Translate(0, Time.fixedDeltaTime * -2.0f, 0);
@@ -48,14 +35,12 @@ public class Game_Over : MonoBehaviour {
                 game.Show();
             }
         }
-
-
     }
+
   public void GameOver()
     {
         time = public_time;
         b1 = true;
-
     }
 
 

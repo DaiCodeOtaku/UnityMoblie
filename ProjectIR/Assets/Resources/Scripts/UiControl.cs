@@ -10,7 +10,6 @@ public class UiControl : MonoBehaviour {
     void Start()
     {
        // GameOver();
-
     }
 
 
