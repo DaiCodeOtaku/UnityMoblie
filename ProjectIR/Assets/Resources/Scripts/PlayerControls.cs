@@ -26,72 +26,75 @@ public class Player
 
 	public Player()
 	{
-		scheme = cScheme.arrows;
+		scheme = cScheme.moveScale;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
 		minSpeed = -10;
 		telegraphTime = 0.0f;
 		lastScheme = (cScheme)(-1);
+		startGetScheme = false;
 	}
 
-	public cScheme GetControlScheme()
+	public void GetControlScheme()
 	{
+		Debug.Log("BREAK 1");
 		if(lastScheme == (cScheme)(-1))
 		{
 			if ((scheme == cScheme.arrows) || (scheme == cScheme.arrowsInv))
 			{
-				Debug.Log("HI I'M A DEBUG");
 				UIControl.ArrowScroll(1);
 			}
+
 			lastScheme = scheme;
-			return scheme;
 		}
-		if (Random.value <= 0.85f) 
+		Debug.Log("BREAK 2");
+		Debug.Log(startGetScheme);
+		if (startGetScheme == true)
 		{
-			if (startGetScheme)
+			Debug.Log("BREAK 3");
+			while (scheme == lastScheme) 
 			{
-				while (scheme == lastScheme) 
+				Debug.Log ("BREAK 4");
+				// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
+				//{
+					scheme = (cScheme)Random.Range (0, 10);
+				/*}
+				else
 				{
-					// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
-					//{
-						scheme = (cScheme)Random.Range (0, 10);
-						
-					/*}
-					else
+					scheme = Random.Range (0, 8);
+					accelSpeed = 0;
+				}*/
+
+				if (scheme != lastScheme)
+				{
+					Debug.Log("BREAK 5");
+					telegraphTime = 0;
+					startGetScheme = false;
+					Debug.Log(scheme);
+
+
+					if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
 					{
-						scheme = Random.Range (0, 8);
-						accelSpeed = 0;
-					}*/
 
-					if (scheme != lastScheme)
+						UIControl.ArrowScroll(0);
+					}
+					if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
 					{
-						telegraphTime = 0;
-						startGetScheme = false;
-						Debug.Log(scheme);
-						lastScheme = scheme;
-
-						if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
-						{
-							UIControl.ArrowScroll(0);
-						}
-						if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
-						{
-							UIControl.ArrowScroll(1);
-						}
-
-					// DisplayScheme(); A function from UI that displays what control scheme is being used
-					// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
-
+						UIControl.ArrowScroll(1);
 					}
 
+				// DisplayScheme(); A function from UI that displays what control scheme is being used
+				// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
+
 				}
-			}
 
 			}
-
-		return scheme;
+			lastScheme = scheme;
+		}
+		Debug.Log("BREAK 2");
 	}
+
 }
 
 public class PlayerControls : MonoBehaviour 
@@ -133,11 +136,7 @@ public class PlayerControls : MonoBehaviour
 		timer = 0;
 		checkSOD = false;
 		player.UIControl = GameObject.FindObjectOfType<UiControl>();
-		if ((player.scheme == cScheme.arrows) || (player.scheme == cScheme.arrowsInv))
-		{
-			Debug.Log("HI I'M A DEBUG");
-			player.UIControl.ArrowScroll(1);
-		}
+
 	}
 
 	/*
@@ -166,7 +165,7 @@ public class PlayerControls : MonoBehaviour
 		MovePlayer ();
 		AccelLimit (ref player);
 
-		//Debug.Log ((cScheme)player.scheme);
+		//Debug.Log (player.startGetScheme);
 	}
 
 
@@ -334,7 +333,7 @@ public class PlayerControls : MonoBehaviour
 	// Misc Functions:
 	public void EdgeDetect(ref float accelSpeed)
 	{
-		accelSpeed = 0;
+		accelSpeed = 0.0f;
 		if (this.transform.position.x < (Screen.width/2))
 		{
 			this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
@@ -361,23 +360,28 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (player.teleCheck) 
 		{
+			Debug.Log("Telecheck on");
 			player.telegraphTime += Time.deltaTime;
 			if(player.telegraphTime >= teleTime)
 			{
+				Debug.Log("TelegraphTime > teletime");
 				player.startGetScheme = true;
 				player.teleCheck = false;
 				activateTimer = true;
+				player.telegraphTime = 0.0f;
 			}
 		}
 	}
 
 	void PlayTimer ()
 	{
+		Debug.Log("Playtimer active");
 		if (timer >= 5 && activateTimer) 
 		{
-			player.scheme = player.GetControlScheme();
-			activateTimer = true;
-			timer = 0;
+			Debug.Log("Get a new scheme");
+			player.GetControlScheme();
+			activateTimer = false;
+			timer = 0.0f;
 			player.teleCheck = true;
 		}
 	}
