@@ -7,11 +7,11 @@ using System.Timers;
 public class SplashSequencer : MonoBehaviour {
 
 	public Timer splashInterval = new Timer();
-	public int splashCount = 0;
-	public static int sfxVol = 10;
+	public static int splashCount = 0;
+	public static float sfxVol = 1.0f;
+	public static float sfxUI = 10.0f;
 	public static int ctrlScheme = 1;
-
-	public Canvas canUnity;
+	
 	public Canvas canBrokenEarth;
 	public Canvas canMenu;
 	public Canvas canOptions;
@@ -22,7 +22,7 @@ public class SplashSequencer : MonoBehaviour {
 		splashInterval.Interval = 3000;
 		splashInterval.Start ();
 
-		canBrokenEarth.enabled = false;
+		canBrokenEarth.enabled = true;
 		canMenu.enabled = false;
 		canOptions.enabled = false;
 		
@@ -35,19 +35,15 @@ public class SplashSequencer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (splashCount < 3) {
-
-			canUnity.enabled = false;
+		if (splashCount < 2) {
 			canBrokenEarth.enabled = false;
 			canMenu.enabled = false;
 		}
 
 
-		if (splashCount == 0) {
-			canUnity.enabled = true;
-		} else if (splashCount == 1){
+		if (splashCount == 0){
 			canBrokenEarth.enabled = true;
-		} else if (splashCount == 2){
+		} else if (splashCount == 1){
 			canMenu.enabled = true;
 			splashInterval.Stop();
 			splashCount++;

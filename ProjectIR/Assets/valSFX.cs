@@ -13,10 +13,10 @@ public class valSFX : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (SplashSequencer.sfxVol == 0){
-			txt.text = "Off";
+		if (SplashSequencer.sfxUI == 0){
+			txt.text = "Off";;
 		} else {
-			txtVal = SplashSequencer.sfxVol.ToString ();
+			txtVal = SplashSequencer.sfxUI.ToString ();
 			txt.text = txtVal;
 		}
 

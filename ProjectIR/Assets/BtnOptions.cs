@@ -13,15 +13,24 @@ public class BtnOptions : MonoBehaviour {
 	
 	}
 
+	public void pressLogo(){
+		Debug.Log ("skip logo");
+		SplashSequencer.splashCount = 1;
+	}
+
 	public void pressLowerSfx(){
-		if (SplashSequencer.sfxVol > 0){
-			SplashSequencer.sfxVol--;
+		if (SplashSequencer.sfxUI > 0){
+			SplashSequencer.sfxUI--;
+			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10;
+			Debug.Log ("Volume: " + SplashSequencer.sfxVol);
 		}
 	}
 
 	public void pressRaiseSfx(){
-		if (SplashSequencer.sfxVol < 10){
-			SplashSequencer.sfxVol++;
+		if (SplashSequencer.sfxUI < 10){
+			SplashSequencer.sfxUI++;
+			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10;
+			Debug.Log ("Volume: " + SplashSequencer.sfxVol);
 		}
 	}
 
