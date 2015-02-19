@@ -13,7 +13,7 @@ public class BackgroundScroll : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		texOffset += Time.deltaTime * scrollAmount;
+		texOffset += Time.deltaTime * scrollAmount * 0.5f;
 		//renderer.material.SetTextureOffset ("checkered", new Vector2(0.0f, texOffset));
 		renderer.material.mainTextureOffset = new Vector2(0.0f, -texOffset);
 	}

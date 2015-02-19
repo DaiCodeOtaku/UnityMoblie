@@ -45,6 +45,7 @@ public class Player
 				UIControl.ArrowScroll(1);
 			}
 			lastScheme = scheme;
+			UIControl.Controls(scheme.ToString());
 			//return scheme;
 		}
 
@@ -64,6 +65,8 @@ public class Player
 						telegraphTime = 0;
 						startGetScheme = false;
 						Debug.Log(scheme);
+						UIControl.Inverse(false);
+						UIControl.Controls(scheme.ToString());
 
 						if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
 						{
@@ -343,12 +346,14 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (player.teleCheck) 
 		{
+
 			player.telegraphTime += Time.deltaTime;
 			if(player.telegraphTime >= teleTime)
 			{
 				player.startGetScheme = true;
 				player.teleCheck = false;
 				activateTimer = true;
+				player.UIControl.Inverse(true);
 			}
 		}
 	}
@@ -361,6 +366,7 @@ public class PlayerControls : MonoBehaviour
 			activateTimer = false;
 			timer = 0;
 			player.teleCheck = true;
+
 		}
 	}
 

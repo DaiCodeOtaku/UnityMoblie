@@ -112,13 +112,15 @@ public class ObstacleController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		patternTimer -= Time.deltaTime;
+		if (!GO) {
+			patternTimer -= Time.deltaTime;
 
-		executePattern(currentPattern);
+			executePattern (currentPattern);
 
-		if (patternTimer < 0) {
-			currentPattern = newPattern();
-			Debug.Log(currentPattern);
+			if (patternTimer < 0) {
+					currentPattern = newPattern ();
+					Debug.Log (currentPattern);
+			}
 		}
 	}
 
