@@ -7,7 +7,7 @@ public class ObstacleController : MonoBehaviour {
 
 	public GameObject ObstacleTemplate;
 	enum spawnPatterns {nullPattern = 0, Basic, Advanced, Painful, Stairs, Butterfly, 
-		SpaceInvaders, Pillar, TargetLocked, Platforms, Spears};
+						SpaceInvaders, Pillar, TargetLocked, Platforms, Spears};
 	public float patternTimer;
 	public static bool GO = false;
 	spawnPatterns previousPattern, currentPattern;

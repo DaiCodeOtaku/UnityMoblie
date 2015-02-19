@@ -26,9 +26,9 @@ public class Player
 
 	public Player()
 	{
-		scheme = cScheme.arrows;
+		scheme = cScheme.moveScale;
 		speed = 0.0375f;
-		accelSpeed = 0; 
+		accelSpeed = 0;
 		maxSpeed = 10;
 		minSpeed = -10;
 		telegraphTime = 0.0f;
@@ -149,7 +149,7 @@ public class PlayerControls : MonoBehaviour
 		MovePlayer ();
 		AccelLimit (ref player);
 
-		Debug.Log (timer);
+		//Debug.Log (timer);
 	}
 
 
@@ -215,8 +215,7 @@ public class PlayerControls : MonoBehaviour
 		}
 	}
 
-	void Tilt(int sign)
-	
+	void Tilt(int sign)	
 	{
 		if (Input.acceleration.y > moveThreshold)
 		{
@@ -304,11 +303,11 @@ public class PlayerControls : MonoBehaviour
 	{
 		
 		if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 4))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
-		{	
-			this.transform.Translate (normalisedSpeed * arrowSpeed, 0, 0);
-		} 
+		{
+			this.transform.Translate (normalisedSpeed * arrowSpeed * sign, 0, 0);
+		}
 		else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 4)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
-		{	
+		{
 			this.transform.Translate (-normalisedSpeed * arrowSpeed * sign, 0, 0);
 		}
 	}
