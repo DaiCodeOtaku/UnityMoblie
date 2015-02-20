@@ -96,12 +96,13 @@ public class UiControl : MonoBehaviour {
 
     public void LoadMenu()
     {
-        //Application.LoadLevel("TitleSplash");
+		ObstacleController.GO = false;
+        Application.LoadLevel("TitleSplash");
     }
 
 
    public void LoadGame()
-    {
+   {
 		ObstacleController.GO = false;
         Application.LoadLevel("Main");
     }

@@ -19,16 +19,17 @@ public class Player
 	public float minSpeed; // Lowest etc. 
 	public float telegraphTime; // Grace period before the control scheme changes
 	public bool teleCheck; // Checks if the grace period is active
-	public bool startGetScheme; // Used to tell the control scheme function to get a new control scheme 
+	public bool startGetScheme; // Used to tell the control scheme function to get a new control scheme
+	public bool direction; // 0 = Left, 1 = Right
 	
 	public UiControl UIControl;
 	public cScheme lastScheme;
 
 	public Player()
 	{
-		scheme = cScheme.moveScale;
+		scheme = cScheme.accel;
 		speed = 0.0375f;
-		accelSpeed = 0;
+		accelSpeed = 0; 
 		maxSpeed = 10;
 		minSpeed = -10;
 		telegraphTime = 0.0f;
@@ -44,42 +45,53 @@ public class Player
 			{
 				UIControl.ArrowScroll(1);
 			}
+
 			lastScheme = scheme;
 			UIControl.Controls(scheme.ToString());
-			//return scheme;
 		}
-
-		//lastScheme = scheme;
-
-		if (Random.value <= 0.85f) 
+		Debug.Log(startGetScheme);
+		if (startGetScheme == true)
 		{
-			if (startGetScheme)
+			while (scheme == lastScheme) 
 			{
-				//int i = 0;
-				while (scheme == lastScheme) 
-				{
+				// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
+				//{
 					scheme = (cScheme)Random.Range (0, 10);
+				/*}
+				else
+				{
+					scheme = Random.Range (0, 8);
+					accelSpeed = 0;
+				}*/
 
-					if (scheme != lastScheme)
+				if (scheme != lastScheme)
+				{
+					telegraphTime = 0;
+					startGetScheme = false;
+					Debug.Log(scheme);
+
+					UIControl.Inverse(false);
+					UIControl.Controls(scheme.ToString());
+
+
+					if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
 					{
-						telegraphTime = 0;
-						startGetScheme = false;
-						Debug.Log(scheme);
-						UIControl.Inverse(false);
-						UIControl.Controls(scheme.ToString());
 
-						if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
-						{
-							UIControl.ArrowScroll(0);
-						}
-						if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
-						{
-							UIControl.ArrowScroll(1);
-						}
+						UIControl.ArrowScroll(0);
 					}
+					if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
+					{
+						UIControl.ArrowScroll(1);
+					}
+
+				// DisplayScheme(); A function from UI that displays what control scheme is being used
+				// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
+					
+
 				}
-				lastScheme = scheme;
+
 			}
+			lastScheme = scheme;
 		}
 	}
 
@@ -104,15 +116,15 @@ public class PlayerControls : MonoBehaviour
 	float arrowSpeed = 150.0f;
 	float normalisedSpeed = 0.0f;
 	float tiltSpeed = 6.0f;
-	float acceleration = 0.05f;
-	float revAcceleration = 0.11f;
+	float acceleration = 0.2f;
+	float revAcceleration = 0.4f;
 	float scaleSpeedLimiter = 0.9f;
 
 	// Misc Variables:
 	bool checkSOD;
 	float moveThreshold = 0.2f;
-	float arrowTop = (Screen.height / 8) + 0.25f;
-	float arrowBottom = (Screen.height / 20);
+	float arrowTop = (Screen.height / 5);
+	float arrowBottom = (Screen.height / 8);
 
 	// Class Variables:
 	Player player = new Player();
@@ -124,6 +136,7 @@ public class PlayerControls : MonoBehaviour
 		timer = 0;
 		checkSOD = false;
 		player.UIControl = GameObject.FindObjectOfType<UiControl>();
+
 	}
 
 	/*
@@ -142,17 +155,12 @@ public class PlayerControls : MonoBehaviour
 		normalisedSpeed = player.speed * Time.deltaTime;
 		timer += Time.deltaTime;
 
-		if (player.lastScheme == (cScheme)(-1))
-		{
-			player.GetControlScheme();
-		}
 
+		ArrowCheck ();
 		PlayTimer ();
 		TelegraphChecker ();
 		MovePlayer ();
 		AccelLimit (ref player);
-
-		//Debug.Log (timer);
 	}
 
 
@@ -218,7 +226,8 @@ public class PlayerControls : MonoBehaviour
 		}
 	}
 
-	void Tilt(int sign)	
+	void Tilt(int sign)
+	
 	{
 		if (Input.acceleration.y > moveThreshold)
 		{
@@ -234,7 +243,7 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
 		{	
-			if(transform.position.x > 0)
+			if(player.direction == false)
 			{
 				player.accelSpeed -= acceleration;
 			} else
@@ -244,7 +253,7 @@ public class PlayerControls : MonoBehaviour
 		} 
 		else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
 		{	
-			if(transform.position.x < 0)
+			if(player.direction == true)
 			{
 				player.accelSpeed += acceleration;
 			} else
@@ -305,12 +314,12 @@ public class PlayerControls : MonoBehaviour
 	void Arrows(int sign)
 	{
 		
-		if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 4))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
-		{
-			this.transform.Translate (normalisedSpeed * arrowSpeed * sign, 0, 0);
-		}
-		else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 4)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
-		{
+		if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 2.5))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
+		{	
+			this.transform.Translate (normalisedSpeed * arrowSpeed, 0, 0);
+		} 
+		else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 2.5)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
+		{	
 			this.transform.Translate (-normalisedSpeed * arrowSpeed * sign, 0, 0);
 		}
 	}
@@ -319,7 +328,7 @@ public class PlayerControls : MonoBehaviour
 	// Misc Functions:
 	public void EdgeDetect(ref float accelSpeed)
 	{
-		accelSpeed = 0;
+		accelSpeed = 0.0f;
 		if (this.transform.position.x < (Screen.width/2))
 		{
 			this.transform.Translate ((this.transform.position.x * -0.005f),0,0);
@@ -346,13 +355,13 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (player.teleCheck) 
 		{
-
 			player.telegraphTime += Time.deltaTime;
 			if(player.telegraphTime >= teleTime)
 			{
 				player.startGetScheme = true;
 				player.teleCheck = false;
 				activateTimer = true;
+				player.telegraphTime = 0.0f;
 				player.UIControl.Inverse(true);
 			}
 		}
@@ -364,18 +373,37 @@ public class PlayerControls : MonoBehaviour
 		{
 			player.GetControlScheme();
 			activateTimer = false;
-			timer = 0;
+			timer = 0.0f;
 			player.teleCheck = true;
-
 		}
 	}
 
+	void ArrowCheck()
+	{
+		if (player.lastScheme == (cScheme)(-1))
+		{
+			player.GetControlScheme();
+		}
+	}
+
+	void DirectionCheck()
+	{
+		if(player.speed < 0)
+		{
+			player.direction = false;
+		}
+		else
+		{
+			player.direction = true;
+		}
+	}
 
 	void OnCollisionEnter ()
 	{
 		if (ObstacleController.GO == false) {
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
+			player.scheme = (cScheme)(-1);
 		}
 	}
 

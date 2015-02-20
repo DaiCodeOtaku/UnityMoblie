@@ -15,7 +15,7 @@ public class XML : MonoBehaviour {
         file = "/info.xml";
         filepath = Application.persistentDataPath;
         final = filepath + file;
-      //  FirstTime();
+      	FirstTime();
     }
  
 

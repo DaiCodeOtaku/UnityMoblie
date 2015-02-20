@@ -49,6 +49,8 @@
      <Compile Include="Assets\Resources\Scripts\AndroidButtonHandel.cs" />
      <Compile Include="Assets\Resources\Scripts\ArrowControl.cs" />
      <Compile Include="Assets\Resources\Scripts\BackgroundScroll.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnOptions.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnScreen.cs" />
      <Compile Include="Assets\Resources\Scripts\ControlText.cs" />
      <Compile Include="Assets\Resources\Scripts\GameOverController.cs" />
      <Compile Include="Assets\Resources\Scripts\Game_Over.cs" />
@@ -59,12 +61,15 @@
      <Compile Include="Assets\Resources\Scripts\PlayerControls.cs" />
      <Compile Include="Assets\Resources\Scripts\QuitCon.cs" />
      <Compile Include="Assets\Resources\Scripts\ScoreController.cs" />
+     <Compile Include="Assets\Resources\Scripts\SplashSequencer.cs" />
      <Compile Include="Assets\Resources\Scripts\UiControl.cs" />
      <Compile Include="Assets\Resources\Scripts\UiScore.cs" />
      <Compile Include="Assets\Resources\Scripts\XML.cs" />
      <Compile Include="Assets\Resources\Scripts\blade_spin.cs" />
      <Compile Include="Assets\Resources\Scripts\engine_jiggle.cs" />
      <Compile Include="Assets\Resources\Scripts\simpleSpin.cs" />
+     <Compile Include="Assets\Resources\Scripts\valControlScheme.cs" />
+     <Compile Include="Assets\Resources\Scripts\valSFX.cs" />
      <None Include="Assets\Scenes\lolololol.txt" />
      <None Include="Assets\Resources\ctrlReview.txt" />
  <Reference Include="UnityEngine.UI">
