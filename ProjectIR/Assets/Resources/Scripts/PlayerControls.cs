@@ -157,7 +157,7 @@ public class PlayerControls : MonoBehaviour
 
 
 		ArrowCheck ();
-		//PlayTimer ();
+		PlayTimer ();
 		TelegraphChecker ();
 		MovePlayer ();
 		AccelLimit (ref player);
