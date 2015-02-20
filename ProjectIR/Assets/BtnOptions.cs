@@ -7,15 +7,16 @@ public class BtnOptions : MonoBehaviour {
 	void Start () {
 	
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
+
 	public void pressLogo(){
 		Debug.Log ("skip logo");
-		SplashSequencer.splashCount = 1;
+		SplashTimer.splashCount = 1;
 	}
 
 	public void pressLowerSfx(){

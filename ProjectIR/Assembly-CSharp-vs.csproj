@@ -50,6 +50,7 @@
      <Compile Include="Assets\BtnOptions.cs" />
      <Compile Include="Assets\BtnScreen.cs" />
      <Compile Include="Assets\SplashSequencer.cs" />
+     <Compile Include="Assets\SplashTimer.cs" />
      <Compile Include="Assets\valControlScheme.cs" />
      <Compile Include="Assets\valSFX.cs" />
  <Reference Include="UnityEngine.UI">
