@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <ApplicationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <HighScore>5</HighScore>
+  <HighScore>0</HighScore>
   <FirstTimePlay>0</FirstTimePlay>
-  <ControlScheme>0</ControlScheme>
+  <Control>0</Control>
 </ApplicationData>
