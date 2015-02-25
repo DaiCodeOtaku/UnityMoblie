@@ -64,6 +64,7 @@
      <Compile Include="Assets\Resources\Scripts\SplashSequencer.cs" />
      <Compile Include="Assets\Resources\Scripts\UiControl.cs" />
      <Compile Include="Assets\Resources\Scripts\UiScore.cs" />
+     <Compile Include="Assets\Resources\Scripts\UiWave.cs" />
      <Compile Include="Assets\Resources\Scripts\XML.cs" />
      <Compile Include="Assets\Resources\Scripts\blade_spin.cs" />
      <Compile Include="Assets\Resources\Scripts\craft_tilt.cs" />

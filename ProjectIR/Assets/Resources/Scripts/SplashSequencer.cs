@@ -53,19 +53,23 @@ public class SplashSequencer : MonoBehaviour {
 	}
 
 	public void pressOptions(){
-		Debug.Log ("options");
+		//Debug.Log ("options");
 		canMenu.enabled = false;
 		canOptions.enabled = true;
 	}
 
 	public void pressStart(){
-		Debug.Log ("start");
+		//Debug.Log ("start");
 		Application.LoadLevel ("Main");
 	}
 
 	public void pressBack(){
-		Debug.Log ("back");
+		//Debug.Log ("back");
 		canMenu.enabled = true;
 		canOptions.enabled = false;
+	}
+
+	public void pressExit(){
+		Application.Quit();
 	}
 }

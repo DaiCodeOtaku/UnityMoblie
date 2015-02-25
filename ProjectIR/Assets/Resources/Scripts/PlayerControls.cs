@@ -26,9 +26,10 @@ public class Player
 	public cScheme lastScheme;
 	public AudioSource music;
 
+
 	public Player()
 	{
-		scheme = cScheme.accel;
+		scheme = cScheme.moveScale;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -45,8 +46,12 @@ public class Player
 			if ((scheme == cScheme.arrows) || (scheme == cScheme.arrowsInv))
 			{
 				UIControl.ArrowScroll(1);
-			}
 
+			}
+			if (scheme >= (cScheme)4 && scheme <= (cScheme)8)
+			{
+				music.pitch = -1.5f;
+			}
 			lastScheme = scheme;
 			UIControl.Controls(scheme.ToString());
 		}
@@ -73,6 +78,7 @@ public class Player
 
 					UIControl.Inverse(false);
 					UIControl.Controls(scheme.ToString());
+					accelSpeed = 0;
 
 
 					if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
@@ -86,22 +92,20 @@ public class Player
 					}
 
 				// DisplayScheme(); A function from UI that displays what control scheme is being used
-				 	if (scheme >= (cScheme)4 && scheme <= (cScheme)9) // shows the "INVERT" flashing UI bit
+					if (scheme >= (cScheme)4 && scheme <= (cScheme)8)
 					{
-						music.pitch = -1;
-					}
+						//ShowInvert();
+						music.pitch = -1.5f;
+					} // shows the "INVERT" flashing UI bit
 					else
 					{
-						music.pitch = 1;
+						music.pitch = 1.0f;
 					}
-
 				}
-
 			}
 			lastScheme = scheme;
 		}
 	}
-
 }
 
 public class PlayerControls : MonoBehaviour 
@@ -132,12 +136,14 @@ public class PlayerControls : MonoBehaviour
 	float moveThreshold = 0.2f;
 	float arrowTop = (Screen.height / 5);
 	float arrowBottom = (Screen.height / 8);
+	bool musicPlayed = false;
 
 	// Class Variables:
 	Player player = new Player();
+	public AudioSource inverseBeeps;
+	public AudioSource gameStart;
 	public AudioSource Music;
-	public AudioSource Explosion;
-
+	public AudioSource explosion;
 
 	// Use this for initialization
 	void Start () 
@@ -164,11 +170,19 @@ public class PlayerControls : MonoBehaviour
 		normalisedSpeed = player.speed * Time.deltaTime;
 		timer += Time.deltaTime;
 
-		ArrowCheck ();
-		PlayTimer ();
-		TelegraphChecker ();
-		MovePlayer ();
-		AccelLimit (ref player);
+		if (player.scheme != (cScheme)(-1))
+		{
+			ArrowCheck ();
+			PlayTimer ();
+			TelegraphChecker ();
+			MovePlayer ();
+			AccelLimit (ref player);
+			if (!gameStart.isPlaying && musicPlayed == false)
+			{
+				Music.Play ();
+				musicPlayed = true;
+			}
+		}
 	}
 
 
@@ -371,6 +385,7 @@ public class PlayerControls : MonoBehaviour
 				activateTimer = true;
 				player.telegraphTime = 0.0f;
 				player.UIControl.Inverse(true);
+				inverseBeeps.Play();
 			}
 		}
 	}
@@ -412,13 +427,13 @@ public class PlayerControls : MonoBehaviour
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
 			player.scheme = (cScheme)(-1);
-			Music.pitch = 0.5f;
-			Explosion.Play();
+			Music.pitch = -0.5f;
+			explosion.Play ();
+			inverseBeeps.Stop();
+			Handheld.Vibrate();
+			Destroy(this.gameObject);
 		}
 	}
-
-
-
 }
 
 

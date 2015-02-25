@@ -13,6 +13,7 @@ public class ArrowControl : MonoBehaviour {
    public int arrow;
    float time;
    public float public_time;
+	public float translateTime;
 
 
 	void Start () {
@@ -33,7 +34,7 @@ public class ArrowControl : MonoBehaviour {
                
                 if (time > 0.0f)
                 {
-                    gameObject.transform.Translate(Time.fixedDeltaTime * -2.5f, 0, 0);
+					gameObject.transform.Translate(Time.fixedDeltaTime * -translateTime, 0, 0);
                 }
                 time = (time - 0.1f);
 
@@ -50,7 +51,7 @@ public class ArrowControl : MonoBehaviour {
                
                 if (time > 0.0f)
                 {
-                    gameObject.transform.Translate(Time.fixedDeltaTime * 2.5f, 0, 0);
+					gameObject.transform.Translate(Time.fixedDeltaTime * translateTime, 0, 0);
                 }
                 time = (time - 0.1f);
 
@@ -70,7 +71,7 @@ public class ArrowControl : MonoBehaviour {
               
                 if (time > 0.0f)
                 {
-                    gameObject.transform.Translate(Time.fixedDeltaTime * 2.5f, 0, 0);
+					gameObject.transform.Translate(Time.fixedDeltaTime * translateTime, 0, 0);
                 }
                 time = (time - 0.1f);
 
@@ -87,7 +88,7 @@ public class ArrowControl : MonoBehaviour {
                
                 if (time > 0.0f)
                 {
-                    gameObject.transform.Translate(Time.fixedDeltaTime * -2.5f, 0, 0);
+					gameObject.transform.Translate(Time.fixedDeltaTime * -translateTime, 0, 0);
                 }
                 time = (time - 0.1f);
 

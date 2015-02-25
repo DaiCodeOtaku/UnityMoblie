@@ -58,8 +58,12 @@ public class UiControl : MonoBehaviour {
         UiScore uiscore = (UiScore)GameObject.FindObjectOfType<UiScore>();
         uiscore.Hide();
 
+        UiWave uiwave = (UiWave)GameObject.FindObjectOfType<UiWave>();
+        uiwave.Hide();
+
         ControlText TextControl = (ControlText)GameObject.FindObjectOfType<ControlText>();
         TextControl.Hide();
+
 
         Inverse(false);
         Game_Over game = (Game_Over)GameObject.FindObjectOfType<Game_Over>();
