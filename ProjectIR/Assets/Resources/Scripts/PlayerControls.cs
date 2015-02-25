@@ -24,6 +24,8 @@ public class Player
 	
 	public UiControl UIControl;
 	public cScheme lastScheme;
+	public AudioSource music;
+
 
 	public Player()
 	{
@@ -85,7 +87,15 @@ public class Player
 					}
 
 				// DisplayScheme(); A function from UI that displays what control scheme is being used
-				// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
+					if (scheme >= (cScheme)4 && scheme <= (cScheme)9)
+					{
+						//ShowInvert();
+						music.pitch = -1;
+					} // shows the "INVERT" flashing UI bit
+					else
+					{
+						music.pitch = 1;
+					}
 					
 
 				}
@@ -94,7 +104,6 @@ public class Player
 			lastScheme = scheme;
 		}
 	}
-
 }
 
 public class PlayerControls : MonoBehaviour 
@@ -125,10 +134,14 @@ public class PlayerControls : MonoBehaviour
 	float moveThreshold = 0.2f;
 	float arrowTop = (Screen.height / 5);
 	float arrowBottom = (Screen.height / 8);
+	bool musicPlayed = false;
 
 	// Class Variables:
 	Player player = new Player();
-
+	public AudioSource inverseBeeps;
+	public AudioSource gameStart;
+	public AudioSource Music;
+	public AudioSource explosion;
 
 	// Use this for initialization
 	void Start () 
@@ -136,7 +149,7 @@ public class PlayerControls : MonoBehaviour
 		timer = 0;
 		checkSOD = false;
 		player.UIControl = GameObject.FindObjectOfType<UiControl>();
-
+		player.music = Music;
 	}
 
 	/*
@@ -155,12 +168,16 @@ public class PlayerControls : MonoBehaviour
 		normalisedSpeed = player.speed * Time.deltaTime;
 		timer += Time.deltaTime;
 
-
 		ArrowCheck ();
 		PlayTimer ();
 		TelegraphChecker ();
 		MovePlayer ();
 		AccelLimit (ref player);
+		if (!gameStart.isPlaying && musicPlayed == false)
+		{
+			Music.Play ();
+			musicPlayed = true;
+		}
 	}
 
 
@@ -316,7 +333,7 @@ public class PlayerControls : MonoBehaviour
 		
 		if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 2.5))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
 		{	
-			this.transform.Translate (normalisedSpeed * arrowSpeed, 0, 0);
+			this.transform.Translate (normalisedSpeed * arrowSpeed * sign, 0, 0);
 		} 
 		else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 2.5)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
 		{	
@@ -363,6 +380,7 @@ public class PlayerControls : MonoBehaviour
 				activateTimer = true;
 				player.telegraphTime = 0.0f;
 				player.UIControl.Inverse(true);
+				inverseBeeps.Play();
 			}
 		}
 	}
@@ -404,11 +422,10 @@ public class PlayerControls : MonoBehaviour
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
 			player.scheme = (cScheme)(-1);
+			Music.pitch = 0.5f;
+			explosion.Play ();
 		}
 	}
-
-
-
 }
 
 

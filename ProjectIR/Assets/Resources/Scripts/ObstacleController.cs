@@ -7,7 +7,7 @@ public class ObstacleController : MonoBehaviour {
 
 	public GameObject ObstacleTemplate;
 	enum spawnPatterns {nullPattern = 0, Basic, Advanced, Painful, Stairs, Butterfly, 
-		SpaceInvaders, Pillar, TargetLocked, Platforms, Spears};
+						SpaceInvaders, Pillar, TargetLocked, Platforms, Spears};
 	public float patternTimer;
 	public static bool GO = false;
 	spawnPatterns previousPattern, currentPattern;
@@ -112,13 +112,15 @@ public class ObstacleController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		patternTimer -= Time.deltaTime;
+		if (!GO) {
+			patternTimer -= Time.deltaTime;
 
-		executePattern(currentPattern);
+			executePattern (currentPattern);
 
-		if (patternTimer < 0) {
-			currentPattern = newPattern();
-			Debug.Log(currentPattern);
+			if (patternTimer < 0) {
+					currentPattern = newPattern ();
+					Debug.Log (currentPattern);
+			}
 		}
 	}
 

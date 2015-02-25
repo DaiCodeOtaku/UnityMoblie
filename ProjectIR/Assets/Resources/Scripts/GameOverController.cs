@@ -36,8 +36,8 @@ public class GameOverController : MonoBehaviour {
      
         if (Highscore < currentScore == true)
         {
-            Debug.Log("worrking");
-         
+
+            Debug.Log("in");
             X.UpdateScore(currentScore);
             Highscore = currentScore;
 
