@@ -24,6 +24,7 @@ public class Player
 	
 	public UiControl UIControl;
 	public cScheme lastScheme;
+	public AudioSource music;
 
 	public Player()
 	{
@@ -85,8 +86,14 @@ public class Player
 					}
 
 				// DisplayScheme(); A function from UI that displays what control scheme is being used
-				// if (scheme >= 4 && scheme <= 9) {ShowInvert();} // shows the "INVERT" flashing UI bit
-					
+				 	if (scheme >= (cScheme)4 && scheme <= (cScheme)9) // shows the "INVERT" flashing UI bit
+					{
+						music.pitch = -1;
+					}
+					else
+					{
+						music.pitch = 1;
+					}
 
 				}
 
@@ -128,6 +135,8 @@ public class PlayerControls : MonoBehaviour
 
 	// Class Variables:
 	Player player = new Player();
+	public AudioSource Music;
+	public AudioSource Explosion;
 
 
 	// Use this for initialization
@@ -136,7 +145,7 @@ public class PlayerControls : MonoBehaviour
 		timer = 0;
 		checkSOD = false;
 		player.UIControl = GameObject.FindObjectOfType<UiControl>();
-
+		player.music = Music;
 	}
 
 	/*
@@ -154,7 +163,6 @@ public class PlayerControls : MonoBehaviour
 	{
 		normalisedSpeed = player.speed * Time.deltaTime;
 		timer += Time.deltaTime;
-
 
 		ArrowCheck ();
 		PlayTimer ();
@@ -316,7 +324,7 @@ public class PlayerControls : MonoBehaviour
 		
 		if (Input.GetMouseButton (0) && (Input.mousePosition.x > ((Screen.width / 4) + (Screen.width / 2.5))) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
 		{	
-			this.transform.Translate (normalisedSpeed * arrowSpeed, 0, 0);
+			this.transform.Translate (normalisedSpeed * arrowSpeed * sign, 0, 0);
 		} 
 		else if (Input.GetMouseButton (0) && (Input.mousePosition.x < (Screen.width / 2.5)) && ((Input.mousePosition.y < arrowTop) && (Input.mousePosition.y > arrowBottom))) 
 		{	
@@ -404,6 +412,8 @@ public class PlayerControls : MonoBehaviour
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
 			player.scheme = (cScheme)(-1);
+			Music.pitch = 0.5f;
+			Explosion.Play();
 		}
 	}
 
