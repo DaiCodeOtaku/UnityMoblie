@@ -46,8 +46,12 @@ public class Player
 			if ((scheme == cScheme.arrows) || (scheme == cScheme.arrowsInv))
 			{
 				UIControl.ArrowScroll(1);
-			}
 
+			}
+			if (scheme >= (cScheme)4 && scheme <= (cScheme)8)
+			{
+				music.pitch = -1.5f;
+			}
 			lastScheme = scheme;
 			UIControl.Controls(scheme.ToString());
 		}
@@ -97,10 +101,7 @@ public class Player
 					{
 						music.pitch = 1.0f;
 					}
-					
-
 				}
-
 			}
 			lastScheme = scheme;
 		}
