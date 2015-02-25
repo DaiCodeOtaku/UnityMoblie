@@ -170,15 +170,18 @@ public class PlayerControls : MonoBehaviour
 		normalisedSpeed = player.speed * Time.deltaTime;
 		timer += Time.deltaTime;
 
-		ArrowCheck ();
-		PlayTimer ();
-		TelegraphChecker ();
-		MovePlayer ();
-		AccelLimit (ref player);
-		if (!gameStart.isPlaying && musicPlayed == false)
+		if (player.scheme != (cScheme)(-1))
 		{
-			Music.Play ();
-			musicPlayed = true;
+			ArrowCheck ();
+			PlayTimer ();
+			TelegraphChecker ();
+			MovePlayer ();
+			AccelLimit (ref player);
+			if (!gameStart.isPlaying && musicPlayed == false)
+			{
+				Music.Play ();
+				musicPlayed = true;
+			}
 		}
 	}
 
@@ -426,6 +429,8 @@ public class PlayerControls : MonoBehaviour
 			player.scheme = (cScheme)(-1);
 			Music.pitch = -0.5f;
 			explosion.Play ();
+			inverseBeeps.Stop();
+			Destroy(this.gameObject);
 		}
 	}
 }
