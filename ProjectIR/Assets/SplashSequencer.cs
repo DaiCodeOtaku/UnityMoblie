@@ -48,5 +48,9 @@ public class SplashSequencer : MonoBehaviour {
 		canMenu.enabled = true;
 		canOptions.enabled = false;
 	}
+
+	public void pressExit(){
+		Application.Quit ();
+	}
 	
 }
