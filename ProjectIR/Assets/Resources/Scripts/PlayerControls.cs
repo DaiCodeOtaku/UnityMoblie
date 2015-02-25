@@ -29,7 +29,7 @@ public class Player
 
 	public Player()
 	{
-		scheme = cScheme.accel;
+		scheme = cScheme.moveScale;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -74,6 +74,7 @@ public class Player
 
 					UIControl.Inverse(false);
 					UIControl.Controls(scheme.ToString());
+					accelSpeed = 0;
 
 
 					if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
@@ -87,14 +88,14 @@ public class Player
 					}
 
 				// DisplayScheme(); A function from UI that displays what control scheme is being used
-					if (scheme >= (cScheme)4 && scheme <= (cScheme)9)
+					if (scheme >= (cScheme)4 && scheme <= (cScheme)8)
 					{
 						//ShowInvert();
-						music.pitch = -1;
+						music.pitch = -1.5f;
 					} // shows the "INVERT" flashing UI bit
 					else
 					{
-						music.pitch = 1;
+						music.pitch = 1.0f;
 					}
 					
 
@@ -422,7 +423,7 @@ public class PlayerControls : MonoBehaviour
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
 			player.scheme = (cScheme)(-1);
-			Music.pitch = 0.5f;
+			Music.pitch = -0.5f;
 			explosion.Play ();
 		}
 	}
