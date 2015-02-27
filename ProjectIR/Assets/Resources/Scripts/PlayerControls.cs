@@ -29,7 +29,7 @@ public class Player
 
 	public Player()
 	{
-		scheme = cScheme.moveScale;
+		scheme = cScheme.SOD;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -294,7 +294,7 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
 		{	
-			if(transform.position.x > 0)
+			if(player.direction == true)
 			{
 				if(checkSOD == false)
 				{
@@ -313,7 +313,7 @@ public class PlayerControls : MonoBehaviour
 		} 
 		else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
 		{	
-			if(transform.position.x < 0)
+			if(player.direction == false)
 			{
 				if(checkSOD == false)
 				{
@@ -431,6 +431,7 @@ public class PlayerControls : MonoBehaviour
 			explosion.Play ();
 			inverseBeeps.Stop();
 			Destroy(this.gameObject);
+			Handheld.Vibrate();
 		}
 	}
 }
