@@ -49,6 +49,7 @@
      <Compile Include="Assets\AndroidButtonHandel.cs" />
      <Compile Include="Assets\BtnOptions.cs" />
      <Compile Include="Assets\BtnScreen.cs" />
+     <Compile Include="Assets\BtnTick.cs" />
      <Compile Include="Assets\SplashSequencer.cs" />
      <Compile Include="Assets\SplashTimer.cs" />
      <Compile Include="Assets\valControlScheme.cs" />

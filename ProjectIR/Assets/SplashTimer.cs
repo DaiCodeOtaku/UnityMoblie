@@ -10,7 +10,7 @@ public class SplashTimer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		splashInterval.Elapsed += new ElapsedEventHandler (splashSequence);
-		splashInterval.Interval = 5000;
+		splashInterval.Interval = 3000;
 		splashInterval.Start ();
 	}
 	

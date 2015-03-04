@@ -6,9 +6,9 @@ using System.Timers;
 
 public class SplashSequencer : MonoBehaviour {
 	
-	public static float sfxVol = 1.0f;
-	public static float sfxUI = 10.0f;
-	public static int ctrlScheme = 1;
+	public static float sfxVol;
+	public static float sfxUI;
+	public static int ctrlScheme;
 	
 	public Canvas canBrokenEarth;
 	public Canvas canMenu;
@@ -36,6 +36,7 @@ public class SplashSequencer : MonoBehaviour {
 		Debug.Log ("options");
 		canMenu.enabled = false;
 		canOptions.enabled = true;
+		BtnOptions.setControlUI();
 	}
 	
 	public void pressStart(){
