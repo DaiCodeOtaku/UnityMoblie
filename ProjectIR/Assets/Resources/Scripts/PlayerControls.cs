@@ -26,6 +26,7 @@ public class Player
 	public cScheme lastScheme;
 	public AudioSource music;
 	public ObstacleController OC;
+	public bool tiltEnabled;
 
 	public Player()
 	{
@@ -89,15 +90,18 @@ public class Player
 		{
 			while (scheme == lastScheme) 
 			{
-				// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
-				//{
+
+				if (tiltEnabled) // Player stored info from Options, checks if tilt controls are enabled
+				{
 					scheme = (cScheme)Random.Range (0, 10);
-				/*}
+					Debug.Log (scheme);
+					accelSpeed = 0;
+				}
 				else
 				{
-					scheme = Random.Range (0, 8);
+					scheme = (cScheme)Random.Range (0, 8);
 					accelSpeed = 0;
-				}*/
+				}
 
 				if (scheme != lastScheme)
 				{
@@ -192,6 +196,8 @@ public class PlayerControls : MonoBehaviour
 		Music.volume = musicVolume;
 		explosion.volume = musicVolume;
 		player.OC = GameObject.FindObjectOfType<ObstacleController>();
+		player.tiltEnabled = xmlDoc.TilteEnabledRead();
+		gameStart.Play();
 	}
 
 	/*

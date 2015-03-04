@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class BtnOptions : MonoBehaviour {
-
+	public static XML xml = GameObject.FindObjectOfType<XML>();
 	// Use this for initialization
 	void Start () {
 	
@@ -24,6 +24,7 @@ public class BtnOptions : MonoBehaviour {
 			SplashSequencer.sfxUI--;
 			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10;
 			Debug.Log ("Volume: " + SplashSequencer.sfxVol);
+			xml.MusicWrite(SplashSequencer.sfxVol);
 		}
 	}
 
@@ -32,6 +33,7 @@ public class BtnOptions : MonoBehaviour {
 			SplashSequencer.sfxUI++;
 			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10;
 			Debug.Log ("Volume: " + SplashSequencer.sfxVol);
+			xml.MusicWrite(SplashSequencer.sfxVol);
 		}
 	}
 
@@ -77,55 +79,57 @@ public class BtnOptions : MonoBehaviour {
 
 	// changes the option screen's preferred control to a string and passes the value into xml
 	public static void setControlUI(){
+
+
 		switch (SplashSequencer.ctrlScheme) {
 		case 0:
-		setControlText("Move Scale");
-		// pass val to xml
+			setControlText("Move Scale");
+			xml.UpdateControl(0);
 		break;
 
 		case 1:
-		setControlText("Arrows");
-		// pass val to xml
+			setControlText("Arrows");
+			xml.UpdateControl(1);
 		break;
 
 		case 2:
-		setControlText("Accel");
-		// pass val to xml
+			setControlText("Accel");
+			xml.UpdateControl(2);
 		break;
 
 		case 3:
-		setControlText("Stop on a Dime");
-		// pass val to xml
+			setControlText("Stop on a Dime");
+			xml.UpdateControl(3);
 		break;
 
 		case 4:
-		setControlText("Tilt");
-		// pass val to xml
+			setControlText("Tilt");
+			xml.UpdateControl(9);
 		break;
 
 		case 5:
-		setControlText("Move Scale Inverted");
-		// pass val to xml
+			setControlText("Move Scale Inverted");
+			xml.UpdateControl(4);
 		break;
 			
 		case 6:
-		setControlText("Arrows Inverted");
-		// pass val to xml
+			setControlText("Arrows Inverted");
+			xml.UpdateControl(5);
 		break;
 			
 		case 7:
-		setControlText("Accel Inverted");
-		// pass val to xml
+			setControlText("Accel Inverted");
+			xml.UpdateControl(6);
 		break;
 			
 		case 8:
-		setControlText("Stop on a Dime Inverted");
-		// pass val to xml
+			setControlText("Stop on a Dime Inverted");
+			xml.UpdateControl(7);
 		break;
 			
 		case 9:
-		setControlText("Tilt Inverted");
-		// pass val to xml
+			setControlText("Tilt Inverted");
+			xml.UpdateControl(8);
 		break;
 		}
 
