@@ -17,6 +17,7 @@ public class AndroidButtonHandel : MonoBehaviour {
 		if(Input.GetKey(KeyCode.Escape))
 		{
             G.SetActive(true);
+			Time.timeScale = 0.0f;
             //QuitCon Quit = (QuitCon)GameObject.FindObjectOfType<QuitCon>();
            // Quit.Show();
 		};

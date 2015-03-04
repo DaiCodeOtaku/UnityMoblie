@@ -25,6 +25,7 @@ public class Player
 	public UiControl UIControl;
 	public cScheme lastScheme;
 	public AudioSource music;
+	public ObstacleController OC;
 
 	public Player()
 	{
@@ -110,7 +111,7 @@ public class Player
 					{
 						UIControl.ArrowScroll(0);
 					}
-					if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
+					else if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
 					{
 						UIControl.ArrowScroll(1);
 					}
@@ -125,6 +126,9 @@ public class Player
 					{
 						music.pitch = 1.0f;
 					}
+					OC.ChangeObstacleSpeed(0.5f);
+					music.pitch *= 0.9f;
+
 				}
 			}
 			lastScheme = scheme;
@@ -168,6 +172,7 @@ public class PlayerControls : MonoBehaviour
 	public AudioSource gameStart;
 	public AudioSource Music;
 	public AudioSource explosion;
+	public XML xmlDoc;
 
 	// Use this for initialization
 	void Start () 
@@ -178,14 +183,15 @@ public class PlayerControls : MonoBehaviour
 		player.music = Music;
 		//float musicVolume = GameObject.FindObjectOfType<XML>().MusicRead();
 		//player.scheme = (cScheme)GameObject.FindObjectOfType<XML>().ControlScheme();
-		XML xmlDoc = (XML)GameObject.FindObjectOfType<XML>();
 		float musicVolume = xmlDoc.MusicRead();
 		player.scheme = (cScheme)xmlDoc.ControlScheme();
+		Debug.Log("Control Scheme: ");
+		Debug.Log(xmlDoc.ControlScheme());
 		inverseBeeps.volume = musicVolume;
 		gameStart.volume = musicVolume;
 		Music.volume = musicVolume;
 		explosion.volume = musicVolume;
-
+		player.OC = GameObject.FindObjectOfType<ObstacleController>();
 	}
 
 	/*
@@ -411,7 +417,7 @@ public class PlayerControls : MonoBehaviour
 		{
 			player.telegraphTime += Time.deltaTime;
 			player.UIControl.Inverse(true);
-			inverseBeeps.Play();
+
 			if(player.telegraphTime >= teleTime)
 			{
 				player.startGetScheme = true;
@@ -434,6 +440,7 @@ public class PlayerControls : MonoBehaviour
 				activateTimer = false;
 				timer = 0.0f;
 				player.teleCheck = true;
+				inverseBeeps.Play();
 			}
 		}
 	}
@@ -448,11 +455,11 @@ public class PlayerControls : MonoBehaviour
 
 	void DirectionCheck()
 	{
-		if(player.speed < 0)
+		if(player.accelSpeed < 0)
 		{
 			player.direction = -1;
 		}
-		else if(player.speed > 0)
+		else if(player.accelSpeed > 0)
 		{
 			player.direction = 1;
 		}
@@ -465,6 +472,7 @@ public class PlayerControls : MonoBehaviour
 	void OnCollisionEnter ()
 	{
 		if (ObstacleController.GO == false) {
+
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
 			player.scheme = (cScheme)(-1);
@@ -472,6 +480,11 @@ public class PlayerControls : MonoBehaviour
 			explosion.Play ();
 			inverseBeeps.Stop();
 			Destroy(this.gameObject);
+			if (player.scheme == cScheme.arrows || player.scheme == cScheme.arrowsInv)
+			{
+				player.UIControl.ArrowScroll(0);
+				player.UIControl.ArrowScroll(0);
+			}
 			Handheld.Vibrate();
 		}
 	}

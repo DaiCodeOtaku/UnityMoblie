@@ -10,10 +10,13 @@ public class ObstacleController : MonoBehaviour {
 						SpaceInvaders, Pillar, TargetLocked, Platforms, Spears};
 	public float patternTimer;
 	public static bool GO = false;
+	public static float obstacleSpeed;
 	spawnPatterns previousPattern, currentPattern;
 	int patternOffset;
 	public int waveCounter;
-	float spawnHeight, spawnDepth;
+	float spawnHeight, spawnDepth, baseSpeed, spawnRate, slowDownTimer, slowDownLength;
+	bool slowDown;
+
 
 							  //time before, //num of blocks, //block offset
 
@@ -58,7 +61,7 @@ public class ObstacleController : MonoBehaviour {
 	int numSpaceInvaders = 57;
 	float[] spaceInvadersPattern = {	0.2f, 5, 3.0f, -3.0f, 2.0f, -2.0f, 0.0f, 		0.1f, 2, 2.5f, -2.5f,
 								0.5f, 2, 1.0f, -1.0f, 	0.1f, 4, 0.5f, -0.5f, 1.5f, -1.5f,
-								0.3f, 1, 2.3f, 			0.1f, 2, 3.0f, 2.0f,	0.2f, 1, -2.5f,
+								0.3f, 1, 2.5f, 			0.1f, 2, 3.0f, 2.0f,	0.2f, 1, -2.5f,
 								0.1f, 2, -3.0f, -2.0f, 	0.3f, 1, -0.5f,			0.1f, 2, 0.0f, -1.0f,
 								0.3f, 1, 2.5f,			0.1f, 2, 3.0f, 2.0f,	0.3f, 1, 1.0f,
 								0.1f, 2, 1.5f, 0.5f,	0.3f};
@@ -108,13 +111,21 @@ public class ObstacleController : MonoBehaviour {
 		patternOffset = 0;
 		spawnHeight = 7.0f;
 		spawnDepth = -0.5f;
+		baseSpeed = 5.5f;
+		obstacleSpeed = baseSpeed;
+		spawnRate = 1;
+		slowDownLength = 0.5f;
+		slowDownTimer = 0.0f;
+		slowDown = false;
 		//GO = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!GO) {
-			patternTimer -= Time.deltaTime;
+			patternTimer -= Time.deltaTime * spawnRate;
+
+			SlowDown();
 
 			executePattern (currentPattern);
 
@@ -123,8 +134,24 @@ public class ObstacleController : MonoBehaviour {
 				waveCounter++;
 				UiWave W = (UiWave)GameObject.FindObjectOfType<UiWave>();
 				W.Wave(waveCounter);
-				Debug.Log("wave update");
+				//Debug.Log("wave update");
 				Debug.Log (currentPattern);
+			}
+		}
+	}
+
+	void SlowDown(){
+		if (slowDownTimer >= 0) {
+			slowDownTimer -= Time.deltaTime;
+		} else {
+			if (slowDown){
+				//ResetObstacleSpeed();
+				PlayerControls PLC = (PlayerControls)GameObject.FindObjectOfType<PlayerControls>();
+				PLC.Music.pitch *= 1.11111111f;
+				slowDown = false;
+			}
+			if (obstacleSpeed != baseSpeed){
+				ResetObstacleSpeed();
 			}
 		}
 	}
@@ -287,6 +314,27 @@ public class ObstacleController : MonoBehaviour {
 				patternOffset++;
 			}
 		}
+	}
+
+	public void ChangeObstacleSpeed(float Multiplier){ // reduces the obstacle speed and spawn rate.
+		obstacleSpeed *= Multiplier;
+		spawnRate = Multiplier;
+		slowDownTimer = slowDownLength;
+		slowDown = true;
+		//Debug.Log ("Slow");
+	}
+
+	public void ResetObstacleSpeed(){ // resets speed of obstacles
+		//obstacleSpeed = baseSpeed;
+		//spawnRate = 1;
+		//Debug.Log ("Normal");
+		obstacleSpeed += Time.deltaTime;
+		spawnRate = obstacleSpeed / baseSpeed;
+		if (obstacleSpeed > baseSpeed){
+			obstacleSpeed = baseSpeed;
+			spawnRate = 1;
+		}
+
 	}
 
 }

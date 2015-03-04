@@ -116,6 +116,7 @@ public class UiControl : MonoBehaviour {
 
        QuitCon Quit = (QuitCon)GameObject.FindObjectOfType<QuitCon>();
        Quit.Hide();
+		Time.timeScale = 1.0f;
    }
 
 

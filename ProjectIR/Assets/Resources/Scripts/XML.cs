@@ -88,7 +88,7 @@ public class XML : MonoBehaviour {
                                                 new XElement("HighScore", 0),
                                                 new XElement("FirstTimePlay", 0),
                                                 new XElement("Control", 3),
-                                                new XElement("music", 0.0f),
+                                                new XElement("music", 1.0f),
                                                 new XElement("TilteEnabled", false)
                                             );
 
