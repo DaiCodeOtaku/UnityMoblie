@@ -51,6 +51,7 @@
      <Compile Include="Assets\Resources\Scripts\BackgroundScroll.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnOptions.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnScreen.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnTick.cs" />
      <Compile Include="Assets\Resources\Scripts\ControlText.cs" />
      <Compile Include="Assets\Resources\Scripts\GameOverController.cs" />
      <Compile Include="Assets\Resources\Scripts\Game_Over.cs" />
@@ -62,6 +63,7 @@
      <Compile Include="Assets\Resources\Scripts\QuitCon.cs" />
      <Compile Include="Assets\Resources\Scripts\ScoreController.cs" />
      <Compile Include="Assets\Resources\Scripts\SplashSequencer.cs" />
+     <Compile Include="Assets\Resources\Scripts\SplashTimer.cs" />
      <Compile Include="Assets\Resources\Scripts\UiControl.cs" />
      <Compile Include="Assets\Resources\Scripts\UiScore.cs" />
      <Compile Include="Assets\Resources\Scripts\UiWave.cs" />

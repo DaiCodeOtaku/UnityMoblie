@@ -134,7 +134,7 @@ public class ObstacleController : MonoBehaviour {
 				waveCounter++;
 				UiWave W = (UiWave)GameObject.FindObjectOfType<UiWave>();
 				W.Wave(waveCounter);
-				Debug.Log("wave update");
+				//Debug.Log("wave update");
 				Debug.Log (currentPattern);
 			}
 		}
@@ -146,7 +146,8 @@ public class ObstacleController : MonoBehaviour {
 		} else {
 			if (slowDown){
 				//ResetObstacleSpeed();
-				GameObject.FindObjectOfType<PlayerControls>().player.music.pitch *= 1.11111111f;
+				PlayerControls PLC = (PlayerControls)GameObject.FindObjectOfType<PlayerControls>();
+				PLC.Music.pitch *= 1.11111111f;
 				slowDown = false;
 			}
 			if (obstacleSpeed != baseSpeed){
@@ -320,7 +321,7 @@ public class ObstacleController : MonoBehaviour {
 		spawnRate = Multiplier;
 		slowDownTimer = slowDownLength;
 		slowDown = true;
-		Debug.Log ("Slow");
+		//Debug.Log ("Slow");
 	}
 
 	public void ResetObstacleSpeed(){ // resets speed of obstacles
