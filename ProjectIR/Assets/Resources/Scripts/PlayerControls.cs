@@ -30,7 +30,7 @@ public class Player
 
 	public Player()
 	{
-		scheme = cScheme.SOD;
+		scheme = cScheme.arrows;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -157,6 +157,13 @@ public class PlayerControls : MonoBehaviour
 		player.UIControl = GameObject.FindObjectOfType<UiControl>();
 		player.OC = GameObject.FindObjectOfType<ObstacleController> ();
 		player.music = Music;
+		//added code here
+		float musicVolume = GameObject.FindObjectOfType<XML>().MusicRead();
+		musicVolume = 0.2f;
+		inverseBeeps.volume = musicVolume;
+		gameStart.volume = musicVolume;
+		Music.volume = musicVolume;
+		explosion.volume = musicVolume;
 	}
 
 	/*
