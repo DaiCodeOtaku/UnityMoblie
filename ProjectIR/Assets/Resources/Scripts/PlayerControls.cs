@@ -25,6 +25,8 @@ public class Player
 	public UiControl UIControl;
 	public cScheme lastScheme;
 	public AudioSource music;
+	public ObstacleController OC;
+	public bool tiltEnabled;
 
 	public Player()
 	{
@@ -88,15 +90,18 @@ public class Player
 		{
 			while (scheme == lastScheme) 
 			{
-				// if (UseTilt()) // Player stored info from Options, checks if tilt controls are enabled
-				//{
+
+				if (tiltEnabled) // Player stored info from Options, checks if tilt controls are enabled
+				{
 					scheme = (cScheme)Random.Range (0, 10);
-				/*}
+					Debug.Log (scheme);
+					accelSpeed = 0;
+				}
 				else
 				{
-					scheme = Random.Range (0, 8);
+					scheme = (cScheme)Random.Range (0, 8);
 					accelSpeed = 0;
-				}*/
+				}
 
 				if (scheme != lastScheme)
 				{
@@ -110,7 +115,7 @@ public class Player
 					{
 						UIControl.ArrowScroll(0);
 					}
-					if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
+					else if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
 					{
 						UIControl.ArrowScroll(1);
 					}
@@ -125,6 +130,9 @@ public class Player
 					{
 						music.pitch = 1.0f;
 					}
+					OC.ChangeObstacleSpeed(0.5f);
+					music.pitch *= 0.9f;
+
 				}
 			}
 			lastScheme = scheme;
@@ -187,11 +195,15 @@ public class PlayerControls : MonoBehaviour
 		gameStart.volume = musicVolume;
 		Music.volume = musicVolume;
 		explosion.volume = musicVolume;
+		player.OC = GameObject.FindObjectOfType<ObstacleController>();
+		player.tiltEnabled = xmlDoc.TilteEnabledRead();
+		gameStart.Play();
 	}
 
 	/*
 	 ______ _    _ _   _  _____ _______ _____ ____  _   _  _____ 
-	|  ____| |  | | \ | |/ ____|__   __|_   _/ __ \| \ | |/ ____|
+	|  ____
+	| |  | | \ | |/ ____|__   __|_   _/ __ \| \ | |/ ____|
 	| |__  | |  | |  \| | |       | |    | || |  | |  \| | (___  
 	|  __| | |  | | . ` | |       | |    | || |  | | . ` |\___ \ 
 	| |    | |__| | |\  | |____   | |   _| || |__| | |\  |____) |
@@ -467,6 +479,7 @@ public class PlayerControls : MonoBehaviour
 	void OnCollisionEnter ()
 	{
 		if (ObstacleController.GO == false) {
+
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
 			player.scheme = (cScheme)(-1);
@@ -474,6 +487,11 @@ public class PlayerControls : MonoBehaviour
 			explosion.Play ();
 			inverseBeeps.Stop();
 			Destroy(this.gameObject);
+			if (player.scheme == cScheme.arrows || player.scheme == cScheme.arrowsInv)
+			{
+				player.UIControl.ArrowScroll(0);
+				player.UIControl.ArrowScroll(0);
+			}
 			Handheld.Vibrate();
 		}
 	}
