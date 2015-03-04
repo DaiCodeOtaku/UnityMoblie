@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class BtnOptions : MonoBehaviour {
-	public static XML xml = GameObject.FindObjectOfType<XML>();
+	public static XML xml;
 	// Use this for initialization
 	void Start () {
-	
+		xml = GameObject.FindObjectOfType<XML>();
 	}
 
 	// Update is called once per frame
