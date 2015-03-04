@@ -25,11 +25,12 @@ public class Player
 	public UiControl UIControl;
 	public cScheme lastScheme;
 	public AudioSource music;
+	public ObstacleController OC;
 
 
 	public Player()
 	{
-		scheme = cScheme.moveScale;
+		scheme = cScheme.SOD;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -101,6 +102,8 @@ public class Player
 					{
 						music.pitch = 1.0f;
 					}
+					OC.ChangeObstacleSpeed(0.5f);
+					music.pitch *= 0.9f;
 				}
 			}
 			lastScheme = scheme;
@@ -138,8 +141,9 @@ public class PlayerControls : MonoBehaviour
 	float arrowBottom = (Screen.height / 8);
 	bool musicPlayed = false;
 
+
 	// Class Variables:
-	Player player = new Player();
+	public Player player = new Player();
 	public AudioSource inverseBeeps;
 	public AudioSource gameStart;
 	public AudioSource Music;
@@ -151,6 +155,7 @@ public class PlayerControls : MonoBehaviour
 		timer = 0;
 		checkSOD = false;
 		player.UIControl = GameObject.FindObjectOfType<UiControl>();
+		player.OC = GameObject.FindObjectOfType<ObstacleController> ();
 		player.music = Music;
 	}
 
@@ -294,7 +299,7 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
 		{	
-			if(transform.position.x > 0)
+			if(player.direction == true)
 			{
 				if(checkSOD == false)
 				{
@@ -313,7 +318,7 @@ public class PlayerControls : MonoBehaviour
 		} 
 		else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
 		{	
-			if(transform.position.x < 0)
+			if(player.direction == false)
 			{
 				if(checkSOD == false)
 				{
@@ -398,6 +403,7 @@ public class PlayerControls : MonoBehaviour
 			activateTimer = false;
 			timer = 0.0f;
 			player.teleCheck = true;
+
 		}
 	}
 
@@ -430,8 +436,8 @@ public class PlayerControls : MonoBehaviour
 			Music.pitch = -0.5f;
 			explosion.Play ();
 			inverseBeeps.Stop();
-			Handheld.Vibrate();
 			Destroy(this.gameObject);
+			Handheld.Vibrate();
 		}
 	}
 }
