@@ -12,6 +12,7 @@ public class ObstacleController : MonoBehaviour {
 	public static bool GO = false;
 	spawnPatterns previousPattern, currentPattern;
 	int patternOffset;
+	public int waveCounter;
 	float spawnHeight, spawnDepth;
 
 							  //time before, //num of blocks, //block offset
@@ -118,8 +119,12 @@ public class ObstacleController : MonoBehaviour {
 			executePattern (currentPattern);
 
 			if (patternTimer < 0) {
-					currentPattern = newPattern ();
-					Debug.Log (currentPattern);
+				currentPattern = newPattern ();
+				waveCounter++;
+				UiWave W = (UiWave)GameObject.FindObjectOfType<UiWave>();
+				W.Wave(waveCounter);
+				Debug.Log("wave update");
+				Debug.Log (currentPattern);
 			}
 		}
 	}

@@ -20,16 +20,15 @@ public class Player
 	public float telegraphTime; // Grace period before the control scheme changes
 	public bool teleCheck; // Checks if the grace period is active
 	public bool startGetScheme; // Used to tell the control scheme function to get a new control scheme
-	public bool direction; // 0 = Left, 1 = Right
+	public short direction; // -1 = Left, 1 = Right, 0 = stationary
 	
 	public UiControl UIControl;
 	public cScheme lastScheme;
 	public AudioSource music;
 
-
 	public Player()
 	{
-		scheme = cScheme.SOD;
+		//scheme = cScheme.SOD;
 		speed = 0.0375f;
 		accelSpeed = 0; 
 		maxSpeed = 10;
@@ -37,6 +36,36 @@ public class Player
 		telegraphTime = 0.0f;
 		lastScheme = (cScheme)(-1);
 		startGetScheme = false;
+	}
+
+	string GetPlayerControl()
+	{
+		switch (scheme)
+		{
+		case cScheme.moveScale:
+			return "Move Scale";
+		case cScheme.arrows:
+			return "Arrows";
+		case cScheme.accel:
+			return "Acceleration";
+		case cScheme.SOD:
+			return "Stop on a Dime";
+		case cScheme.tilt:
+			return "Tilt";
+		case cScheme.moveScaleInv:
+			return "Move Scale Inverse";
+		case cScheme.arrowsInv:
+			return "Arrows Inverse";
+		case cScheme.accelInv:
+			return "Acceleration Inverse";
+		case cScheme.SODInv:
+			return "Stop on a Dime Inverse";
+		case cScheme.tiltInv:
+			return "TiltInverse";
+		default:
+			break;
+		}
+		return null;
 	}
 
 	public void GetControlScheme()
@@ -53,9 +82,8 @@ public class Player
 				music.pitch = -1.5f;
 			}
 			lastScheme = scheme;
-			UIControl.Controls(scheme.ToString());
+			UIControl.Controls(GetPlayerControl());
 		}
-		Debug.Log(startGetScheme);
 		if (startGetScheme == true)
 		{
 			while (scheme == lastScheme) 
@@ -74,16 +102,12 @@ public class Player
 				{
 					telegraphTime = 0;
 					startGetScheme = false;
-					Debug.Log(scheme);
 
-					UIControl.Inverse(false);
-					UIControl.Controls(scheme.ToString());
+					UIControl.Controls(GetPlayerControl());
 					accelSpeed = 0;
-
 
 					if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
 					{
-
 						UIControl.ArrowScroll(0);
 					}
 					if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
@@ -91,12 +115,12 @@ public class Player
 						UIControl.ArrowScroll(1);
 					}
 
-				// DisplayScheme(); A function from UI that displays what control scheme is being used
+				
 					if (scheme >= (cScheme)4 && scheme <= (cScheme)8)
 					{
 						//ShowInvert();
 						music.pitch = -1.5f;
-					} // shows the "INVERT" flashing UI bit
+					} 
 					else
 					{
 						music.pitch = 1.0f;
@@ -152,6 +176,16 @@ public class PlayerControls : MonoBehaviour
 		checkSOD = false;
 		player.UIControl = GameObject.FindObjectOfType<UiControl>();
 		player.music = Music;
+		//float musicVolume = GameObject.FindObjectOfType<XML>().MusicRead();
+		//player.scheme = (cScheme)GameObject.FindObjectOfType<XML>().ControlScheme();
+		XML xmlDoc = (XML)GameObject.FindObjectOfType<XML>();
+		float musicVolume = xmlDoc.MusicRead();
+		player.scheme = (cScheme)xmlDoc.ControlScheme();
+		inverseBeeps.volume = musicVolume;
+		gameStart.volume = musicVolume;
+		Music.volume = musicVolume;
+		explosion.volume = musicVolume;
+
 	}
 
 	/*
@@ -168,10 +202,10 @@ public class PlayerControls : MonoBehaviour
 	void Update () 
 	{
 		normalisedSpeed = player.speed * Time.deltaTime;
-		timer += Time.deltaTime;
 
 		if (player.scheme != (cScheme)(-1))
 		{
+			DirectionCheck();
 			ArrowCheck ();
 			PlayTimer ();
 			TelegraphChecker ();
@@ -184,7 +218,6 @@ public class PlayerControls : MonoBehaviour
 			}
 		}
 	}
-
 
 	//SCOTT'S FUNCTIONS
 	// Update Function
@@ -265,7 +298,7 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
 		{	
-			if(player.direction == false)
+			if(player.direction == -1)
 			{
 				player.accelSpeed -= acceleration;
 			} else
@@ -275,7 +308,7 @@ public class PlayerControls : MonoBehaviour
 		} 
 		else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
 		{	
-			if(player.direction == true)
+			if(player.direction == 1)
 			{
 				player.accelSpeed += acceleration;
 			} else
@@ -294,7 +327,7 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (Input.GetMouseButton (0) && Input.mousePosition.x < (Screen.width / 2)) 
 		{	
-			if(player.direction == true)
+			if(player.direction == 1)
 			{
 				if(checkSOD == false)
 				{
@@ -313,7 +346,7 @@ public class PlayerControls : MonoBehaviour
 		} 
 		else if (Input.GetMouseButton (0) && Input.mousePosition.x > (Screen.width / 2)) 
 		{	
-			if(player.direction == false)
+			if(player.direction == -1)
 			{
 				if(checkSOD == false)
 				{
@@ -346,7 +379,6 @@ public class PlayerControls : MonoBehaviour
 		}
 	}
 	
-	
 	// Misc Functions:
 	public void EdgeDetect(ref float accelSpeed)
 	{
@@ -378,26 +410,31 @@ public class PlayerControls : MonoBehaviour
 		if (player.teleCheck) 
 		{
 			player.telegraphTime += Time.deltaTime;
+			player.UIControl.Inverse(true);
+			inverseBeeps.Play();
 			if(player.telegraphTime >= teleTime)
 			{
 				player.startGetScheme = true;
+				player.GetControlScheme();
+				player.UIControl.Inverse(false);
 				player.teleCheck = false;
 				activateTimer = true;
 				player.telegraphTime = 0.0f;
-				player.UIControl.Inverse(true);
-				inverseBeeps.Play();
 			}
 		}
 	}
 
 	void PlayTimer ()
 	{
-		if (timer >= 5 && activateTimer) 
+		if(activateTimer)
 		{
-			player.GetControlScheme();
-			activateTimer = false;
-			timer = 0.0f;
-			player.teleCheck = true;
+			timer += Time.deltaTime;
+			if (timer >= 8) 
+			{
+				activateTimer = false;
+				timer = 0.0f;
+				player.teleCheck = true;
+			}
 		}
 	}
 
@@ -413,11 +450,15 @@ public class PlayerControls : MonoBehaviour
 	{
 		if(player.speed < 0)
 		{
-			player.direction = false;
+			player.direction = -1;
+		}
+		else if(player.speed > 0)
+		{
+			player.direction = 1;
 		}
 		else
 		{
-			player.direction = true;
+			player.direction = 0;
 		}
 	}
 

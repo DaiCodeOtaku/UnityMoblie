@@ -8,11 +8,13 @@ public class GameOverController : MonoBehaviour {
     
     public Text GameOver_score;
     public Text GameOver_Highscore;
+    public Text GameOver_Wave;
 
     public GameObject New;
     int FinalScore;
     int Highscore;
     int currentScore;
+    int Wave;
 	// Use this for initialization
 	void Start () {      
 	}
@@ -28,7 +30,12 @@ public class GameOverController : MonoBehaviour {
 
         ScoreController S = (ScoreController)GameObject.FindObjectOfType<ScoreController>();
         currentScore = (int)S.score;
-      
+
+		ObstacleController O = (ObstacleController)GameObject.FindObjectOfType<ObstacleController>();
+		Wave = O.waveCounter;
+		Debug.Log("wave get");
+		Debug.Log(Wave);
+
         Debug.Log(currentScore);
         XML X = (XML)GameObject.FindObjectOfType<XML>();
         Highscore = X.HighScore();
@@ -47,11 +54,13 @@ public class GameOverController : MonoBehaviour {
 
         string t1;
         string t2;
-
+		string t3;
         t1 = currentScore.ToString();
         GameOver_score.text = t1;
 
         t2 = Highscore.ToString();
         GameOver_Highscore.text = t2;
+		t3 = Wave.ToString();
+		GameOver_Wave.text = t3;
     }
 }
