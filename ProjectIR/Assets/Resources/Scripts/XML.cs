@@ -105,9 +105,9 @@ public class XML : MonoBehaviour {
         return temp;
     }
 
-    public void MusicWrite(float IN)
+    public void MusicWrite(int IN)
 {
-         ApplicationData APP1 = new ApplicationData();
+        ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
         APP1 = APP1.Load(final);
         APP2 = APP1;
@@ -129,7 +129,7 @@ public class XML : MonoBehaviour {
     {
         ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
-        APP1 = APP1.Load(final);
+       	APP1 = APP1.Load(final);
         APP2 = APP1;
         APP2.TilteEnabled = b1; ;
         APP2.save(final);

@@ -22,18 +22,18 @@ public class BtnOptions : MonoBehaviour {
 	public void pressLowerSfx(){
 		if (SplashSequencer.sfxUI > 0){
 			SplashSequencer.sfxUI--;
-			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10;
+			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10.0f;
 			Debug.Log ("Volume: " + SplashSequencer.sfxVol);
-			xml.MusicWrite(SplashSequencer.sfxVol);
+			xml.MusicWrite((int)SplashSequencer.sfxUI);
 		}
 	}
 
 	public void pressRaiseSfx(){
 		if (SplashSequencer.sfxUI < 10){
 			SplashSequencer.sfxUI++;
-			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10;
+			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10.0f;
 			Debug.Log ("Volume: " + SplashSequencer.sfxVol);
-			xml.MusicWrite(SplashSequencer.sfxVol);
+			xml.MusicWrite((int)SplashSequencer.sfxUI);
 		}
 	}
 

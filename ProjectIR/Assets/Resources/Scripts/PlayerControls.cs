@@ -161,7 +161,7 @@ public class PlayerControls : MonoBehaviour
 	float tiltSpeed = 6.0f;
 	float acceleration = 0.2f;
 	float revAcceleration = 0.4f;
-	float scaleSpeedLimiter = 0.9f;
+	float scaleSpeedLimiter = 0.85f;
 
 	// Misc Variables:
 	bool checkSOD;
@@ -415,6 +415,14 @@ public class PlayerControls : MonoBehaviour
 		if (player.accelSpeed <= player.minSpeed) 
 		{
 			player.accelSpeed = player.minSpeed + 1;
+		}
+		if(normalisedSpeed >= player.maxSpeed)
+		{
+			player.accelSpeed = player.maxSpeed - 0.1f;
+		}
+		if (player.accelSpeed <= player.minSpeed) 
+		{
+			player.accelSpeed = player.minSpeed + 0.1f;
 		}
 	}
 
