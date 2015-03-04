@@ -25,6 +25,7 @@ public class Player
 	public UiControl UIControl;
 	public cScheme lastScheme;
 	public AudioSource music;
+	public ObstacleController OC;
 
 
 	public Player()
@@ -101,6 +102,8 @@ public class Player
 					{
 						music.pitch = 1.0f;
 					}
+					OC.ChangeObstacleSpeed(0.5f);
+					music.pitch *= 0.9f;
 				}
 			}
 			lastScheme = scheme;
@@ -138,8 +141,9 @@ public class PlayerControls : MonoBehaviour
 	float arrowBottom = (Screen.height / 8);
 	bool musicPlayed = false;
 
+
 	// Class Variables:
-	Player player = new Player();
+	public Player player = new Player();
 	public AudioSource inverseBeeps;
 	public AudioSource gameStart;
 	public AudioSource Music;
@@ -151,6 +155,7 @@ public class PlayerControls : MonoBehaviour
 		timer = 0;
 		checkSOD = false;
 		player.UIControl = GameObject.FindObjectOfType<UiControl>();
+		player.OC = GameObject.FindObjectOfType<ObstacleController> ();
 		player.music = Music;
 	}
 
@@ -398,6 +403,7 @@ public class PlayerControls : MonoBehaviour
 			activateTimer = false;
 			timer = 0.0f;
 			player.teleCheck = true;
+
 		}
 	}
 
