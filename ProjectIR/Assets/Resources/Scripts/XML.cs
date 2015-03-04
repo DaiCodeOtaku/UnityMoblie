@@ -88,7 +88,7 @@ public class XML : MonoBehaviour {
                                                 new XElement("HighScore", 0),
                                                 new XElement("FirstTimePlay", 0),
                                                 new XElement("Control", 3),
-                                                new XElement("music", 1.0f),
+                                                new XElement("music", 0.0f),
                                                 new XElement("TilteEnabled", false)
                                             );
 
@@ -111,7 +111,7 @@ public class XML : MonoBehaviour {
         ApplicationData APP2 = new ApplicationData();
         APP1 = APP1.Load(final);
         APP2 = APP1;
-        APP2.music = IN; ;
+        APP2.music = IN;
         APP2.save(final);
 
 }
