@@ -78,12 +78,12 @@ public class XML : MonoBehaviour {
             //File exists
             foreach (FileInfo file in listfiles)
             {
-                Debug.Log("i exist");
+                //Debug.Log("i exist");
             }
         }
         else
         {
-            Debug.Log("i am created");
+            //Debug.Log("i am created");
             XElement srcTree = new XElement("ApplicationData",
                                                 new XElement("HighScore", 0),
                                                 new XElement("FirstTimePlay", 0),

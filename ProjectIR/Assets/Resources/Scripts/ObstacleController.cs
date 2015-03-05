@@ -134,7 +134,7 @@ public class ObstacleController : MonoBehaviour {
 				waveCounter++;
 				UiWave W = (UiWave)GameObject.FindObjectOfType<UiWave>();
 				W.Wave(waveCounter);
-				Debug.Log("wave update");
+				//Debug.Log("wave update");
 				Debug.Log (currentPattern);
 			}
 		}
@@ -320,7 +320,7 @@ public class ObstacleController : MonoBehaviour {
 		spawnRate = Multiplier;
 		slowDownTimer = slowDownLength;
 		slowDown = true;
-		Debug.Log ("Slow");
+		//Debug.Log ("Slow");
 	}
 
 	public void ResetObstacleSpeed(){ // resets speed of obstacles

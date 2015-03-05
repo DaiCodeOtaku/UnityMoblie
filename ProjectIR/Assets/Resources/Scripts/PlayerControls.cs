@@ -56,7 +56,7 @@ public class Player
 			lastScheme = scheme;
 			UIControl.Controls(scheme.ToString());
 		}
-		Debug.Log(startGetScheme);
+		//Debug.Log(startGetScheme);
 		if (startGetScheme == true)
 		{
 			while (scheme == lastScheme) 
