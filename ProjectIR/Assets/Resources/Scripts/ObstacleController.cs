@@ -146,7 +146,8 @@ public class ObstacleController : MonoBehaviour {
 		} else {
 			if (slowDown){
 				//ResetObstacleSpeed();
-				GameObject.FindObjectOfType<PlayerControls>().player.music.pitch *= 1.11111111f;
+				PlayerControls PLC = (PlayerControls)GameObject.FindObjectOfType<PlayerControls>();
+				PLC.Music.pitch *= 1.11111111f;
 				slowDown = false;
 			}
 			if (obstacleSpeed != baseSpeed){

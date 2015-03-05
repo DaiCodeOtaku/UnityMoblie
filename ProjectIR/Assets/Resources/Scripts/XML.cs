@@ -78,16 +78,16 @@ public class XML : MonoBehaviour {
             //File exists
             foreach (FileInfo file in listfiles)
             {
-                //Debug.Log("i exist");
+                Debug.Log("i exist");
             }
         }
         else
         {
-            //Debug.Log("i am created");
+            Debug.Log("i am created");
             XElement srcTree = new XElement("ApplicationData",
                                                 new XElement("HighScore", 0),
                                                 new XElement("FirstTimePlay", 0),
-                                                new XElement("Control", 0),
+                                                new XElement("Control", 3),
                                                 new XElement("music", 0.0f),
                                                 new XElement("TilteEnabled", false)
                                             );
@@ -105,13 +105,13 @@ public class XML : MonoBehaviour {
         return temp;
     }
 
-    public void MusicWrite(float IN)
+    public void MusicWrite(int IN)
 {
-         ApplicationData APP1 = new ApplicationData();
+        ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
         APP1 = APP1.Load(final);
         APP2 = APP1;
-        APP2.music = IN; ;
+        APP2.music = IN;
         APP2.save(final);
 
 }
@@ -129,7 +129,7 @@ public class XML : MonoBehaviour {
     {
         ApplicationData APP1 = new ApplicationData();
         ApplicationData APP2 = new ApplicationData();
-        APP1 = APP1.Load(final);
+       	APP1 = APP1.Load(final);
         APP2 = APP1;
         APP2.TilteEnabled = b1; ;
         APP2.save(final);

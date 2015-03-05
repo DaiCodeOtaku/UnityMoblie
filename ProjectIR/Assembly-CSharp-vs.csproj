@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +51,7 @@
      <Compile Include="Assets\Resources\Scripts\BackgroundScroll.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnOptions.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnScreen.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnTick.cs" />
      <Compile Include="Assets\Resources\Scripts\ControlText.cs" />
      <Compile Include="Assets\Resources\Scripts\GameOverController.cs" />
      <Compile Include="Assets\Resources\Scripts\Game_Over.cs" />
@@ -62,6 +63,7 @@
      <Compile Include="Assets\Resources\Scripts\QuitCon.cs" />
      <Compile Include="Assets\Resources\Scripts\ScoreController.cs" />
      <Compile Include="Assets\Resources\Scripts\SplashSequencer.cs" />
+     <Compile Include="Assets\Resources\Scripts\SplashTimer.cs" />
      <Compile Include="Assets\Resources\Scripts\UiControl.cs" />
      <Compile Include="Assets\Resources\Scripts\UiScore.cs" />
      <Compile Include="Assets\Resources\Scripts\UiWave.cs" />
@@ -75,7 +77,7 @@
      <None Include="Assets\Scenes\lolololol.txt" />
      <None Include="Assets\Resources\ctrlReview.txt" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
