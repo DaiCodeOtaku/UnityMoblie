@@ -51,6 +51,7 @@
      <Compile Include="Assets\Resources\Scripts\BackgroundScroll.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnOptions.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnScreen.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnSfxTick.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnTick.cs" />
      <Compile Include="Assets\Resources\Scripts\ControlText.cs" />
      <Compile Include="Assets\Resources\Scripts\GameOverController.cs" />
@@ -72,9 +73,9 @@
      <Compile Include="Assets\Resources\Scripts\blade_spin.cs" />
      <Compile Include="Assets\Resources\Scripts\craft_tilt.cs" />
      <Compile Include="Assets\Resources\Scripts\engine_jiggle.cs" />
+     <Compile Include="Assets\Resources\Scripts\sfxToggle.cs" />
      <Compile Include="Assets\Resources\Scripts\simpleSpin.cs" />
      <Compile Include="Assets\Resources\Scripts\valControlScheme.cs" />
-     <Compile Include="Assets\Resources\Scripts\valSFX.cs" />
      <None Include="Assets\Scenes\lolololol.txt" />
      <None Include="Assets\Resources\ctrlReview.txt" />
  <Reference Include="UnityEngine.UI">

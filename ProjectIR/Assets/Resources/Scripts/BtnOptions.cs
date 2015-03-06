@@ -19,7 +19,7 @@ public class BtnOptions : MonoBehaviour {
 		SplashTimer.splashCount = 1;
 	}
 
-	public void pressLowerSfx(){
+	/*public void pressLowerSfx(){
 		if (SplashSequencer.sfxUI > 0){
 			SplashSequencer.sfxUI--;
 			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10;
@@ -33,7 +33,7 @@ public class BtnOptions : MonoBehaviour {
 			SplashSequencer.sfxVol = SplashSequencer.sfxUI / 10;
 			Debug.Log ("Volume: " + SplashSequencer.sfxVol);
 		}
-	}
+	}*/
 
 	public void pressLowerControl(){
 		if (SplashSequencer.ctrlScheme > 0){

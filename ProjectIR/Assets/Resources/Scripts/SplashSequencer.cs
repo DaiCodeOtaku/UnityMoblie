@@ -5,9 +5,8 @@ using System.Timers;
 [RequireComponent(typeof(Canvas))]
 
 public class SplashSequencer : MonoBehaviour {
-	
-	public static float sfxVol;
-	public static float sfxUI;
+
+	public static int sfxToggle;
 	public static int ctrlScheme;
 	
 	public Canvas canBrokenEarth;

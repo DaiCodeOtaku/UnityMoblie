@@ -12,8 +12,6 @@ public class BtnTick : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		SplashSequencer.ctrlScheme = 0;
-		SplashSequencer.sfxUI = 10.0f;
-		SplashSequencer.sfxVol = 1.0f;
 		button = GetComponent<Button>();
 	}
 	
