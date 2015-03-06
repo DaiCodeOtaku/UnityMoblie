@@ -1,0 +1,19 @@
+
+
+Update(){
+
+	//stuff here
+
+	switch ctrlScheme(){
+		case accel:
+			Accel();
+	}
+
+	player.tranform.translate(new vector3(speed, 0.0f, 0.0f));
+
+}
+
+Accel(){
+	accelAmount ++;
+	player speed += accelAmount;
+}

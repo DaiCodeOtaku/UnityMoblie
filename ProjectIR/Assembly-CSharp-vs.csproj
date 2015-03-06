@@ -46,14 +46,37 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\AndroidButtonHandel.cs" />
-     <Compile Include="Assets\BtnOptions.cs" />
-     <Compile Include="Assets\BtnScreen.cs" />
-     <Compile Include="Assets\BtnTick.cs" />
-     <Compile Include="Assets\SplashSequencer.cs" />
-     <Compile Include="Assets\SplashTimer.cs" />
-     <Compile Include="Assets\valControlScheme.cs" />
-     <Compile Include="Assets\valSFX.cs" />
+     <Compile Include="Assets\Resources\Scripts\AndroidButtonHandel.cs" />
+     <Compile Include="Assets\Resources\Scripts\ArrowControl.cs" />
+     <Compile Include="Assets\Resources\Scripts\BackgroundScroll.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnOptions.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnScreen.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnTick.cs" />
+     <Compile Include="Assets\Resources\Scripts\ControlText.cs" />
+     <Compile Include="Assets\Resources\Scripts\GameOverController.cs" />
+     <Compile Include="Assets\Resources\Scripts\Game_Over.cs" />
+     <Compile Include="Assets\Resources\Scripts\InverseControl.cs" />
+     <Compile Include="Assets\Resources\Scripts\NEW.cs" />
+     <Compile Include="Assets\Resources\Scripts\Obstacle.cs" />
+     <Compile Include="Assets\Resources\Scripts\ObstacleController.cs" />
+     <Compile Include="Assets\Resources\Scripts\PlayerControls.cs" />
+     <Compile Include="Assets\Resources\Scripts\QuitCon.cs" />
+     <Compile Include="Assets\Resources\Scripts\ScoreController.cs" />
+     <Compile Include="Assets\Resources\Scripts\SplashSequencer.cs" />
+     <Compile Include="Assets\Resources\Scripts\SplashTimer.cs" />
+     <Compile Include="Assets\Resources\Scripts\Tutorial.cs" />
+     <Compile Include="Assets\Resources\Scripts\UiControl.cs" />
+     <Compile Include="Assets\Resources\Scripts\UiScore.cs" />
+     <Compile Include="Assets\Resources\Scripts\UiWave.cs" />
+     <Compile Include="Assets\Resources\Scripts\XML.cs" />
+     <Compile Include="Assets\Resources\Scripts\blade_spin.cs" />
+     <Compile Include="Assets\Resources\Scripts\craft_tilt.cs" />
+     <Compile Include="Assets\Resources\Scripts\engine_jiggle.cs" />
+     <Compile Include="Assets\Resources\Scripts\simpleSpin.cs" />
+     <Compile Include="Assets\Resources\Scripts\valControlScheme.cs" />
+     <Compile Include="Assets\Resources\Scripts\valSFX.cs" />
+     <None Include="Assets\Scenes\lolololol.txt" />
+     <None Include="Assets\Resources\ctrlReview.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
