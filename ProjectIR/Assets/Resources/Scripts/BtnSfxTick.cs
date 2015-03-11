@@ -5,14 +5,15 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 
 public class BtnSfxTick : MonoBehaviour {
-
+	public XML xml;
 	public Sprite sfxOff;
-	private Button button;
+	public Button button;
 
 	// Use this for initialization
 	void Start () {
-		SplashSequencer.sfxToggle = 1;
-		button = GetComponent<Button>();
+		//xml = GameObject.FindObjectOfType<XML>();
+		SplashSequencer.sfxToggle = (int)xml.MusicRead();
+		//button = GetComponent<Button>();
 	}
 	
 	// Update is called once per frame
@@ -28,11 +29,12 @@ public class BtnSfxTick : MonoBehaviour {
 		if (SplashSequencer.sfxToggle == 1){
 			SplashSequencer.sfxToggle = 0;
 			Debug.Log("sfx disabled");
-			// pass val to xml
+			xml.MusicWrite(0);
 			
 		} else {
 			SplashSequencer.sfxToggle = 1;
 			Debug.Log("sfx enabled again");
+			xml.MusicWrite(1);
 		}
 	}
 }

@@ -176,6 +176,7 @@ public class PlayerControls : MonoBehaviour
 	public AudioSource gameStart;
 	public AudioSource Music;
 	public AudioSource explosion;
+	public AudioSource engineHum;
 	public XML xmlDoc;
 
 	// Use this for initialization
@@ -195,6 +196,7 @@ public class PlayerControls : MonoBehaviour
 		gameStart.volume = musicVolume;
 		Music.volume = musicVolume;
 		explosion.volume = musicVolume;
+		engineHum.volume = musicVolume;
 		player.OC = GameObject.FindObjectOfType<ObstacleController>();
 		player.tiltEnabled = xmlDoc.TilteEnabledRead();
 		gameStart.Play();

@@ -37,7 +37,9 @@ public class SplashSequencer : MonoBehaviour {
 		Debug.Log ("options");
 		canMenu.enabled = false;
 		canOptions.enabled = true;
-		BtnOptions.setControlUI();
+		GameObject.FindObjectOfType<BtnOptions>().refresh();
+		GameObject.FindObjectOfType<BtnOptions>().setControlUI();
+		//BtnOptions.setControlUI();
 	}
 	
 	public void pressTut(){

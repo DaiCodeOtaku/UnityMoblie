@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -73,12 +73,13 @@
      <Compile Include="Assets\Resources\Scripts\blade_spin.cs" />
      <Compile Include="Assets\Resources\Scripts\craft_tilt.cs" />
      <Compile Include="Assets\Resources\Scripts\engine_jiggle.cs" />
+     <Compile Include="Assets\Resources\Scripts\sfxToggle.cs" />
      <Compile Include="Assets\Resources\Scripts\simpleSpin.cs" />
      <Compile Include="Assets\Resources\Scripts\valControlScheme.cs" />
      <None Include="Assets\Scenes\lolololol.txt" />
      <None Include="Assets\Resources\ctrlReview.txt" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
