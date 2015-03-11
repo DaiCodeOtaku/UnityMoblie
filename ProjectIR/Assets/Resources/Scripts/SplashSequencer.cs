@@ -6,22 +6,23 @@ using System.Timers;
 
 public class SplashSequencer : MonoBehaviour {
 	
-	public static float sfxVol;
-	public static float sfxUI;
+	public static int sfxToggle;
 	public static int ctrlScheme;
 	
 	public Canvas canBrokenEarth;
 	public Canvas canMenu;
 	public Canvas canOptions;
-
+	public Canvas canTut;
+	
 	// Use this for initialization
 	void Start () {
 		canBrokenEarth.enabled = true;
 		canMenu.enabled = false;
 		canOptions.enabled = false;
-
+		canTut.enabled = false;
+		
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
 		if (SplashTimer.splashCount == 1){
@@ -31,12 +32,18 @@ public class SplashSequencer : MonoBehaviour {
 			canMenu.enabled = true;
 		}
 	}
-
+	
 	public void pressOptions(){
 		Debug.Log ("options");
 		canMenu.enabled = false;
 		canOptions.enabled = true;
 		BtnOptions.setControlUI();
+	}
+	
+	public void pressTut(){
+		Debug.Log ("tut");
+		canTut.enabled = true;
+		canMenu.enabled = false;
 	}
 	
 	public void pressStart(){
@@ -48,8 +55,9 @@ public class SplashSequencer : MonoBehaviour {
 		Debug.Log ("back");
 		canMenu.enabled = true;
 		canOptions.enabled = false;
+		canTut.enabled = false;
 	}
-
+	
 	public void pressExit(){
 		Application.Quit ();
 	}

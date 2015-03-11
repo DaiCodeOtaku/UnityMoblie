@@ -111,11 +111,11 @@ public class Player
 					UIControl.Controls(GetPlayerControl());
 					accelSpeed = 0;
 
-					if ((scheme != cScheme.arrows || scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
+					if ((scheme != cScheme.arrows && scheme != cScheme.arrowsInv) && (lastScheme == cScheme.arrows || lastScheme == cScheme.arrowsInv))
 					{
 						UIControl.ArrowScroll(0);
 					}
-					else if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows || lastScheme != cScheme.arrowsInv))
+					else if ((scheme == cScheme.arrows || scheme == cScheme.arrowsInv) && (lastScheme != cScheme.arrows && lastScheme != cScheme.arrowsInv))
 					{
 						UIControl.ArrowScroll(1);
 					}

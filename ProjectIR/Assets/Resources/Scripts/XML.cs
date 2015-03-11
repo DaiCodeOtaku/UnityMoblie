@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class XML : MonoBehaviour {
 
+
     string filepath;
     string file;
     static string final;
@@ -24,36 +25,51 @@ public class XML : MonoBehaviour {
     public void UpdateScore(int Score)
     {
         ApplicationData APP1 = new ApplicationData();
-        ApplicationData APP2 = new ApplicationData();
         APP1 = APP1.Load(final);
-        APP2 = APP1;
-        APP2.HighScore = Score;
-        APP2.save(final);
+        XElement srcTree = new XElement("ApplicationData",
+                                         new XElement("HighScore", Score),
+                                         new XElement("FirstTimePlay", APP1.FirstTimePlay),
+                                         new XElement("Control", APP1.Control),
+                                         new XElement("music", APP1.music),
+                                         new XElement("TilteEnabled", APP1.TilteEnabled)
+                                     );
+
+        srcTree.Save(final);
 
 
     }
 
-     public void UpdateControl(int Control)
+    public void UpdateControl(int Control)
     {
         ApplicationData APP1 = new ApplicationData();
-        ApplicationData APP2 = new ApplicationData();
         APP1 = APP1.Load(final);
-        APP2 = APP1;
-        APP2.Control = Control;
-        APP2.save(final);
+        XElement srcTree = new XElement("ApplicationData",
+                                         new XElement("HighScore", APP1.HighScore),
+                                         new XElement("FirstTimePlay", APP1.FirstTimePlay),
+                                         new XElement("Control", Control),
+                                         new XElement("music", APP1.music),
+                                         new XElement("TilteEnabled", APP1.TilteEnabled)
+                                     );
+
+        srcTree.Save(final);
     }
 
     public void UpdateFirstPlay(int First)
     {
         ApplicationData APP1 = new ApplicationData();
-        ApplicationData APP2 = new ApplicationData();
         APP1 = APP1.Load(final);
-        APP2 = APP1;
-        APP2.FirstTimePlay = First;
-        APP2.save(final);
+        XElement srcTree = new XElement("ApplicationData",
+                                         new XElement("HighScore", APP1.HighScore),
+                                         new XElement("FirstTimePlay", First),
+                                         new XElement("Control", APP1.Control),
+                                         new XElement("music", APP1.music),
+                                         new XElement("TilteEnabled", APP1.TilteEnabled)
+                                     );
+
+        srcTree.Save(final);
     }
 
-     public int ControlScheme()
+    public int ControlScheme()
     {
         ApplicationData APP1 = new ApplicationData();
         APP1 = APP1.Load(final);
@@ -86,15 +102,16 @@ public class XML : MonoBehaviour {
             Debug.Log("i am created");
             XElement srcTree = new XElement("ApplicationData",
                                                 new XElement("HighScore", 0),
-                                                new XElement("FirstTimePlay", 0),
+                                                new XElement("FirstTimePlay", 1),
                                                 new XElement("Control", 3),
-                                                new XElement("music", 0.0f),
+                                                new XElement("music", 0.0d),
                                                 new XElement("TilteEnabled", false)
                                             );
 
             srcTree.Save(final);
         }
     }
+
 
     public float MusicRead()
     {
@@ -105,16 +122,20 @@ public class XML : MonoBehaviour {
         return temp;
     }
 
-    public void MusicWrite(int IN)
-{
+    public void MusicWrite(float IN)
+    {
         ApplicationData APP1 = new ApplicationData();
-        ApplicationData APP2 = new ApplicationData();
         APP1 = APP1.Load(final);
-        APP2 = APP1;
-        APP2.music = IN;
-        APP2.save(final);
+        XElement srcTree = new XElement("ApplicationData",
+                                         new XElement("HighScore", APP1.HighScore),
+                                         new XElement("FirstTimePlay", APP1.FirstTimePlay),
+                                         new XElement("Control", APP1.Control),
+                                         new XElement("music", IN),
+                                         new XElement("TilteEnabled", APP1.TilteEnabled)
+                                     );
 
-}
+        srcTree.Save(final);
+    }
 
     public bool TilteEnabledRead()
     {
@@ -128,11 +149,16 @@ public class XML : MonoBehaviour {
     public void TilteEnabledWrite(bool b1)
     {
         ApplicationData APP1 = new ApplicationData();
-        ApplicationData APP2 = new ApplicationData();
-       	APP1 = APP1.Load(final);
-        APP2 = APP1;
-        APP2.TilteEnabled = b1; ;
-        APP2.save(final);
+        APP1 = APP1.Load(final);
+        XElement srcTree = new XElement("ApplicationData",
+                                         new XElement("HighScore", APP1.HighScore),
+                                         new XElement("FirstTimePlay", APP1.FirstTimePlay),
+                                         new XElement("Control", APP1.Control),
+                                         new XElement("music", APP1.music),
+                                         new XElement("TilteEnabled", b1)
+                                     );
+
+        srcTree.Save(final);
     }
 
 
