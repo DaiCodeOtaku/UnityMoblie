@@ -712,8 +712,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ceccd6d3336d7b34db98c447ba120fd8, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2675,7 +2675,7 @@ Prefab:
     - target: {fileID: 11483324, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 68d055e09e5c88c47a33e789ddbae35f,
+      objectReference: {fileID: 21300000, guid: ceccd6d3336d7b34db98c447ba120fd8,
         type: 3}
     - target: {fileID: 11483324, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_Type
@@ -2684,7 +2684,7 @@ Prefab:
     - target: {fileID: 11483348, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 68d055e09e5c88c47a33e789ddbae35f,
+      objectReference: {fileID: 21300000, guid: ceccd6d3336d7b34db98c447ba120fd8,
         type: 3}
     - target: {fileID: 11483348, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_Type
@@ -2738,6 +2738,56 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: -204
       objectReference: {fileID: 0}
+    - target: {fileID: 11483334, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ceccd6d3336d7b34db98c447ba120fd8,
+        type: 3}
+    - target: {fileID: 11483334, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483330, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ceccd6d3336d7b34db98c447ba120fd8,
+        type: 3}
+    - target: {fileID: 11483330, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183348, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483380, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483380, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483380, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483344, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483344, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483344, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183352, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
   m_RootGameObject: {fileID: 455631973}
@@ -2759,7 +2809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &646340554
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4963,8 +5013,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ceccd6d3336d7b34db98c447ba120fd8, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6845,7 +6895,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 68d055e09e5c88c47a33e789ddbae35f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ceccd6d3336d7b34db98c447ba120fd8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6908,7 +6958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: .195999995, g: .195999995, b: .195999995, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1e6b981b10d75dc44bdec544e9a5192a, type: 3}
     m_FontSize: 14
@@ -7175,7 +7225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 68d055e09e5c88c47a33e789ddbae35f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ceccd6d3336d7b34db98c447ba120fd8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7321,7 +7371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: .195999995, g: .195999995, b: .195999995, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1e6b981b10d75dc44bdec544e9a5192a, type: 3}
     m_FontSize: 14
