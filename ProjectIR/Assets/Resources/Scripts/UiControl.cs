@@ -91,6 +91,13 @@ public class UiControl : MonoBehaviour {
         
     }
 
+	public void ToggleArrows(bool Enabled){
+		ArrowControl[] AC = GameObject.FindObjectsOfType<ArrowControl>();
+
+		AC[0].Togggle(Enabled);
+		AC[1].Togggle(Enabled);
+	}
+
 
 
    public void Quit()
@@ -101,6 +108,7 @@ public class UiControl : MonoBehaviour {
     public void LoadMenu()
     {
 		ObstacleController.GO = false;
+		//ToggleArrows(true);
         Application.LoadLevel("TitleSplash");
     }
 
@@ -108,6 +116,7 @@ public class UiControl : MonoBehaviour {
    public void LoadGame()
    {
 		ObstacleController.GO = false;
+		//ToggleArrows(true);
         Application.LoadLevel("Main");
     }
 

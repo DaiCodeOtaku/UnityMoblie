@@ -104,6 +104,9 @@ public class ArrowControl : MonoBehaviour {
 	}
 
 
+	public void Togggle(bool Enable){
+		gameObject.SetActive(Enable);
+	}
 
 
     public void ArrowIn()

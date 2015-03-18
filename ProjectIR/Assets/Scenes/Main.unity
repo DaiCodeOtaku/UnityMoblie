@@ -2657,20 +2657,20 @@ Prefab:
     - target: {fileID: 11483318, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 46e9ec5902f649f4dab7c2eb9f8e6725,
+      objectReference: {fileID: 21300000, guid: 1a62d7adbf4b2ee4fb65c9f4c979b56c,
         type: 3}
     - target: {fileID: 11483384, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 03e59fa1e8e64c54da40e9dfe91a0964,
+      objectReference: {fileID: 21300000, guid: cc492f3adb06fec41a3986ab76e2f20f,
         type: 3}
     - target: {fileID: 22483312, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_LocalScale.y
-      value: .75
+      value: 1.35804498
       objectReference: {fileID: 0}
     - target: {fileID: 22483346, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_LocalScale.y
-      value: .75
+      value: 1.35804486
       objectReference: {fileID: 0}
     - target: {fileID: 11483324, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_Sprite
@@ -2787,6 +2787,34 @@ Prefab:
     - target: {fileID: 183352, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22483312, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 22483346, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 22483346, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 22483346, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.35804474
+      objectReference: {fileID: 0}
+    - target: {fileID: 22483346, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1.35804486
+      objectReference: {fileID: 0}
+    - target: {fileID: 22483312, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.35804498
+      objectReference: {fileID: 0}
+    - target: {fileID: 22483312, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1.35804498
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1a71a540e2a340843b683102fd45cb5e, type: 2}
@@ -4386,14 +4414,14 @@ RectTransform:
   m_GameObject: {fileID: 933856936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 538.599976}
-  m_LocalScale: {x: 1.24751008, y: .75, z: .871726751}
+  m_LocalScale: {x: 1.35804498, y: 1.35804498, z: 1.35804498}
   m_Children: []
   m_Father: {fileID: 455631974}
   m_RootOrder: 6
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 351, y: -204}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 42}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &933856938
 MonoBehaviour:
@@ -4424,7 +4452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 46e9ec5902f649f4dab7c2eb9f8e6725, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1a62d7adbf4b2ee4fb65c9f4c979b56c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6625,14 +6653,14 @@ RectTransform:
   m_GameObject: {fileID: 1675624517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 538.599976}
-  m_LocalScale: {x: 1.24751997, y: .75, z: .871739864}
+  m_LocalScale: {x: 1.35804474, y: 1.35804486, z: 1.35804486}
   m_Children: []
   m_Father: {fileID: 455631974}
   m_RootOrder: 7
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -351, y: -204}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 42}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1675624519
 MonoBehaviour:
@@ -6663,7 +6691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 03e59fa1e8e64c54da40e9dfe91a0964, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cc492f3adb06fec41a3986ab76e2f20f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

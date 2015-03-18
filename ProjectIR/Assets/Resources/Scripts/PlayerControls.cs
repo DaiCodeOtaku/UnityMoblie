@@ -495,9 +495,9 @@ public class PlayerControls : MonoBehaviour
 				Debug.Log("Play Ad");
 			}
 
-
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
+			player.UIControl.ToggleArrows(false);
 			player.scheme = (cScheme)(-1);
 			Music.pitch = -0.5f;
 			explosion.Play ();
