@@ -14,14 +14,16 @@ public class AndroidButtonHandel : MonoBehaviour {
 	// Update is called once per frame
 	public void Update () {
 	
-		if(Input.GetKey(KeyCode.Escape))
-		{
-            G.SetActive(true);
-			Time.timeScale = 0.0f;
-            //QuitCon Quit = (QuitCon)GameObject.FindObjectOfType<QuitCon>();
-           // Quit.Show();
-		};
+		if(!ObstacleController.GO){
 
+			if(Input.GetKey(KeyCode.Escape))
+			{
+	            G.SetActive(true);
+				Time.timeScale = 0.0f;
+	            //QuitCon Quit = (QuitCon)GameObject.FindObjectOfType<QuitCon>();
+	           // Quit.Show();
+			}
+		}
 
 	}
 }

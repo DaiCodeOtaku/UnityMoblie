@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Advertisements;
 
 public enum cScheme {moveScale, arrows, accel, SOD, moveScaleInv, arrowsInv, accelInv, SODInv, tiltInv, tilt};
 // moveScale = Player moves at varying speed depending on how extreme their button presses are either side of middle
@@ -301,11 +302,11 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (Input.acceleration.y > moveThreshold)
 		{
-			transform.Translate(Input.acceleration.x * player.speed * tiltSpeed * sign,0,0);
+			transform.Translate(Input.acceleration.x * player.speed * tiltSpeed * sign * Time.timeScale,0,0);
 		}
 		else if (Input.acceleration.y < -moveThreshold)
 		{
-			transform.Translate(Input.acceleration.x * player.speed * tiltSpeed * sign,0,0);
+			transform.Translate(Input.acceleration.x * player.speed * tiltSpeed * sign * Time.timeScale,0,0);
 		} 
 	}
 
@@ -490,9 +491,11 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (ObstacleController.GO == false) {
 
-			if(ObstacleController.AdvertTimer >= 300){
-				//play ad here
+			if(ObstacleController.AdvertTimer >= 15){
 				Debug.Log("Play Ad");
+				if(Advertisement.isReady()) { Advertisement.Show();}
+				ObstacleController.AdvertTimer = 0.0f;
+
 			}
 
 			player.UIControl.GameOver();
