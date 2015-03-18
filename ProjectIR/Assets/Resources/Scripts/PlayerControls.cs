@@ -490,6 +490,12 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (ObstacleController.GO == false) {
 
+			if(ObstacleController.AdvertTimer >= 300){
+				//play ad here
+				Debug.Log("Play Ad");
+			}
+
+
 			player.UIControl.GameOver();
 			ObstacleController.GO = true;
 			player.scheme = (cScheme)(-1);
