@@ -377,7 +377,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xml: {fileID: 1714776545}
-  toggleOff: {fileID: 21300000, guid: 3cde13d7e8cd3cc4dad65c628877d6f0, type: 3}
+  toggleOff: {fileID: 21300000, guid: d141b408a2a0d57459d1679e10af335f, type: 3}
   button: {fileID: 277778427}
 --- !u!114 &277778427
 MonoBehaviour:
@@ -625,9 +625,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: .100000001
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 2d5be69cc07e79d41a288a461d9f8b0d,
+    m_HighlightedSprite: {fileID: 21300000, guid: c30c5ba220a5f9541b3746b5690af737,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 2d5be69cc07e79d41a288a461d9f8b0d, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: d141b408a2a0d57459d1679e10af335f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 2d5be69cc07e79d41a288a461d9f8b0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c30c5ba220a5f9541b3746b5690af737, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -987,15 +987,15 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 411237395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.79999995}
-  m_LocalScale: {x: -.254994601, y: .254994601, z: .254994601}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 1555120237}
   m_Father: {fileID: 1242789176}
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -74.9999847, y: -122.000008}
+  m_AnchoredPosition: {x: -270, y: -350}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: .50000006, y: .49999994}
 --- !u!114 &411237397
@@ -1452,14 +1452,14 @@ RectTransform:
   m_GameObject: {fileID: 540996953}
   m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106829}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -.262499988, y: .262499988, z: .262499988}
+  m_LocalScale: {x: -1.02212727, y: 1, z: 1}
   m_Children:
   - {fileID: 561614009}
   m_Father: {fileID: 1242789176}
   m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: -141.75}
+  m_AnchoredPosition: {x: 0, y: -530}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &540996955
@@ -1728,15 +1728,15 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 594267186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.79999995}
-  m_LocalScale: {x: .254994601, y: .254994601, z: .254994601}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1246650763}
   m_Father: {fileID: 1242789176}
   m_RootOrder: 3
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 75.0000076, y: -122}
+  m_AnchoredPosition: {x: 270, y: -350}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: .50000006, y: .5}
 --- !u!114 &594267188
@@ -2676,12 +2676,12 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 375, y: 600}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4198,7 +4198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xml: {fileID: 1714776545}
-  sfxOff: {fileID: 21300000, guid: 3cde13d7e8cd3cc4dad65c628877d6f0, type: 3}
+  sfxOff: {fileID: 21300000, guid: d141b408a2a0d57459d1679e10af335f, type: 3}
   button: {fileID: 1499725092}
 --- !u!114 &1499725092
 MonoBehaviour:
@@ -4227,9 +4227,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: .100000001
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 2d5be69cc07e79d41a288a461d9f8b0d,
+    m_HighlightedSprite: {fileID: 21300000, guid: c30c5ba220a5f9541b3746b5690af737,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 2d5be69cc07e79d41a288a461d9f8b0d, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: d141b408a2a0d57459d1679e10af335f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -4269,7 +4269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 2d5be69cc07e79d41a288a461d9f8b0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c30c5ba220a5f9541b3746b5690af737, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4422,7 +4422,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
@@ -4560,7 +4560,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
@@ -4723,14 +4723,14 @@ RectTransform:
   m_GameObject: {fileID: 1617699414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.05464983, y: 1, z: 1}
+  m_LocalScale: {x: 2.05464983, y: 3.91000009, z: 1}
   m_Children: []
   m_Father: {fileID: 1242789176}
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: .000132536879, y: .249996185}
-  m_SizeDelta: {x: 99.2870026, y: 327.5}
+  m_AnchoredPosition: {x: -.001953125, y: -.206657156}
+  m_SizeDelta: {x: 389.359985, y: 327.269989}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1617699416
 MonoBehaviour:
