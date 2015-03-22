@@ -45,3 +45,6 @@ Thumbs.db[Ll]ibrary/
 
 #Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+*.csproj
+ProjectIR/Assets/Resources/Scripts/SplashSequencer.cs
