@@ -46,11 +46,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\Ad.cs" />
+     <Compile Include="Assets\Resources\Scripts\Ad1.cs" />
      <Compile Include="Assets\Resources\Scripts\AndroidButtonHandel.cs" />
      <Compile Include="Assets\Resources\Scripts\ArrowControl.cs" />
      <Compile Include="Assets\Resources\Scripts\BackgroundScroll.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnOptions.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnScreen.cs" />
+     <Compile Include="Assets\Resources\Scripts\BtnSfxTick.cs" />
      <Compile Include="Assets\Resources\Scripts\BtnTick.cs" />
      <Compile Include="Assets\Resources\Scripts\ControlText.cs" />
      <Compile Include="Assets\Resources\Scripts\GameOverController.cs" />
@@ -64,6 +67,7 @@
      <Compile Include="Assets\Resources\Scripts\ScoreController.cs" />
      <Compile Include="Assets\Resources\Scripts\SplashSequencer.cs" />
      <Compile Include="Assets\Resources\Scripts\SplashTimer.cs" />
+     <Compile Include="Assets\Resources\Scripts\Tutorial.cs" />
      <Compile Include="Assets\Resources\Scripts\UiControl.cs" />
      <Compile Include="Assets\Resources\Scripts\UiScore.cs" />
      <Compile Include="Assets\Resources\Scripts\UiWave.cs" />
@@ -71,14 +75,18 @@
      <Compile Include="Assets\Resources\Scripts\blade_spin.cs" />
      <Compile Include="Assets\Resources\Scripts\craft_tilt.cs" />
      <Compile Include="Assets\Resources\Scripts\engine_jiggle.cs" />
+     <Compile Include="Assets\Resources\Scripts\sfxToggle.cs" />
      <Compile Include="Assets\Resources\Scripts\simpleSpin.cs" />
      <Compile Include="Assets\Resources\Scripts\valControlScheme.cs" />
-     <Compile Include="Assets\Resources\Scripts\valSFX.cs" />
      <None Include="Assets\Scenes\lolololol.txt" />
      <None Include="Assets\Resources\ctrlReview.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{CC4B3BA7-03D4-0501-6F71-D4054D6E9C2D}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

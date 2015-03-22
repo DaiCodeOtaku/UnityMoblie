@@ -10,7 +10,7 @@ PlayerSettings:
   targetGlesGraphics: -1
   targetResolution: 0
   accelerometerFrequency: 60
-  companyName: Group_Derail
+  companyName: 'Broken Earth: Games Studio'
   productName: Inverse Runner
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -109,8 +109,22 @@ PlayerSettings:
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
-    - m_Icon: {fileID: 0}
+    - m_Icon: {fileID: 2800000, guid: df85c0ef332c0f44797e178a77f184e5, type: 3}
       m_Size: 128
+  - m_BuildTarget: Android
+    m_Icons:
+    - m_Icon: {fileID: 2800000, guid: 35e46a723bfb31546b1a7ec73a4a2a42, type: 3}
+      m_Size: 192
+    - m_Icon: {fileID: 2800000, guid: 71fd28f32706cd54d8d3a017c55872d4, type: 3}
+      m_Size: 144
+    - m_Icon: {fileID: 2800000, guid: 4e44e89de09d30e4c845ce49c271e76f, type: 3}
+      m_Size: 96
+    - m_Icon: {fileID: 2800000, guid: 4217f59eb3a02e84a8a15630483f6efc, type: 3}
+      m_Size: 72
+    - m_Icon: {fileID: 2800000, guid: dc9918747e8da2749bf4d9100cc4ddb8, type: 3}
+      m_Size: 48
+    - m_Icon: {fileID: 2800000, guid: 2aad7ab2f5986244cb8244bd22ad7103, type: 3}
+      m_Size: 36
   m_BuildTargetBatching:
   - m_BuildTarget: Android
     m_StaticBatching: 1
@@ -250,6 +264,8 @@ PlayerSettings:
   tizenGPSPermissions: 0
   tizenMicrophonePermissions: 0
   stvDeviceAddress: 
+  wp8UnprocessedPlugins: []
+  intPropertyNames: []
   firstStreamedLevelWithResources: 0
   unityRebuildLibraryVersion: 9
   unityForwardCompatibleVersion: 39

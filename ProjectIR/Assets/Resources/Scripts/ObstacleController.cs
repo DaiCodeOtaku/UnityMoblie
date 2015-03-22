@@ -11,6 +11,7 @@ public class ObstacleController : MonoBehaviour {
 	public float patternTimer;
 	public static bool GO = false;
 	public static float obstacleSpeed;
+	public static float AdvertTimer;
 	spawnPatterns previousPattern, currentPattern;
 	int patternOffset;
 	public int waveCounter;
@@ -124,6 +125,8 @@ public class ObstacleController : MonoBehaviour {
 	void Update () {
 		if (!GO) {
 			patternTimer -= Time.deltaTime * spawnRate;
+
+			AdvertTimer += Time.deltaTime;
 
 			SlowDown();
 

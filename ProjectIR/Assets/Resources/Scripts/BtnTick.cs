@@ -5,18 +5,17 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 
 public class BtnTick : MonoBehaviour {
-	public static bool tiltAllow = true;
-	public  XML xml;
+	public XML xml;
+	public static bool tiltAllow;
 	public Sprite toggleOff;
-	private Button button;
+	public Button button;
 
 	// Use this for initialization
 	void Start () {
-		SplashSequencer.ctrlScheme = 0;
-		SplashSequencer.sfxUI = 10.0f;
-		SplashSequencer.sfxVol = 1.0f;
-		button = GetComponent<Button>();
-		xml = GameObject.FindObjectOfType<XML>();
+		//xml = GameObject.FindObjectOfType<XML>();
+		SplashSequencer.ctrlScheme = xml.ControlScheme();
+		tiltAllow = xml.TilteEnabledRead();
+		//button = GetComponent<Button>();
 	}
 	
 	// Update is called once per frame
@@ -34,7 +33,7 @@ public class BtnTick : MonoBehaviour {
 			Debug.Log("now disabled");
 			SplashSequencer.ctrlScheme = 0;
 			BtnOptions.setControlText("Move Scale");
-
+			// pass val to xml
 			
 		} else {
 			tiltAllow = true;
@@ -43,6 +42,5 @@ public class BtnTick : MonoBehaviour {
 				SplashSequencer.ctrlScheme = 8;
 			}
 		}
-		xml.TilteEnabledWrite(tiltAllow); 
 	}
 }
