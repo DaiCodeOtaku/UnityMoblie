@@ -13,18 +13,19 @@ public class SplashSequencer : MonoBehaviour {
 	public Canvas canMenu;
 	public Canvas canOptions;
 	public Canvas canTut;
+	//static bool Firsttime = true;
 
 	GameObject LOGOBK;
 	GameObject LOGO;
 	
 	// Use this for initialization
 	void Start () {
+		LOGOBK = GameObject.Find("LOGOBK");
+		LOGO = GameObject.Find ("LOGO");
 		canBrokenEarth.enabled = true;
 		canMenu.enabled = false;
 		canOptions.enabled = false;
 		canTut.enabled = false;
-		LOGOBK = GameObject.Find("LOGOBK");
-		LOGO = GameObject.Find ("LOGO");
 	}
 	
 	// Update is called once per frame
@@ -35,6 +36,7 @@ public class SplashSequencer : MonoBehaviour {
 			canBrokenEarth.enabled = false;
 			LOGOBK.SetActive(false);
 			canMenu.enabled = true;
+			//Firsttime = false;
 		}
 	}
 	
