@@ -491,11 +491,10 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (ObstacleController.GO == false) {
 
-			if(ObstacleController.AdvertTimer >= 15){
+			if(ObstacleController.AdvertTimer >= 125){
 				Debug.Log("Play Ad");
 				if(Advertisement.isReady()) { Advertisement.Show();}
 				ObstacleController.AdvertTimer = 0.0f;
-
 			}
 
 			player.UIControl.GameOver();
