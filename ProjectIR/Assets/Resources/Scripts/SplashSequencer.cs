@@ -17,11 +17,13 @@ public class SplashSequencer : MonoBehaviour {
 
 	GameObject LOGOBK;
 	GameObject LOGO;
+	GameObject TITLEBACK;
 	
 	// Use this for initialization
 	void Start () {
 		LOGOBK = GameObject.Find("LOGOBK");
 		LOGO = GameObject.Find ("LOGO");
+		TITLEBACK = GameObject.Find ("TITLEBACK");
 		canBrokenEarth.enabled = true;
 		canMenu.enabled = false;
 		canOptions.enabled = false;
@@ -52,6 +54,7 @@ public class SplashSequencer : MonoBehaviour {
 	
 	public void pressTut(){
 		Debug.Log ("tut");
+		TITLEBACK.SetActive (false);
 		canTut.enabled = true;
 		canMenu.enabled = false;
 	}
@@ -65,6 +68,7 @@ public class SplashSequencer : MonoBehaviour {
 		Debug.Log ("back");
 		LOGOBK.SetActive(false);
 		LOGO.SetActive (true);
+		TITLEBACK.SetActive (true);
 		canMenu.enabled = true;
 		canOptions.enabled = false;
 		canTut.enabled = false;

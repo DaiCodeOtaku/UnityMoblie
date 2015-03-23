@@ -201,7 +201,7 @@ GameObject:
   - 4: {fileID: 209736765}
   - 212: {fileID: 209736766}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: TITLEBACK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1085,7 +1085,7 @@ RectTransform:
   m_Children:
   - {fileID: 1555120237}
   m_Father: {fileID: 1242789176}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -270, y: -530}
@@ -1650,6 +1650,14 @@ Prefab:
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11454400, guid: af9aaa6cef3d75641a29c2c7e36aa11c, type: 2}
+      propertyPath: m_MatchWidthOrHeight
+      value: .600000024
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454400, guid: af9aaa6cef3d75641a29c2c7e36aa11c, type: 2}
+      propertyPath: m_ReferenceResolution.y
+      value: 1281.43701
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af9aaa6cef3d75641a29c2c7e36aa11c, type: 2}
   m_RootGameObject: {fileID: 1705492306}
@@ -1756,7 +1764,7 @@ RectTransform:
   m_Children:
   - {fileID: 561614009}
   m_Father: {fileID: 1242789176}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: -530}
@@ -2033,7 +2041,7 @@ RectTransform:
   m_Children:
   - {fileID: 1246650763}
   m_Father: {fileID: 1242789176}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 270, y: -530}
@@ -2923,10 +2931,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1617699415}
   - {fileID: 540996954}
   - {fileID: 411237396}
   - {fileID: 594267187}
-  - {fileID: 1617699415}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_AnchorMin: {x: 0, y: 0}
@@ -2990,7 +2998,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 1281.43701}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: .600000024
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -5081,15 +5089,15 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1617699414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 18.0000439}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1242789176}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 1330}
+  m_AnchoredPosition: {x: 6, y: 0}
+  m_SizeDelta: {x: 812, y: 1330}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1617699416
 MonoBehaviour:
@@ -5414,9 +5422,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 800, y: 1281.43701}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: .600000024
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
